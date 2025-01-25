@@ -5,13 +5,21 @@
 
 <body>
     <div class="sidebar">
-        <h1>InfinityPrintz<br> Admin Panel</h1>
+        <h1>Infinity Prints</h1>
         <ul>
-            <li style="margin-bottom: 5px;" class="active">
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Homepage()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                    </span>
+                    Homepage
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
                 <a ng-click="Account()">
 
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-user-circle active" style="font-size: 18px;"></i>
+                        <i class="fas fa-user-circle " style="font-size: 18px;"></i>
                     </span>
                     Account
                 </a>
@@ -72,7 +80,7 @@
                     User Guide
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" class="active">
                 <a ng-click="Status()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-spinner active" style="font-size: 18px;"></i>
@@ -88,6 +96,14 @@
                     Receipts
                 </a>
             </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Receipts()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-file-alt" " style="font-size: 18px;"></i>
+                    </span>
+                    Logs
+                </a>
+            </li>
         </ul>
         <div class="sidebar-footer">
             <div class="user-info">
@@ -98,6 +114,7 @@
 
             </div>
         </div>
+
     </div>
 
     <div class="main-content">

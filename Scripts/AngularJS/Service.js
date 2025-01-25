@@ -32,6 +32,11 @@ app.service("IPService", function ($http) {
         return $http.get("Home/LoadPayments");
     }
 
+    this.loadChartService = function () {
+        return $http.get("/Home/LoadChart");
+    }
+
+
     this.SendEmailCP = function (emailData) {
         console.log(emailData);
 

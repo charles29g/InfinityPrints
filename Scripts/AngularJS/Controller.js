@@ -456,6 +456,9 @@
     $scope.Receipts = function () {
         window.location.href = "Home/DashReceipts";
     };
+    $scope.Homepage = function () {
+        window.location.href = "Home/DashAdmin";
+    };
 
 
     $scope.confirmEmailFromURL = function () {
@@ -744,7 +747,7 @@
     };
 
     $scope.loadChart = function () {
-        var getData = TBService.loadChartService();
+        var getData = IPService.loadChartService();
         console.log("Controller");
         getData.then(function (ReturnedData) {
             $scope.labels = ReturnedData.data.labels;
@@ -754,6 +757,16 @@
             console.log(ReturnedData.data.data[0]);
         });
     };
+
+
+    //$scope.loadChart = function () {
+
+    //    console.log("Chart")
+
+    //    $scope.labels = ["January", "February", "March", "April"];
+    //    $scope.data = [10, 20, 30, 40];
+    //    $scope.options = { responsive: true };
+    //};
 
 
 

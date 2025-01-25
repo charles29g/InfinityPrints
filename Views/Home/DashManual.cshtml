@@ -5,8 +5,16 @@
 
 <body>
     <div class="sidebar">
-        <h1>InfinityPrintz<br> Admin Panel</h1>
+        <h1>Infinity Prints</h1>
         <ul>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Homepage()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                    </span>
+                    Homepage
+                </a>
+            </li>
             <li style="margin-bottom: 5px;" class="active">
                 <a ng-click="Account()">
 
@@ -64,10 +72,10 @@
                     Chat
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" class="active">
                 <a ng-click="UserGuide()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                        <i class="fas fa-book-open active" style="font-size: 18px;"></i>
                     </span>
                     User Guide
                 </a>
@@ -86,6 +94,14 @@
                         <i class="fas fa-receipt" style="font-size: 18px;"></i>
                     </span>
                     Receipts
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Receipts()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-file-alt" " style="font-size: 18px;"></i>
+                    </span>
+                    Logs
                 </a>
             </li>
         </ul>

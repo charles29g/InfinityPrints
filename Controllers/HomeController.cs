@@ -119,7 +119,11 @@ namespace InfinityPrints.Controllers
             return View();
         }
 
+        public ActionResult DashAdmin()
+        {
 
+            return View();
+        }
         public JsonResult LoadServices()
         {
             using (var db = new InfinityPrintsContext())
@@ -738,6 +742,52 @@ namespace InfinityPrints.Controllers
 
 
 
+        public JsonResult LoadChart()
+        {
+            using (var db = new InfinityPrintsContext())
+            {
+                // Query the database with manual projection
+                var monthlyData = db.tbl_orders
+                    .Select(o => new
+                    {
+                        Year = o.CreatedAt.Year,
+                        Month = o.CreatedAt.Month,
+                        TotalPrice = o.TotalPrice
+                    })
+                    .GroupBy(o => new { o.Year, o.Month })
+                    .Select(g => new
+                    {
+                        Year = g.Key.Year,
+                        Month = g.Key.Month,
+                        AverageTotalPrice = g.Average(o => o.TotalPrice)
+                    })
+                    .OrderBy(g => g.Year)
+                    .ThenBy(g => g.Month)
+                    .ToList();
+
+                // Generate labels in "MM/YYYY" format
+                var labels = monthlyData
+                    .Select(m => $"{m.Month:D2}/{m.Year}")
+                    .ToArray(); // Format as "MM/YYYY"
+
+                var data = monthlyData
+                    .Select(m => m.AverageTotalPrice)
+                    .ToArray(); // Average TotalPrice values for the chart
+
+                var chartData = new
+                {
+                    data = new[] { data },
+                    labels = labels,
+                    options = new
+                    {
+                        responsive = true,
+                        maintainAspectRatio = false
+                    }
+                };
+
+                return Json(chartData, JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
 
