@@ -1,0 +1,117 @@
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<body>
+    <div class="sidebar">
+        <h1>InfinityPrintz<br> Admin Panel</h1>
+        <ul>
+            <li style="margin-bottom: 5px;" class="active">
+                <a ng-click="Account()">
+
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-user-circle active" style="font-size: 18px;"></i>
+                    </span>
+                    Account
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Reviews()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-star" style="font-size: 18px;"></i>
+                    </span>
+                    Reviews
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Service()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
+                    </span>
+                    Services
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Orders()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-box-open" style="font-size: 18px;"></i>
+                    </span>
+                    Orders
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Users()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-users" style="font-size: 18px;"></i>
+                    </span>
+                    Users
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Payment()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-credit-card" style="font-size: 18px;"></i>
+                    </span>
+                    Payment
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Chat()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-comments" style="font-size: 18px;"></i>
+                    </span>
+                    Chat
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="UserGuide()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                    </span>
+                    User Guide
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Status()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-spinner active" style="font-size: 18px;"></i>
+                    </span>
+                    Status
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Receipts()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-receipt" style="font-size: 18px;"></i>
+                    </span>
+                    Receipts
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <button class="logout-btn" ng-click="logoutfunc()">
+                    <p class="user-name"><i class="fas fa-user-circle"></i> {{ getFullName }}</p>
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content" ng-init="loadChart()">
+
+        <div class="welcome-message">
+            <img src="~/Content/Images/logo.PNG" />
+            <h1>Welcome, {{ getFullName }}!</h1>
+            <p>Manage your platform efficiently with the tools below.</p>
+        </div>
+        <div class="content">
+            <canvas id="bar" class="chart chart-bar"
+                    chart-data="data" chart-labels="labels" chart-options="options">
+            </canvas>
+
+        </div>
+
+    </div>
+</body>
