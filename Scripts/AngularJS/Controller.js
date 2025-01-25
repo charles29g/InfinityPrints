@@ -743,7 +743,17 @@
         });
     };
 
+    $scope.loadChart = function () {
+        var getData = TBService.loadChartService();
+        console.log("Controller");
+        getData.then(function (ReturnedData) {
+            $scope.labels = ReturnedData.data.labels;
+            $scope.data = ReturnedData.data.data[0];
 
+            console.log(ReturnedData.data.labels);
+            console.log(ReturnedData.data.data[0]);
+        });
+    };
 
 
 
