@@ -216,6 +216,7 @@
         });
     };
 
+    //Activate Email send
     $scope.sendEmail = function (encryptedUserId, email) {
         // Construct the URL with the encrypted userID
         var url = `https://localhost:44395/Home/ConfirmationPage?userID=${encryptedUserId}`;
@@ -249,7 +250,7 @@
 
 
 
-
+    //input email to change pass
     $scope.GetEmailID = function (encryptedUserId) {
         // Construct the URL with the encrypted userID
 
@@ -265,7 +266,7 @@
             var Email = response.data.Email;
             var userID = response.data.HashedUserID;
 
-            $scope.sendEmailChangePass(userID, Email);
+            $scope.sendEmailChangePass(userID, Email, Enc);
 
 
             swal.fire({
@@ -285,9 +286,18 @@
         });
     };
 
+    $scope.EncryptIDAndSend = function (UserID, Email) {
+        // Call the EncryptID service to encrypt the UserID
+        IPService.EncryptID(UserID).then(function (response) {
+            // Once the ID is encrypted, send it to sendEmailChangePass
+            var encryptedID = response.data.EncID;
+            $scope.sendEmailChangePass(encryptedID, Email); // Call your function with the encrypted ID and email
+        }, function (error) {
+            console.error("Error encrypting UserID", error);
+        });
+    };
 
-
-
+    //email change pass email send
     $scope.sendEmailChangePass = function (encryptedUserId, email) {
         // Construct the URL with the encrypted userID
         var url = `https://localhost:44395/Home/ForgotPasswordPage?userID=${encryptedUserId}`;
@@ -318,6 +328,9 @@
         });
     };
 
+
+
+    // logic to change password 
     $scope.ChangePassword = function () {
         var params = $location.search(); // gets all query parameters as an object
         $scope.userID = params.userID; //Get 'userID' directly from the URL query string
@@ -326,7 +339,7 @@
 
         var userID = $scope.userID
         var RegData = {
-            Password: $scope.password,
+            Password: $scope.password2,
             UserID: userID
 
 
@@ -346,7 +359,11 @@
                     text: response.message,
                     icon: 'success',
                     confirmButtonText: 'OK',
-                });
+                }).then(() => {
+
+                    window.location.href = "Home/signin"
+
+                })
             } else {
                 swal.fire({
                     title: 'Error!',
@@ -509,6 +526,9 @@
         }
     };
 
+
+
+    //
     $scope.ChangePasswordEmail = function () {
         var params = $location.search(); // gets all query parameters as an object
         $scope.userID = params.userID; //Get 'userID' directly from the URL query string
@@ -559,6 +579,7 @@
 
 
 
+    $scope.UserID = sessionStorage.getItem("UserID") || "No UserID found";
 
 
 
@@ -584,13 +605,13 @@
                 }).then(() => {
                     sessionStorage.setItem("Name", returnedValue.FName);
                     sessionStorage.setItem("FullName", returnedValue.FullName);
-                    //  IPService.setUserID(returnedValue.UserID);
+                    sessionStorage.setItem("UserID", returnedValue.UserID);
                     sessionStorage.setItem("roleID", returnedValue.RoleID);
 
                     if (returnedValue.RoleID == 1) {
                         window.location.href = "/Home/Homepage";
                     } else {
-                        window.location.href = "/Home/DashboardAccount";
+                        window.location.href = "/Home/DashAdmin";
                     }
                 });
 

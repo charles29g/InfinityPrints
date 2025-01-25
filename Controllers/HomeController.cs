@@ -180,6 +180,25 @@ namespace InfinityPrints.Controllers
         }
 
 
+        public JsonResult EncryptID(int userID)
+        {
+            var salt = "InfinityPrints";
+
+            // Encrypt UserID with MD5 and salt
+            var EncID = userID.GetMD5WithSalt(salt);
+
+            // Create an anonymous object with the encrypted UserID
+            var userInfo = new { EncID = EncID };
+
+            // Return the JSON result with the user info
+            return Json(userInfo, JsonRequestBehavior.AllowGet); // Return the encrypted UserID
+        }
+
+
+
+
+
+
 
 
         public JsonResult LoadUsers()
@@ -622,20 +641,28 @@ namespace InfinityPrints.Controllers
             {
                 try
                 {
-
                     Console.WriteLine("Login Attempt: Email = " + loginData.Email + ", Password = " + loginData.Password);
                     var salt = "InfinityPrints";
                     var passhashed = loginData.Password.GetMD5WithSalt(salt);
+
+                    // Check user credentials
                     var login = db.tbl_users
                         .Where(r => r.Email.Equals(loginData.Email) && r.Password.Equals(passhashed))
                         .FirstOrDefault();
 
                     if (login == null)
                     {
-                        return Json(new { success = false, message = "Email or password home does not match", status = 0 }, JsonRequestBehavior.AllowGet);
+                        // Invalid email or password
+                        return Json(new { success = false, message = "Email or password does not match", status = 0 }, JsonRequestBehavior.AllowGet);
+                    }
+                    else if (login.IsActive?.ToLower() != "true")
+                    {
+                        // Account is inactive
+                        return Json(new { success = false, message = "Account is inactive. Please contact support.", status = 0 }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
+                        // Successful login
                         return Json(new
                         {
                             success = true,
@@ -645,21 +672,16 @@ namespace InfinityPrints.Controllers
                             FName = login.FName,
                             RoleID = login.RoleID,
                             FullName = login.FName + " " + login.LName,
-
                         }, JsonRequestBehavior.AllowGet);
-
-
-
                     }
                 }
                 catch (Exception ex)
                 {
+                    // Handle exceptions
                     return Json(new { success = false, message = ex.Message, status = -1 }, JsonRequestBehavior.AllowGet);
                 }
             }
         }
-
-
 
 
 

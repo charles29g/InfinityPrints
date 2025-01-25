@@ -33,7 +33,7 @@
         margin-left: 300px; /* Sidebar width */
         padding: 30px;
         width: calc(60% - 300px); /* Adjust content width dynamically */
-        overflow-y: auto;
+        overflow-y: hidden;
         height: 100vh;
         transition: margin-left 0.3s ease, width 0.3s ease;
     }
@@ -269,7 +269,7 @@
     <div class="content" ng-init="loadUsers()">
         <h2>Account</h2>
         <hr>
-        <div ng-repeat="pDATA in UsersData | filter:{UserID: 44} ">
+        <div ng-repeat="pDATA in UsersData | filter:{UserID: UserID} ">
 
             <form id="profileForm">
                 <div>
@@ -291,14 +291,15 @@
                     <input type="text" class="form-control" ng-model="pDATA.UName" />
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Email" readonly />
+                    <label for="username" class="form-label">Email</label>
+                    <input type="text" class="form-control" ng-model="pDATA.Email" disabled />
                 </div>
+
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <div class="password-container">
-                        <input type="password" class="form-control" id="password" placeholder="Password" readonly />
-                        <button type="button" class="btn btn-primary change-btn" ng-click="sendEmailChangePass(pDATA.UserID,pDATA.Email)">Change</button>
+                        <input type="text" class="form-control" placeholder="******" disabled />
+                        <button type="button" class="btn btn-primary change-btn" ng-click="EncryptIDAndSend(pDATA.UserID, pDATA.Email)">Change</button>
                     </div>
                 </div>
 

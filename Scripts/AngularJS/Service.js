@@ -50,6 +50,11 @@ app.service("IPService", function ($http) {
 
         return SendEmail;
     };
+    this.EncryptID = function (UserID) {
+        // Send a POST request with the UserID to the backend
+        return $http.post('/Home/EncryptID', { userID: UserID });
+    };
+
     this.SendEmail = function (emailData) {
         console.log(emailData);
 
