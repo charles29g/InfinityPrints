@@ -267,6 +267,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\datatables.css" />
     <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\images\infinityprintsimg.png" />
     <Content Include="Content\materialize.css" />
     <Content Include="Content\materialize.min.css" />
     <Content Include="favicon.ico" />
@@ -1121,6 +1122,7 @@
     <Content Include="Views\Home\Homepage.cshtml" />
     <Content Include="Views\Shared\_HomepageLayout.cshtml" />
     <Content Include="Views\Home\DashAdmin.cshtml" />
+    <Content Include="Views\Home\Servicepage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
