@@ -217,29 +217,35 @@ app.service("IPService", function ($http, $q, Upload) {
 
 
 
-
-
     this.uploadFile = function (file) {
         var deferred = $q.defer();
 
         var formData = new FormData();
         formData.append('file', file);
         console.log("File being sent:", file.name);
-        $http.post('/Home/Upload', formData, {
+
+        $http.post('Home/Upload', formData, {
             headers: {
                 'Content-Type': undefined
             },
             transformRequest: angular.identity
         })
             .then(function (response) {
-                console.log("Upload success:", response);
-                deferred.resolve(response);
+                if (response.data.success) {
+                    console.log("Upload success:", response);
+                    // Resolve the promise with the filename returned from the server
+                    deferred.resolve(response.data.fileName);
+                } else {
+                    console.error("Upload failed:", response);
+                    deferred.reject(response.data.message);
+                }
             })
             .catch(function (error) {
                 console.error("Upload error:", error);
                 deferred.reject(error);
             });
 
+        console.log("upload service return");
         return deferred.promise;
     };
 

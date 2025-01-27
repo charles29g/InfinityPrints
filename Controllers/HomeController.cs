@@ -889,45 +889,96 @@ namespace InfinityPrints.Controllers
 
 
         [HttpPost]
+
         public JsonResult Upload()
         {
-            try
+            System.Diagnostics.Debug.WriteLine("Upload action hit");
+
+            // Map the physical path to a virtual path
+            string uploadPath = Server.MapPath("~/Content/images/Services/");
+
+            // Ensure the directory exists
+            if (!Directory.Exists(uploadPath))
             {
-                System.Diagnostics.Debug.WriteLine("Upload action hit");
+                Directory.CreateDirectory(uploadPath);
+                System.Diagnostics.Debug.WriteLine("Directory created");
+            }
 
-                string uploadPath = Server.MapPath("~/Content/images/Services");
-                if (!Directory.Exists(uploadPath))
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
                 {
-                    Directory.CreateDirectory(uploadPath);
-                    System.Diagnostics.Debug.WriteLine("Directory created");
-                }
+                    string originalFileName = Path.GetFileName(file.FileName);
+                    string fileName = Path.Combine(uploadPath, originalFileName);
 
-                if (Request.Files.Count > 0)
-                {
-                    var file = Request.Files[0];
-
-                    if (file != null && file.ContentLength > 0)
+                    // Check if the file already exists and create a unique filename
+                    int fileCounter = 1;
+                    while (System.IO.File.Exists(fileName))
                     {
-                        string FileName = Path.GetFileName(file.FileName);
-                        string filePath = Path.Combine(uploadPath, FileName);
-
-                        file.SaveAs(filePath);
-
-                        System.Diagnostics.Debug.WriteLine($"File uploaded successfully: {filePath}");
-
-                        return Json(new { success = true, message = "File uploaded successfully", filePath });
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(originalFileName);
+                        string extension = Path.GetExtension(originalFileName);
+                        fileName = Path.Combine(uploadPath, $"{fileNameWithoutExtension}({fileCounter}){extension}");
+                        fileCounter++;
                     }
-                }
 
-                System.Diagnostics.Debug.WriteLine("No file received");
-                return Json(new { success = false, message = "No file received" });
+                    // Save the file
+                    file.SaveAs(fileName);
+
+                    System.Diagnostics.Debug.WriteLine($"File uploaded successfully: {fileName}");
+
+                    // Return the file name as part of the response
+                    return Json(new { success = true, message = "File uploaded successfully", fileName = Path.GetFileName(fileName) });
+                }
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Upload error: {ex.Message}");
-                return Json(new { success = false, message = ex.Message });
-            }
+
+            return Json(new { success = false, message = "No file received" });
         }
+
+
+
+
+
+
+
+        [HttpPost]
+
+
+
+        //public JsonResult Upload()
+        //{
+        //    System.Diagnostics.Debug.WriteLine("Upload action hit");
+
+        //    string uploadPath = Server.MapPath("~/Content/images/Services/");
+
+        //    if (!Directory.Exists(uploadPath))
+        //    {
+        //        Directory.CreateDirectory(uploadPath);
+        //        System.Diagnostics.Debug.WriteLine("Directory created");
+        //    }
+
+        //    if (Request.Files.Count > 0)
+        //    {
+        //        var file = Request.Files[0];
+
+        //        if (file != null && file.ContentLength > 0)
+        //        {
+        //            string fileName = Path.Combine(uploadPath, Path.GetFileName(file.FileName));
+
+        //            file.SaveAs(fileName);
+
+        //            System.Diagnostics.Debug.WriteLine($"File uploaded successfully: {fileName}");
+
+        //            return Json(new { success = true, message = "File uploaded successfully" });
+        //        }
+        //    }
+
+        //    return Json(new { success = false, message = "No file received" });
+        //}
+
+
+
 
 
         public JsonResult InsertServices(tbl_servicesModel ServiceDataAdd
