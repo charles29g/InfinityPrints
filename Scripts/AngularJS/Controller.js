@@ -597,7 +597,21 @@
 
     $scope.UserID = sessionStorage.getItem("UserID") || "No UserID found";
 
+    $scope.imageSrc = null;
 
+    $scope.previewImage = function (input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                $scope.$apply(function () {
+                    $scope.imageSrc = e.target.result;
+                });
+            };
+
+            reader.readAsDataURL(input.files[0]); // Read only the first file
+        }
+    };
 
     $scope.loginfunc = function () {
         var loginData = {
@@ -624,10 +638,12 @@
                     sessionStorage.setItem("UserID", returnedValue.UserID);
                     sessionStorage.setItem("roleID", returnedValue.RoleID);
 
-                    if (returnedValue.RoleID = "Customer") {
+                    if (returnedValue.RoleID === "Customer") {
                         window.location.href = "/Home/Homepage";
+                        console.log("Customer")
                     } else {
                         window.location.href = "/Home/DashAdmin";
+                        console.log("Employee")
                     }
                 });
 
