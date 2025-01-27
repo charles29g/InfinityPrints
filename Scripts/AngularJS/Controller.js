@@ -1,4 +1,4 @@
-﻿app.controller("IPController", function ($scope, $location, IPService) {
+﻿app.controller("IPController", function ($scope, $location, IPService, $window, $element, $interval) {
 
     $scope.emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -595,6 +595,10 @@
 
 
 
+
+
+
+
     $scope.UserID = sessionStorage.getItem("UserID") || "No UserID found";
 
     $scope.imageSrc = null;
@@ -910,6 +914,123 @@
             }
         });
     };
+
+
+
+
+
+
+
+
+
+
+
+
+    $scope.AddServices = function () {
+
+        var ServiceDataAdd = {
+            ServiceName: $scope.ServiceName,
+            Material: $scope.ServiceMat,
+            Description: $scope.ServiceDesc,
+            ImagePath: "default/image/path",
+
+        };
+
+
+
+        $scope.previewImage = function (input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $scope.$apply(function () {
+                        $scope.imageSrc = e.target.result; // Assign the image source
+                    });
+                };
+                reader.readAsDataURL(input.files[0]); // Read the file
+            }
+        };
+
+        function UploadFile(file) {
+            return new Promise(function (resolve, reject) {
+                if (file) {
+                    console.log("File selected for upload:", file.name);
+                    console.log("File size:", file.size);
+                    console.log("File type:", file.type);
+                    ServiceDataAdd.ImagePath = "/Content/images/Services/" + file.name;
+                    IPService.uploadFile(file).then(function (response) {
+                        console.log("Upload success:", response);
+                        resolve(response);
+                    }).catch(function (error) {
+                        console.error("Upload failed:", error);
+                        reject(error);
+                    });
+                } else {
+                    reject("No file selected");
+                }
+            });
+        }
+
+        console.log("Tour Data to be added:", ServiceDataAdd);
+
+        if ($scope.file) {
+            UploadFile($scope.file).then(function (uploadResponse) {
+
+                var postData = IPService.InsertServices(ServiceDataAdd);
+
+                postData.then(function (ReturnedData) {
+                    var response = ReturnedData.data;
+                    console.log(response);
+                    swal.fire({
+                        title: 'Success!',
+                        text: 'Tour added successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        timer: 2000,
+                    });
+                }).catch(function (error) {
+                    console.error("Failed to add tour:", error);
+                    swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong while adding the tour.',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                });
+            }).catch(function (error) {
+                console.error("File upload failed:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to upload the file.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        } else {
+            var postData = IPService.InsertServices(ServiceDataAdd);
+
+            postData.then(function (ReturnedData) {
+                var response = ReturnedData.data;
+                console.log(response);
+                swal.fire({
+                    title: 'Success!',
+                    text: 'Tour added successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000,
+                });
+            }).catch(function (error) {
+                console.error("Failed to add tour:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong while adding the tour.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        }
+    };
+
+
 
 
 

@@ -292,86 +292,23 @@
         <h3 id="servicesTxt"><strong>Services Offered</strong></h3>
     </div>
 
-    <div class="row" id="services-section">
-        <div class="col s12 m4">
+    <div class="row" id="services-section" ng-init="loadServices()">
+        <div class="col s12 m4" ng-repeat="DATA in ServicesData">
             <div class="card">
                 <div class="card-image">
-                    <img src="~/Content/images/homeimg.png" alt="Service 1">
+                    <img ng-src={{DATA.ImagePath}} alt={{DATA.ServiceName}}>
+
                 </div>
                 <div class="card-content">
-                    <h5 class="service-title">Service 1</h5>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                    <h5 class="service-title">{{DATA.ServiceName}}</h5>
+                    <label>Description</label>
+                    <p>{{DATA.Description}}</p>
+                    <label>Material</label>
+                    <p>{{DATA.Material}}</p>
                 </div>
             </div>
         </div>
-        <div class="col s12 m4">
-            <div class="card">
-                <div class="card-image">
-                    <img src="~/Content/images/homeimg.png" alt="Service 2">
-                </div>
-                <div class="card-content">
-                    <h5 class="service-title">Service 2</h5>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m4">
-            <div class="card">
-                <div class="card-image">
-                    <img src="~/Content/images/homeimg.png" alt="Service 3">
-                </div>
-                <div class="card-content">
-                    <h5 class="service-title">Service 3</h5>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" id="services-section">
-        <div class="col s12 m4">
-            <div class="card">
-                <div class="card-image">
-                    <img src="~/Content/images/homeimg.png" alt="Service 1">
-                </div>
-                <div class="card-content">
-                    <h5 class="service-title">Service 1</h5>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m4">
-            <div class="card">
-                <div class="card-image">
-                    <img src="~/Content/images/homeimg.png" alt="Service 2">
-                </div>
-                <div class="card-content">
-                    <h5 class="service-title">Service 2</h5>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m4">
-            <div class="card">
-                <div class="card-image">
-                    <img src="~/Content/images/homeimg.png" alt="Service 3">
-                </div>
-                <div class="card-content">
-                    <h5 class="service-title">Service 3</h5>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m4">
-            <div class="card">
-                <div class="card-image">
-                    <img src="~/Content/images/homeimg.png" alt="Service 3">
-                </div>
-                <div class="card-content">
-                    <h5 class="service-title">Service 3</h5>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
+
     </div>
 
 
@@ -409,21 +346,22 @@
                                     <i class="material-icons upload-icon">file_upload</i>
                                     Upload Service Image
                                 </label>
-                                <input id="file-upload"
-                                       class="input-field"
-                                       type="file"
-                                       ng-model="ServiceImg"
-                                       accept="image/*"
-                                       onchange="angular.element(this).scope().previewImage(this)" />
+                                <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />
+
                             </div>
+                            <div class="col s12 input-icons">
 
-                            <div class="col s12 input-icons" ">
-
-                                <input id="ServiceName" class="input-field " type="text" placeholder="Service Material" required ng-model="ServiceMat" />
+                                <input id="ServiceName" class="input-field " type="text" placeholder="Service Name" required ng-model="ServiceName" />
 
                             </div>
 
-                            <div class="col s12 input-icons" ">
+                            <div class="col s12 input-icons">
+
+                                <input id="ServiceMat" class="input-field " type="text" placeholder="Service Material" required ng-model="ServiceMat" />
+
+                            </div>
+
+                            <div class="col s12 input-icons">
 
                                 <input id="ServiceDesc" class="input-field " type="text" placeholder="Service Description" required ng-model="ServiceDesc" />
 
@@ -436,7 +374,7 @@
                         </div>
                     </form>
                     <div class="button">
-                        <button class="button1">Submit</button>
+                        <button class="button1" ng-click="AddServices()">Submit</button>
                     </div>
                 </div>
             </div>

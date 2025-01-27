@@ -12,8 +12,9 @@ using Org.BouncyCastle.Ocsp;
 
 using System.Security.Cryptography;
 using System.Text;
+using System.IO;
 namespace InfinityPrints.Controllers
-{ 
+{
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -147,8 +148,7 @@ namespace InfinityPrints.Controllers
          services.ServiceName,
          services.Description,
          services.Material,
-         services.Size,
-         services.Price,
+
          services.CreatedAt,
          services.UpdatedAt,
      })
@@ -878,6 +878,115 @@ namespace InfinityPrints.Controllers
                 }
             }
         }
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        public JsonResult Upload()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Upload action hit");
+
+                string uploadPath = Server.MapPath("~/Content/Images/Services");
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                    System.Diagnostics.Debug.WriteLine("Directory created");
+                }
+
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        string FileName = Path.GetFileName(file.FileName);
+                        string filePath = Path.Combine(uploadPath, FileName);
+
+                        file.SaveAs(filePath);
+
+                        System.Diagnostics.Debug.WriteLine($"File uploaded successfully: {filePath}");
+
+                        return Json(new { success = true, message = "File uploaded successfully", filePath });
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine("No file received");
+                return Json(new { success = false, message = "No file received" });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Upload error: {ex.Message}");
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        public JsonResult InsertServices(tbl_servicesModel ServiceDataAdd
+)
+        {
+            System.Diagnostics.Debug.WriteLine(ServiceDataAdd
+ + "Home");
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+
+
+                    var dbnew = new tbl_servicesModel()
+                    {
+
+                        ServiceName = ServiceDataAdd.ServiceName,
+
+                        Description = ServiceDataAdd.Description,
+
+                        Material = ServiceDataAdd.Material,
+
+                        ImagePath = ServiceDataAdd.ImagePath,
+
+
+                        CreatedAt = DateTime.Now,
+
+
+
+
+
+                    };
+
+                    db.tbl_services.Add(dbnew);
+                    db.SaveChanges();
+                    //LogAction("Added new tour package", UserID);
+
+                    return Json(new { success = true, message = "Services Added successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

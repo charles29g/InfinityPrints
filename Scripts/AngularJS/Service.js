@@ -1,4 +1,4 @@
-app.service("IPService", function ($http) {
+app.service("IPService", function ($http, $q, Upload) {
 
     console.log("Service")
 
@@ -36,7 +36,21 @@ app.service("IPService", function ($http) {
         return $http.get("/Home/LoadChart");
     }
 
+    this.InsertServices = function (ServiceDataAdd) {
 
+        console.log(ServiceDataAdd + "Service")
+        var Insert = $http({
+            method: "post",
+            url: "Home/InsertServices",
+            data: {
+                ServiceDataAdd
+            }
+
+
+        });
+
+        return Insert;
+    };
     this.SendEmailCP = function (emailData) {
         console.log(emailData);
 
@@ -195,5 +209,44 @@ app.service("IPService", function ($http) {
         return Delete;
 
     };
+
+
+
+
+
+
+
+
+
+
+    this.uploadFile = function (file) {
+        var deferred = $q.defer();
+
+        var formData = new FormData();
+        formData.append('file', file);
+        console.log("File being sent:", file.name);
+        $http.post('/Home/Upload', formData, {
+            headers: {
+                'Content-Type': undefined
+            },
+            transformRequest: angular.identity
+        })
+            .then(function (response) {
+                console.log("Upload success:", response);
+                deferred.resolve(response);
+            })
+            .catch(function (error) {
+                console.error("Upload error:", error);
+                deferred.reject(error);
+            });
+
+        return deferred.promise;
+    };
+
+
+
+
+
+
 
 })
