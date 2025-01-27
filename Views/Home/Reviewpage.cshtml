@@ -1,0 +1,248 @@
+﻿<style>
+    nav {
+        background-color: white;
+        box-shadow: none;
+        outline: none;
+        border-bottom: 2px solid #6f0d4a;
+    }
+
+    .nav-content {
+        width: 100%;
+        overflow: hidden;
+    }
+
+        .nav-content .tabs {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+            padding-left: 0px;
+            margin-right: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+        }
+
+            .nav-content .tabs .tab {
+                flex-shrink: 0;
+                text-align: center;
+            }
+
+                .nav-content .tabs .tab a {
+                    display: block;
+                    padding: 10px 0;
+                    font-size: 17px;
+                    color: #6f0d4a !important;
+                }
+
+                    .nav-content .tabs .tab a:hover,
+                    .nav-content .tabs .tab a:focus {
+                        transform: scale(1.1);
+                        transition: transform 0.1s ease;
+                        /*                            border-bottom: solid; */
+                        font-weight: bold;
+                    }
+
+                    .nav-content .tabs .tab a.active {
+                        font-weight: bold;
+                        transform: scale(1.1);
+                    }
+
+                    .nav-content .tabs .tab a:hover {
+                        transform: scale(1.1);
+                    }
+
+    .tab.disabled a {
+        pointer-events: none;
+        color: gray;
+        cursor: default;
+        text-decoration: none;
+    }
+
+    @@media (max-width: 768px) {
+        .nav-content .tabs {
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
+            justify-content: flex-start;
+        }
+
+            .nav-content .tabs .tab {
+                flex-grow: 0;
+                min-width: 120px;
+            }
+    }
+
+
+    #servicesTxt, #feedbacksTxt {
+        margin-top: 50px;
+    }
+
+    #services-section, #feedbacks-section {
+        margin-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .card {
+        border-radius: 15px; /* Smooth corners */
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+        background: #fff; /* Clean white background */
+        border: 1px solid #e0e0e0; /* Subtle border */
+    }
+
+        .card:hover {
+            transform: scale(1.03); /* Slight scaling effect */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Subtle emphasis on hover */
+        }
+
+    .card-image img, .card-feedback-image img {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio for responsiveness */
+        display: block;
+        object-fit: cover; /* Ensure the image covers the container */
+        aspect-ratio: 16 / 9; /* Balanced aspect ratio */
+    }
+
+    .card-content {
+        padding: 20px; /* Comfortable spacing */
+        color: #333; /* Neutral text color */
+        font-family: 'Arial', sans-serif; /* Clean, modern font */
+        line-height: 1.6; /* Improved readability */
+    }
+
+    .card-title {
+        font-size: 1.5rem; /* Slightly larger for prominence */
+        font-weight: 600; /* Bold for titles */
+        margin-bottom: 10px;
+        color: #2c3e50; /* Professional blue-gray tone */
+    }
+
+    .card-description {
+        font-size: 1rem; /* Standard text size */
+        color: #7f8c8d; /* Softer text color for secondary content */
+    }
+
+    .card-actions {
+        margin-top: 15px;
+        display: flex;
+        justify-content: flex-end; /* Align actions to the right */
+        gap: 10px; /* Spacing between buttons/links */
+    }
+
+        .card-actions button, .card-actions a {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background: #3498db; /* Vibrant primary color */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+            .card-actions button:hover, .card-actions a:hover {
+                background: #2980b9; /* Slightly darker hover effect */
+            }
+
+
+    .service-title, .rating-title {
+        font-weight: bold;
+        color: #800000;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+
+
+
+    .service-rating {
+        font-weight: bold;
+        color: #800000;
+        text-align: left;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    #custfeedbacks {
+        text-align: center;
+    }
+
+</style>
+<body>
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <div class="row">
+                <div class="col s6">
+                    <a class="left" id="infinity">Infinity</a>
+                    <a class="left" id="prints">Prints</a>
+                </div>
+                <div class="col s6" style="text-align: right;">
+                    <a id="signIn">Name</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs">
+                <li class="tab "><a ng-click="Homepage()">Home</a></li>
+                <li class="tab "><a ng-click="Servicepage()" class="active">Services</a></li>
+                <li class="tab "><a ng-click="Reviewpage()">Reviews</a></li>
+                <li class="tab "><a href="#test4">Order</a></li>
+                <li class="tab "><a href="#test5">FAQs</a></li>
+                <li class="tab "><a href="#test6">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row center">
+        <h3 id="feedbacksTxt"><strong>Feedbacks</strong></h3>
+    </div>
+
+    <div class="row" id="feedbacks-section">
+        <div class="col s12 m4">
+            <div>
+                <h5 class="rating-title center">Review 1</h5>
+            </div>
+            <div class="card">
+                <div class="card-feedback-image">
+                    <img src="~/Content/images/infinityprintsimg.png" alt="Service 1">
+                </div>
+                <div class="card-feedback">
+                    <h5 class="service-rating"> Rating: </h5>
+                    <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div>
+                <h5 class="rating-title center">Review 2</h5>
+            </div>
+            <div class="card">
+                <div class="card-feedback-image">
+                    <img src="~/Content/images/infinityprintsimg.png" alt="Service 2">
+                </div>
+                <div class="card-feedback">
+                    <h5 class="service-rating"> Rating: </h5>
+                    <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div>
+                <h5 class="rating-title center">Review 3</h5>
+            </div>
+            <div class="card">
+                <div class="card-feedback-image">
+                    <img src="~/Content/images/infinityprintsimg.png" alt="Service 3">
+                </div>
+                <div class="card-feedback">
+                    <h5 class="service-rating"> Rating: </h5>
+                    <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

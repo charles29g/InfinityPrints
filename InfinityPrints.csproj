@@ -1124,6 +1124,7 @@
     <Content Include="Views\Home\DashAdmin.cshtml" />
     <Content Include="Views\Home\DashUsersUpdate.cshtml" />
     <Content Include="Views\Home\Servicepage.cshtml" />
+    <Content Include="Views\Home\Reviewpage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
