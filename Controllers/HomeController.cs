@@ -45,6 +45,11 @@ namespace InfinityPrints.Controllers
 
             return View();
         }
+        public ActionResult DashUsersUpdate()
+        {
+
+            return View();
+        }
 
         public ActionResult DashService()
         {
@@ -720,6 +725,34 @@ namespace InfinityPrints.Controllers
         }
 
 
+        public JsonResult UpdateUser(tbl_usersModel UserDataUpdate)
+        {
+            System.Diagnostics.Debug.WriteLine(UserDataUpdate + "Home");
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var existingUserInfo = db.tbl_users.FirstOrDefault(t => t.UserID == UserDataUpdate.UserID);
+
+                    if (existingUserInfo == null)
+                    {
+                        return Json(new { success = false, message = "Tour not found" }, JsonRequestBehavior.AllowGet);
+                    }
+
+                    existingUserInfo.RoleID = UserDataUpdate.RoleID;
+                    existingUserInfo.UpdatedAt = DateTime.Now;
+
+                    db.SaveChanges();
+                    // LogAction("Updated their own information", UserID);
+
+                    return Json(new { success = true, message = "Successfully Promoted" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
 
 
@@ -812,6 +845,34 @@ namespace InfinityPrints.Controllers
         }
 
 
+
+
+        public JsonResult DeleteUser(tbl_usersModel dataToDelete)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_users.FirstOrDefault(x => x.UserID == dataToDelete.UserID);
+                    if (recordToDelete != null)
+                    {
+                        db.tbl_users.Remove(recordToDelete);
+                        db.SaveChanges();
+                        //LogAction("Deleted a user account", UserID);
+
+                        return Json(new { success = true, message = "User deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "User not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
 
 

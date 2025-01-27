@@ -156,6 +156,25 @@ app.service("IPService", function ($http) {
 
 
 
+
+    this.UpdateUser = function (userDataUpdate) {
+
+        console.log(userDataUpdate + "Service")
+        var Insert = $http({
+            method: "post",
+            url: "Home/UpdateUser",
+            data: {
+                userDataUpdate
+            }
+
+
+        });
+
+        return Insert;
+    };
+
+
+
     this.ValidatePassword = function (passwordData) {
         return $http({
             method: "POST",
@@ -164,6 +183,17 @@ app.service("IPService", function ($http) {
         });
     };
 
+    this.DeleteUser = function (dataToDelete) {
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteUser",
+            data: {
+                dataToDelete
+            }
+        });
 
+        return Delete;
+
+    };
 
 })

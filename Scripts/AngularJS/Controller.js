@@ -264,9 +264,10 @@
             console.log("Email sent successfully:", response.data);
 
             var Email = response.data.Email;
+
             var userID = response.data.HashedUserID;
 
-            $scope.sendEmailChangePass(userID, Email, Enc);
+            $scope.sendEmailChangePass(userID, Email);
 
 
             swal.fire({
@@ -453,6 +454,10 @@
     $scope.Users = function () {
         window.location.href = "Home/DashUsers";
     };
+    $scope.UsersUpdate = function () {
+        window.location.href = "Home/DashUsersUpdate";
+    };
+
 
     $scope.Payment = function () {
         window.location.href = "Home/DashPayment";
@@ -475,6 +480,9 @@
     };
     $scope.Homepage = function () {
         window.location.href = "Home/DashAdmin";
+    };
+    $scope.ForgotPassword = function () {
+        window.location.href = "Home/ForgotPasswordEmail";
     };
 
 
@@ -608,7 +616,7 @@
                     sessionStorage.setItem("UserID", returnedValue.UserID);
                     sessionStorage.setItem("roleID", returnedValue.RoleID);
 
-                    if (returnedValue.RoleID == 1) {
+                    if (returnedValue.RoleID = "Customer") {
                         window.location.href = "/Home/Homepage";
                     } else {
                         window.location.href = "/Home/DashAdmin";
@@ -767,6 +775,52 @@
         });
     };
 
+
+    $scope.updateUser = function (pDATA) {
+        var USData = {
+            RoleID: pDATA.RoleID,
+            UserID: pDATA.UserID
+        };
+
+        // Call the service to update the user
+        var GetData = IPService.UpdateUser(USData);
+
+        GetData.then(
+            function (response) {
+                if (response.data.success) {
+                    // Show success alert using SweetAlert
+                    Swal.fire({
+                        title: "Success!",
+                        text: "User successfully updated.",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                        timer: 2000, // Auto-close after 2 seconds
+                        showConfirmButton: false
+                    });
+                } else {
+                    // Handle failure response
+                    Swal.fire({
+                        title: "Error!",
+                        text: response.data.message || "Failed to update user.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            },
+            function (error) {
+                // Handle error from the server
+                Swal.fire({
+                    title: "Error!",
+                    text: "An error occurred while updating the user.",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            }
+        );
+    };
+
+
+
     $scope.loadChart = function () {
         var getData = IPService.loadChartService();
         console.log("Controller");
@@ -790,6 +844,48 @@
     //};
 
 
+    $scope.DeleteUser = function (pDATA) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(pDATA);
+                var postData = IPService.DeleteUser(pDATA);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "User has been deleted successfully.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error deleting user: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error deleting user: ", error);
+                    Swal.fire("Error!", "An error occurred while deleting.", "error");
+                });
+            }
+        });
+    };
 
 
 

@@ -14,7 +14,7 @@ namespace InfinityPrints.Models
         public string UName { get; set; }
         public long PhoneNum { get; set; }
         public string Password { get; set; }
-        public int RoleID { get; set; }
+        public string RoleID { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string IsActive { get; set; }
