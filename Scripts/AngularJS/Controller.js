@@ -478,12 +478,20 @@
     $scope.Receipts = function () {
         window.location.href = "Home/DashReceipts";
     };
+
+    $scope.DashAdmin = function () {
+        window.location.href = "Home/DashAdmin"
+    };
     $scope.Homepage = function () {
-        window.location.href = "Home/DashAdmin";
+        window.location.href = "Home/Homepage";
+    };
+    $scope.Servicepage = function () {
+        window.location.href = "Home/Servicepage";
     };
     $scope.ForgotPassword = function () {
         window.location.href = "Home/ForgotPasswordEmail";
     };
+
 
 
     $scope.confirmEmailFromURL = function () {
