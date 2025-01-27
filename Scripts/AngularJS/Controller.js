@@ -473,9 +473,17 @@
     $scope.Receipts = function () {
         window.location.href = "Home/DashReceipts";
     };
-    $scope.Homepage = function () {
-        window.location.href = "Home/DashAdmin";
+
+    $scope.DashAdmin = function () {
+        window.location.href = "Home/DashAdmin"
     };
+    $scope.Homepage = function () {
+        window.location.href = "Home/Homepage";
+    };
+    $scope.Servicepage = function () {
+        window.location.href = "Home/Servicepage";
+    };
+
 
 
     $scope.confirmEmailFromURL = function () {
@@ -609,7 +617,7 @@
                     sessionStorage.setItem("roleID", returnedValue.RoleID);
 
                     if (returnedValue.RoleID == 1) {
-                        window.location.href = "/Home/Homepage";
+                        window.location.href = "~/Home/Homepage";
                     } else {
                         window.location.href = "/Home/DashAdmin";
                     }
