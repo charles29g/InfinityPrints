@@ -13,7 +13,7 @@ using Org.BouncyCastle.Ocsp;
 using System.Security.Cryptography;
 using System.Text;
 namespace InfinityPrints.Controllers
-{
+{ 
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -119,6 +119,11 @@ namespace InfinityPrints.Controllers
         }
 
         public ActionResult Homepage()
+        {
+
+            return View();
+        }
+        public ActionResult Servicepage()
         {
 
             return View();

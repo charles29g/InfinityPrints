@@ -1,0 +1,161 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomepageLayout.cshtml";
+}
+
+
+<style>
+    nav {
+        background-color: white;
+        box-shadow: none;
+        outline: none;
+        border-bottom: 2px solid #6f0d4a;
+    }
+
+    .nav-content {
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: 1vh
+    }
+
+        .nav-content .tabs {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+            padding-left: 0px;
+            margin: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+        }
+
+            .nav-content .tabs .tab {
+                flex-shrink: 0;
+                text-align: center;
+            }
+
+                .nav-content .tabs .tab a {
+                    display: block;
+                    padding: 10px 0;
+                    font-size: 17px;
+                    color: #6f0d4a !important;
+                }
+
+                    .nav-content .tabs .tab a:hover,
+                    .nav-content .tabs .tab a:focus {
+                        color: #6f0d4a;
+                    }
+
+    @@media (max-width: 768px) {
+        .nav-content .tabs {
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
+            justify-content: flex-start;
+        }
+
+            .nav-content .tabs .tab {
+                flex-grow: 0;
+                min-width: 120px;
+            }
+    }
+</style>
+<body>
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <div class="row">
+                <div class="col s6">
+                    <a class="left" id="infinity">Infinity</a>
+                    <a class="left" id="prints">Prints</a>
+                </div>
+                <div class="col s6" style="text-align: right;">
+                    <a id="signIn">Name</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs">
+                <li class="tab "><a ng-click="Homepage()">Home</a></li>
+                <li class="tab "><a ng-click="Servicepage()" class="active">Services</a></li>
+                <li class="tab "><a href="#test3">Reviews</a></li>
+                <li class="tab "><a href="#test4">Order</a></li>
+                <li class="tab "><a href="#test5">FAQs</a></li>
+                <li class="tab "><a href="#test6">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row center">
+        <h3 id="servicesTxt"><strong>Services Offered</strong></h3>
+    </div>
+
+    <div class="row" id="services-section">
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="~/Content/images/homeimg.png" alt="Service 1">
+                </div>
+                <div class="card-content">
+                    <h5 class="service-title">Service 1</h5>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="~/Content/images/homeimg.png" alt="Service 2">
+                </div>
+                <div class="card-content">
+                    <h5 class="service-title">Service 2</h5>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="~/Content/images/homeimg.png" alt="Service 3">
+                </div>
+                <div class="card-content">
+                    <h5 class="service-title">Service 3</h5>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="services-section">
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="~/Content/images/homeimg.png" alt="Service 1">
+                </div>
+                <div class="card-content">
+                    <h5 class="service-title">Service 1</h5>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="~/Content/images/homeimg.png" alt="Service 2">
+                </div>
+                <div class="card-content">
+                    <h5 class="service-title">Service 2</h5>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="~/Content/images/homeimg.png" alt="Service 3">
+                </div>
+                <div class="card-content">
+                    <h5 class="service-title">Service 3</h5>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
