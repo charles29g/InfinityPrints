@@ -895,7 +895,7 @@ namespace InfinityPrints.Controllers
             {
                 System.Diagnostics.Debug.WriteLine("Upload action hit");
 
-                string uploadPath = Server.MapPath("~/Content/Images/Services");
+                string uploadPath = Server.MapPath("~/Content/images/Services");
                 if (!Directory.Exists(uploadPath))
                 {
                     Directory.CreateDirectory(uploadPath);
