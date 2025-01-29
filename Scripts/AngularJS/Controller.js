@@ -194,8 +194,8 @@
                 //    icon: 'success',
                 //    confirmButtonText: 'OK',
                 //}).then(() => {
-                    // Call SendEmail with the encryptedUserId
-                    $scope.sendEmail(userId, Email);
+                // Call SendEmail with the encryptedUserId
+                $scope.sendEmail(userId, Email);
                 //});
             } else {
                 swal.fire({
@@ -329,7 +329,7 @@
         });
     };
 
-   
+
 
     // logic to change password 
     $scope.ChangePassword = function () {
@@ -648,7 +648,7 @@
 
                     if (returnedValue.RoleID === "Customer") {
                         window.location.href = "/Home/Homepage";
-                        console.log("Customer") 
+                        console.log("Customer")
                     } else {
                         window.location.href = "/Home/DashAdmin";
                         console.log("Employee")
@@ -659,7 +659,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Login Failed',
-                    text: 'The email address or password provided does not match any records. Please check your credentials and try again.',
+                    text: returnedValue.message || 'The email address or password provided does not match any records. Please check your credentials and try again.',
                     confirmButtonText: 'OK'
                 });
             }
