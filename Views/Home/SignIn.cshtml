@@ -93,7 +93,7 @@
                             <!-- First Name -->
                             <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.fName.$touched && signUpForm.fName.$invalid || signUpForm.$submitted && signUpForm.fName.$invalid}">
                                 <i class="material-icons input-icon">person</i>
-                                <input id="fname" class="input-field validate" type="text" placeholder="First Name" required ng-model="firstName" ng-minlength="1" minlength="1" maxlength="50" name="fName" ng-pattern="/^[a-zA-Z0-9]+$/" autocomplete="off" />
+                                <input id="fname" class="input-field validate" type="text" placeholder="First Name" required ng-model="firstName" ng-minlength="1" minlength="1" maxlength="50" name="fName" ng-pattern="/^[a-zA-Z0-9 ]+$/" autocomplete="off" />
                                 <span class="helper-text red-text" ng-show="signUpForm.fName.$error.required && (signUpForm.fName.$touched || signUpForm.$submitted)">First name is required</span>
                                 <span class="helper-text red-text" ng-show="signUpForm.fName.$error.maxlength && (signUpForm.fName.$touched || signUpForm.$submitted)">First name must not exceed to 50 characters.</span>
                             </div>
@@ -101,7 +101,7 @@
                             <!-- Last Name -->
                             <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.lname.$touched && signUpForm.lname.$invalid || signUpForm.$submitted && signUpForm.lname.$invalid}">
                                 <i class="material-icons input-icon">person</i>
-                                <input id="lname" class="input-field validate" type="text" placeholder="Last Name" required ng-model="lastName" ng-minlength="1" minlength="1" maxlength="50" name="lName" ng-pattern="/^[a-zA-Z0-9]+$/" autocomplete="off" />
+                                <input id="lname" class="input-field validate" type="text" placeholder="Last Name" required ng-model="lastName" ng-minlength="1" minlength="1" maxlength="50" name="lName" ng-pattern="/^[a-zA-Z0-9 ]+$/" autocomplete="off" />
                                 <span class="helper-text red-text" ng-show="signUpForm.lName.$error.required && (signUpForm.lName.$touched || signUpForm.$submitted)">Last Name is required.</span>
                                 <span class="helper-text red-text" ng-show="signUpForm.lName.$error.maxlength && (signUpForm.lName.$touched || signUpForm.$submitted)">Last Name cannot exceed 50 characters.</span>
                             </div>
