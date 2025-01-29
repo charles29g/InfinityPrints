@@ -82,9 +82,9 @@
 
         .tab.disabled a {
             pointer-events: none;
-            color: gray;
             cursor: default;
             text-decoration: none;
+            opacity: 0.6; /* Optional: Make it look more disabled */
         }
 
 
@@ -137,7 +137,7 @@
         }
 
         #txtSign {
-            margin-left: 50px;
+            margin-left: 40px;
             margin-right: 50px;
             margin-top: 40px;
             font-weight: bold;
@@ -178,7 +178,7 @@
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
-            z-index: 10;
+            /*            z-index: 10;*/
         }
 
 
@@ -326,7 +326,7 @@
         }
 
         .helper-text {
-            font-size: 0.7rem;
+            font-size: 9.4px;
             position: absolute;
             color: #ff5722;
             /*    visibility: hidden;*/
@@ -555,26 +555,25 @@
             color: #6f0d4a;
         }
 
-        /* General Footer Styles */
+
         footer {
             background-color: #f8f8f8;
             padding: 20px;
             border-top: 1px solid #ddd;
-            overflow: hidden; /* Ensures no content overflows outside the footer */
-            position: relative; /* Establish a containing block for child elements */
+            overflow: hidden;
+            position: relative;
         }
 
 
-        /* Footer Container */
+
         .footer-container {
             display: flex;
-            flex-wrap: wrap; /* Wrap items if they exceed the width */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            gap: 15px; /* Add spacing between elements */
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
         }
 
-        /* Footer Logo */
         .footer-logo {
             display: flex;
             justify-content: center;
@@ -587,27 +586,25 @@
                 height: auto;
             }
 
-        /* Footer Navigation */
+
         .footer-nav {
             margin-top: 15px;
             display: flex;
-            flex-direction: column; /* Stack links vertically */
-            align-items: center; /* Center content */
-            gap: 10px; /* Add spacing between links */
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Footer Divider */
         .footer-divider {
-            display: none; /* Remove divider for mobile */
+            display: none;
         }
 
-        /* Footer Links */
         .footer-links {
             justify-content: center;
             display: flex;
-            flex-wrap: wrap; /* Wrap links on smaller screens */
+            flex-wrap: wrap;
             margin-top: 10px;
-            gap: 10px; /* Add spacing between links */
+            gap: 10px;
         }
 
             .footer-links a {
@@ -616,13 +613,12 @@
                 display: inline-block;
             }
 
-        /* Footer Social Links */
         .footer-social {
             margin-top: 10px;
             text-align: center;
             display: flex;
             justify-content: center;
-            gap: 10px; /* Add spacing between icons */
+            gap: 10px;
         }
 
             .footer-social a img {
@@ -630,50 +626,49 @@
                 height: auto;
             }
 
-        /* Footer Tagline */
         .footer-tagline {
             margin-top: 10px;
             font-size: 14px;
             text-align: center;
         }
 
-        /* Footer Contact */
+
         .footer-contact {
             margin-top: 15px;
             text-align: center;
             font-size: 14px;
-            word-wrap: break-word; /* Prevent text from overflowing */
+            word-wrap: break-word;
             display: flex;
-            flex-direction: column; /* Stack content vertically */
-            align-items: center; /* Center text and content */
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Responsive Styles */
+
         @@media (max-width: 1004px) {
             .footer-container {
                 display: flex;
-                flex-direction: column; /* Stack footer sections vertically */
-                align-items: center; /* Center all content */
-                gap: 15px; /* Add spacing between sections */
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
             }
 
             .footer-logo img {
-                width: 150px; /* Adjust logo size for smaller screens */
+                width: 150px;
                 height: auto;
             }
 
             .footer-nav, .footer-contact {
-                width: 100%; /* Ensure full width on smaller screens */
+                width: 100%;
             }
 
             .footer-links {
-                flex-direction: column; /* Stack links vertically */
-                gap: 10px; /* Add spacing between links */
+                flex-direction: column;
+                gap: 10px;
             }
 
             .footer-social {
-                flex-direction: row; /* Keep icons in a row */
-                gap: 10px; /* Add spacing between icons */
+                flex-direction: row;
+                gap: 10px;
             }
 
             .row .col.s3 {
@@ -699,6 +694,99 @@
             body {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
+            }
+        }
+
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 100%;
+            background: transparent; /* No background */
+            border-radius: 10px;
+        }
+
+        .modal-content {
+            background-color: white; /* Keep content background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add slight shadow */
+            text-align: center;
+            width: 100%;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+
+        /* Card container for Terms & Conditions */
+        .terms-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            max-width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .terms-header {
+            background-color: #6f0d4a;
+            color: white;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+
+            .terms-header h2 {
+                font-size: 35px
+            }
+
+
+        .close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Styling the label */
+        .checkbox-container label {
+            cursor: pointer;
+        }
+
+        .checkbox-container span {
+            color: blue;
+            text-decoration: underline;
+        }
+
+
+        /* Responsive adjustments for modal*/
+        @@media (max-width: 768px) {
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 2;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 300px;
+                height: 70%;
+                background: transparent;
+                border-radius: 10px;
+            }
+
+            terms-header h2 {
+                font-size: 35px;
+                line-height: 110%;
+                margin: 15.373333rem 0 1.424rem 0;
             }
         }
     </style>
@@ -735,6 +823,32 @@
                 this.style.display = 'none'; // Hide the "View more" link
             });
         </script>*@
+    <script>
+        // Get elements
+        var modal = document.getElementById("termsModal");
+        var btn = document.getElementById("terms");
+        var span = document.getElementsByClassName("close")[0];
+
+        // Open modal on clicking "I accept terms & conditions"
+        btn.onclick = function () {
+            modal.style.display = "block";
+        };
+
+        // Close modal when clicking the close button
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        // Close modal when clicking outside the modal
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+
+
+
 
 
 

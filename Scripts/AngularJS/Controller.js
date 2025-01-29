@@ -167,7 +167,7 @@
             UName: $scope.username,
             PhoneNum: $scope.phone,
             Password: $scope.password2,
-            RoleID: 1
+            RoleID: "Customer"
         };
         console.log(RegData + " controller");
 
@@ -188,15 +188,15 @@
 
 
 
-                swal.fire({
-                    title: 'Success!',
-                    text: response.message,
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                }).then(() => {
+                //swal.fire({
+                //    title: 'Success!',
+                //    //text: response.message,
+                //    icon: 'success',
+                //    confirmButtonText: 'OK',
+                //}).then(() => {
                     // Call SendEmail with the encryptedUserId
                     $scope.sendEmail(userId, Email);
-                });
+                //});
             } else {
                 swal.fire({
                     title: 'Error!',
@@ -305,7 +305,7 @@
 
         var emailData = {
             toEmail: email,  // Target email address
-            subject: "Infinity Prints Account Password Change ",      // Subject of the email
+            subject: "Infinity Prints Account Password Change",      // Subject of the email
             body: `<h1>Infinity Prints</h1><p>Please click the <a href="${url}">link</a> to change your account password</p>` // Body of the email (HTML format)
         };
 
@@ -329,7 +329,7 @@
         });
     };
 
-
+   
 
     // logic to change password 
     $scope.ChangePassword = function () {
@@ -482,9 +482,13 @@
     $scope.DashAdmin = function () {
         window.location.href = "Home/DashAdmin"
     };
+    $scope.SignIn = function () {
+        window.location.href = "Home/SignIn";
+    };
     $scope.Homepage = function () {
         window.location.href = "Home/Homepage";
     };
+
     $scope.Servicepage = function () {
         window.location.href = "Home/Servicepage";
     };
@@ -644,7 +648,7 @@
 
                     if (returnedValue.RoleID === "Customer") {
                         window.location.href = "/Home/Homepage";
-                        console.log("Customer")
+                        console.log("Customer") 
                     } else {
                         window.location.href = "/Home/DashAdmin";
                         console.log("Employee")
@@ -693,7 +697,7 @@
 
     //            };
 
-    //            console.log(userDataUpdate + " in controller");
+    //            console.log(userDataUpdate + " in cont    roller");
 
     //            var postData = IPService.UpdateSelf(userDataUpdate)
 

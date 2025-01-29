@@ -17,10 +17,10 @@
         </div>
         <div class="nav-content">
             <ul class="tabs">
-                <li class="tab "><a href="~/Home/Homepage">Home</a></li>
-                <li class="tab "><a href="#test2">Services</a></li>
-                <li class="tab "><a href="#test3">Reviews</a></li>
-                <li class="tab disabled"><a href="#test4">Order</a></li>
+                <li class="tab "><a ng-click="SignIn()">Home</a></li>
+                <li class="tab "><a >Services</a></li>
+                <li class="tab "><a >Reviews</a></li>
+                <li class="tab disabled"><a>Order</a></li>
                 <li class="tab "><a href="#test5">FAQs</a></li>
                 <li class="tab "><a href="#test6">About Us</a></li>
             </ul>
@@ -202,17 +202,60 @@
                                 </span>
                             </div>
 
+                            <!-- Terms & Conditions Checkbox -->
+                            <div class="checkbox-container">
+                                <label>
+                                    <input class="check" type="checkbox" required ng-model="termsAccepted">
+                                    <span id="terms">I accept terms & conditions</span>
+                                </label>
+                                <span class="helper-text red-text" ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">
+                                    You must accept the terms and conditions.
+                                </span>
+                            </div>
+
+                            <!-- Modal -->
+                            <div id="termsModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+
+                                    <!-- Header Section with Background Color -->
+                                    <div class="terms-header">
+                                        <h2>Terms & Conditions</h2>
+                                        <p>By using our service, you agree to abide by the following terms and conditions...</p>
+                                    </div>
+
+                                    <!-- Card for the Terms & Conditions Content -->
+                                    <div class="terms-card">
+                                        <p>
+                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                        </p>
+                                        <p>
+                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                        </p>
+                                        <p>
+                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
 
                             <!-- Terms & Conditions -->
-                            <div class="checkbox-container">
-                                <label>
-                                    <input class="check" type="checkbox" required ng-model="termsAccepted" />
-                                    <span id="terms">I accept terms & conditions</span>
-                                </label>
-                                <span class="helper-text red-text" S ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">You must accept the terms and conditions.</span>
-                            </div>
-
+                            <!--<div class="checkbox-container">
+        <label>
+            <input class="check" type="checkbox" required ng-model="termsAccepted" />
+            <span id="terms">I accept terms & conditions</span>
+        </label>
+        <span class="helper-text red-text" S ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">You must accept the terms and conditions.</span>
+    </div>-->
                             <!-- Submit Button -->
                             <div class="button-container2">
                                 <!-- Submit Button -->
