@@ -160,12 +160,12 @@
                             <!-- Password -->
                             <div class="col s12 input-icons" ng-class="{'invalid': signUpForm.password2.$touched && signUpForm.password2.$invalid || signUpForm.$submitted && signUpForm.password2.$invalid}">
                                 <i class="material-icons input-icon">lock</i>
-                                <input id="pass2" class="input-field validate" type="{{showPassword ? 'text' : 'password'}}" placeholder="Password" required ng-model="password2" name="password2"
+                                <input id="pass2" class="input-field validate" type="{{showPassword2 ? 'text' : 'password'}}" placeholder="Password" required ng-model="password2" name="password2"
                                        ng-minlength="8" minlength="8" maxlength="15" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/" />
 
                                 <!-- Visibility icon -->
-                                <i class="material-icons input-icon input-icon-right2" ng-click="showPassword = !showPassword">
-                                    {{showPassword ? 'visibility_off' : 'visibility'}}
+                                <i class="material-icons input-icon input-icon-right2" ng-click="showPassword2 = !showPassword2">
+                                    {{showPassword2 ? 'visibility_off' : 'visibility'}}
                                 </i>
 
                                 <!-- Error messages -->
