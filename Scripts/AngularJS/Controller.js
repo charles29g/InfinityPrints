@@ -387,6 +387,18 @@
 
 
 
+    $scope.RoleID = sessionStorage.getItem("roleID");
+    $scope.Name = sessionStorage.getItem("UserName") || "Sign In";
+
+
+    $scope.RoleEmp = function () {
+
+
+        return $scope.RoleID === "Employee" || $scope.RoleID === "Owner";
+
+    }
+
+
 
 
 
@@ -644,6 +656,7 @@
                     sessionStorage.setItem("FullName", returnedValue.FullName);
                     sessionStorage.setItem("UserID", returnedValue.UserID);
                     sessionStorage.setItem("roleID", returnedValue.RoleID);
+                    sessionStorage.setItem("UserName", returnedValue.UserName);
 
                     if (returnedValue.RoleID === "Customer") {
                         window.location.href = "/Home/Homepage";

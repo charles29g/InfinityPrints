@@ -687,6 +687,7 @@ namespace InfinityPrints.Controllers
                             FName = login.FName,
                             RoleID = login.RoleID,
                             FullName = login.FName + " " + login.LName,
+                            UserName = login.UName,
                         }, JsonRequestBehavior.AllowGet);
                     }
                 }
