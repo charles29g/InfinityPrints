@@ -184,7 +184,7 @@
                 var Email = $scope.email2;
                 console.log("UserID created: ", userId);
 
-                 Encrypt the userId using AES before passing it
+
 
 
 
@@ -194,7 +194,6 @@
                     icon: 'success',
                     confirmButtonText: 'OK',
                 }).then(() => {
-                     Call SendEmail with the encryptedUserId
                     $scope.sendEmail(userId, Email);
                 });
             } else {

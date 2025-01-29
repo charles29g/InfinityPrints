@@ -18,8 +18,8 @@
         <div class="nav-content">
             <ul class="tabs">
                 <li class="tab "><a ng-click="SignIn()">Home</a></li>
-                <li class="tab "><a >Services</a></li>
-                <li class="tab "><a >Reviews</a></li>
+                <li class="tab "><a>Services</a></li>
+                <li class="tab "><a>Reviews</a></li>
                 <li class="tab disabled"><a>Order</a></li>
                 <li class="tab "><a href="#test5">FAQs</a></li>
                 <li class="tab "><a href="#test6">About Us</a></li>
@@ -205,7 +205,7 @@
                             <!-- Terms & Conditions Checkbox -->
                             <div class="checkbox-container">
                                 <label>
-                                    <input class="check" type="checkbox" required ng-model="termsAccepted">
+                                    <input class="check" type="checkbox" required id="terms" name="terms">
                                     <span id="terms">I accept terms & conditions</span>
                                 </label>
                                 <span class="helper-text red-text" ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">
@@ -226,21 +226,100 @@
 
                                     <!-- Card for the Terms & Conditions Content -->
                                     <div class="terms-card">
+                                        <h4> Infinity Prints: Terms and Conditions</h4>
+                                        <h5> 1. Payment Terms </h5>
+                                        <strong>
+                                            1.1 Individual/Personal Orders
+                                        </strong>
                                         <p>
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                            50% down payment required at the time of order placement.
+                                            Remaining 50% balance due upon order pick-up.
                                         </p>
+                                        <p> No items released without full payment.</p>
+                                        <strong>
+                                            1.2 Corporate Accounts
+                                        </strong>
+                                        <h5>Approved corporate accounts may avail of payment terms:</h5>
+                                        <p> 15-day terms: Payment due within 15 days from invoice issuance.</p>
+                                        <p>30-day terms: Payment due within 30 days from invoice issuance.</p>
+                                        <p> Corporate accounts subject to prior approval and credit verification.</p>
+                                        <p> Late payments may incur additional charges as specified in the agreement.<p>
+
+                                            <strong>
+                                                1.3 Payment Methods
+                                            </strong>
                                         <p>
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                            Payments can be made via cash, credit/debit cards, or other approved methods.
+                                            Specific payment methods may vary based on customer preferences and business availability.
                                         </p>
-                                        <p>
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                        <h5>
+                                            2. Order Management
+                                        </h5>
+                                        <strong>
+                                            2.1 Order Approval
+                                        </strong><p>
+                                            Orders are subject to review and approval by the business.
+                                            The owner or authorized employees may approve, decline, or cancel orders.
                                         </p>
+                                        <strong>
+                                            2.2 Order Updates
+                                        </strong>
+                                        <p>Customers will be updated on the status of their orders throughout the process.</p>
+                                        <strong>
+                                            2.3 Custom Orders
+                                        </strong>
+                                        <p> Orders requiring customization are subject to extended timelines, which will be communicated during order placement.</p>
+                                        <strong>
+                                            2.4 Walk-In Orders
+                                        </strong>
+                                        <p>Employees are authorized to create orders on behalf of walk-in customers and add them to the system for tracking and fulfillment.</p>
+                                        <h5>
+                                            3. Customer Support
+                                        </h5>
+                                        <p>Customers may reach out for support or inquiries through available communication channels.</p>
+                                        <p>Employees and the owner are available to address order-related concerns, including updates on order statuses or other queries.</p>
+                                        <h5>
+                                            4. Refunds and Exchanges
+                                        </h5>
+                                        <p>Refunds or exchanges are only permitted for defective or incorrect items.</p>
+                                        <p> Claims must be reported within 3 days of receiving the item.</p>
+                                        <p>Custom orders are non-refundable and non-exchangeable, except in cases of defects or errors attributable to the business.</p>
+                                        <h5>
+                                            5. Disclaimers
+                                        </h5>
+                                        <p>Infinity Prints is not responsible for delays caused by unforeseen circumstances such as natural disasters, technical issues, or supply chain disruptions.</p>
+                                        <p>Customers are responsible for providing accurate order information. Errors resulting from customer-provided details are not the responsibility of the business.</p>
+                                        <h5>
+                                            6. Changes to Terms and Conditions
+                                        </h5>
+                                        <p>These terms and conditions are subject to change without prior notice.</p>
+                                        <p>Updated terms will be communicated via our website or in-store.</p>
+
+                                        <h4>
+                                            Account Security
+                                        </h4>
+                                        <h5>
+                                            1. Account Creation and Responsibility
+                                        </h5>
+                                        <p>  Customers are responsible for creating and maintaining a secure password for their accounts. </p>
+                                        <p> Infinity Prints recommends using a strong password that includes a combination of uppercase and lowercase letters, numbers, and symbols.</p>
+                                        <p> Customers are solely responsible for all activity that occurs under their account. </p>
+                                        <h5>
+                                            1.2 Confidentiality
+                                        </h5>
+                                        <p> Customers must keep their account information, including passwords and any other sensitive data, confidential and not share it with unauthorized individuals.</p>
+                                        <p> Customers must notify Infinity Prints immediately of any suspected unauthorized use of their account or any security breach.</p>
+                                        <h5>
+                                            1.3 Account Access
+                                        </h5>
+                                        <p>Infinity Prints reserves the right to suspend or terminate a customer's account if it suspects any fraudulent activity or violation of these Terms and Conditions.</p>
+                                        <h5>
+                                            1.4 Data Security
+                                        </h5>
+                                        <p>Infinity Prints takes reasonable measures to protect customer data from unauthorized access, use, disclosure, alteration, or destruction.</p>
+                                        <p> However, Infinity Prints cannot guarantee the complete security of any data transmitted over the internet or stored electronically. This is due to potential risks posed by hackers and other cyber threats that exist in the digital space. While our website has security measures to protect your information, it is important to acknowledge that no system can be entirely immune to such risks.</p>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -250,12 +329,12 @@
 
                             <!-- Terms & Conditions -->
                             <!--<div class="checkbox-container">
-        <label>
-            <input class="check" type="checkbox" required ng-model="termsAccepted" />
-            <span id="terms">I accept terms & conditions</span>
-        </label>
-        <span class="helper-text red-text" S ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">You must accept the terms and conditions.</span>
-    </div>-->
+                                <label>
+                                    <input class="check" type="checkbox" required ng-model="termsAccepted" />
+                                    <span id="terms">I accept terms & conditions</span>
+                                </label>
+                                <span class="helper-text red-text" S ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">You must accept the terms and conditions.</span>
+                            </div>-->
                             <!-- Submit Button -->
                             <div class="button-container2">
                                 <!-- Submit Button -->
