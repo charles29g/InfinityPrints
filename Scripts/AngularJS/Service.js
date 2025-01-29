@@ -154,7 +154,7 @@ app.service("IPService", function ($http, $q, Upload) {
 
     this.UpdateSelf = function (userDataUpdate) {
 
-        console.log(userDataUpdate + "Service")
+        console.log(userDataUpdate.userID + userDataUpdate.Fname + "Service")
         var Insert = $http({
             method: "post",
             url: "Home/UpdateSelf",
@@ -210,6 +210,19 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
+    this.DeleteUserAd = function (dataToDelete) {
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteUserAd",
+            data: {
+                dataToDelete,
+            }
+        });
+
+        return Delete;
+
+    };
+
 
 
 
@@ -251,6 +264,19 @@ app.service("IPService", function ($http, $q, Upload) {
 
 
 
+
+    this.DeleteUser = function (dataToDelete) {
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteUser",
+            data: {
+                dataToDelete, //userID: sessionStorage.getItem("userID")
+            }
+        });
+
+        return Delete;
+
+    };
 
 
 

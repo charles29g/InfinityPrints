@@ -871,7 +871,7 @@ namespace InfinityPrints.Controllers
                         db.SaveChanges();
                         //LogAction("Deleted a user account", UserID);
 
-                        return Json(new { success = true, message = "User deleted successfully" }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, message = "You Have deleted your account" }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -1035,11 +1035,32 @@ namespace InfinityPrints.Controllers
 
 
 
+        public JsonResult DeleteUserAd(tbl_usersModel dataToDelete)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_users.FirstOrDefault(x => x.UserID == dataToDelete.UserID);
+                    if (recordToDelete != null)
+                    {
+                        db.tbl_users.Remove(recordToDelete);
+                        db.SaveChanges();
+                        // LogAction("Deleted a user account", UserID);
 
-
-
-
-
+                        return Json(new { success = true, message = "User deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "User not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
 
 

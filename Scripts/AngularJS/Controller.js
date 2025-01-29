@@ -397,8 +397,29 @@
         return $scope.RoleID === "Employee" || $scope.RoleID === "Owner";
 
     }
+    $scope.RoleEmpCustOnly = function () {
 
 
+        return $scope.RoleID === "Employee" || $scope.RoleID === "Customer";
+
+    }
+    $scope.Customer = function () {
+
+        return $scope.RoleID === "Customer";
+
+    }
+    $scope.Owner = function () {
+
+
+        return $scope.RoleID === "Owner";
+
+    }
+
+
+
+    $scope.IfOwner = function (pDATA) {
+        return pDATA.RoleID !== "Owner";
+    };
 
 
 
@@ -477,7 +498,9 @@
     $scope.Chat = function () {
         window.location.href = "Home/DashChat";
     };
-
+    $scope.Logs = function () {
+        window.location.href = "Home/DashLog";
+    }
     $scope.UserGuide = function () {
         window.location.href = "Home/DashUserGuide";
     };
@@ -762,8 +785,8 @@
             cancelButtonText: "Cancel"
         }).then((result) => {
             if (result.isConfirmed) {
-                const enteredPassword = result.value; // This will get the password entered by the user.
-
+                var enteredPassword = result.value; // This will get the password entered by the user.
+                console.log(enteredPassword)
                 // Check if the password field is empty
                 if (!enteredPassword) {
                     Swal.fire("Error!", "Password is required.", "error");
@@ -772,7 +795,7 @@
 
                 // Call the server to validate the password
                 var passwordValidation = IPService.ValidatePassword({
-                    userID: 44,  // Or the logged-in user's ID
+                    userID: pDATA.UserID,  // Or the logged-in user's ID
                     password: enteredPassword
                 });
 
@@ -782,7 +805,7 @@
                     if (validationData.success) {
                         // Password is correct, proceed with updating user details
                         var userDataUpdate = {
-                            userID: 44,
+                            userID: pDATA.UserID,
                             Fname: pDATA.FName,
                             Lname: pDATA.LName,
                             Email: pDATA.Email,
@@ -790,7 +813,7 @@
                             PhoneNum: pDATA.PhoneNum
                         };
 
-                        console.log(userDataUpdate + " in controller");
+                        console.log(userDataUpdate.userID + userDataUpdate.Fname + " in controller");
 
                         var postData = IPService.UpdateSelf(userDataUpdate);
 
@@ -819,6 +842,26 @@
         });
     };
 
+
+    $scope.logoutfunc = function () {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: 'Do you really want to log out?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Log out',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Clear session storage and redirect to Signin page if confirmed
+                sessionStorage.clear();
+                window.location.href = 'Home/Signin';
+            } else {
+                // If canceled, do nothing and simply close the modal
+                Swal.fire('Cancelled', 'You are still logged in!', 'info');
+            }
+        });
+    };
 
     $scope.updateUser = function (pDATA) {
         var USData = {
@@ -888,48 +931,48 @@
     //};
 
 
-    $scope.DeleteUser = function (pDATA) {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "Cancel"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log(pDATA);
-                var postData = IPService.DeleteUser(pDATA);
+    //$scope.DeleteUser = function (pDATA) {
+    //    Swal.fire({
+    //        title: "Are you sure?",
+    //        text: "You won't be able to revert this!",
+    //        icon: "warning",
+    //        showCancelButton: true,
+    //        confirmButtonColor: "#3085d6",
+    //        cancelButtonColor: "#d33",
+    //        confirmButtonText: "Yes, delete it!",
+    //        cancelButtonText: "Cancel"
+    //    }).then((result) => {
+    //        if (result.isConfirmed) {
+    //            console.log(pDATA);
+    //            var postData = IPService.DeleteUser(pDATA);
 
-                postData.then(function (response) {
-                    var result = response.data;
+    //            postData.then(function (response) {
+    //                var result = response.data;
 
-                    if (result.success) {
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "User has been deleted successfully.",
-                            icon: "success",
-                            confirmButtonText: "OK"
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Error deleting user: " + result.message,
-                            icon: "error",
-                            confirmButtonText: "OK"
-                        });
-                    }
-                }, function (error) {
-                    console.error("Error deleting user: ", error);
-                    Swal.fire("Error!", "An error occurred while deleting.", "error");
-                });
-            }
-        });
-    };
+    //                if (result.success) {
+    //                    Swal.fire({
+    //                        title: "Deleted!",
+    //                        text: "User has been deleted successfully.",
+    //                        icon: "success",
+    //                        confirmButtonText: "OK"
+    //                    }).then(() => {
+    //                        location.reload();
+    //                    });
+    //                } else {
+    //                    Swal.fire({
+    //                        title: "Error!",
+    //                        text: "Error deleting user: " + result.message,
+    //                        icon: "error",
+    //                        confirmButtonText: "OK"
+    //                    });
+    //                }
+    //            }, function (error) {
+    //                console.error("Error deleting user: ", error);
+    //                Swal.fire("Error!", "An error occurred while deleting.", "error");
+    //            });
+    //        }
+    //    });
+    //};
 
 
 
@@ -1147,6 +1190,137 @@
     //        });
     //    }
     //};
+
+
+
+    $scope.DeleteUser = function (dataToDelete) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You are about to delete your account. Please enter your password to continue.",
+            icon: "warning",
+            input: 'password', // Password input field
+            inputLabel: 'Password',
+            inputPlaceholder: 'Enter your password',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var enteredPassword = result.value;
+
+                console.log(enteredPassword)
+
+                // Ensure password is entered
+                if (!enteredPassword) {
+                    Swal.fire("Error!", "Password is required.", "error");
+                    return;
+                }
+
+                // Validate password before proceeding
+                var passwordValidation = IPService.ValidatePassword({
+                    userID: dataToDelete.UserID,
+                    password: enteredPassword
+                });
+
+                passwordValidation.then(function (validationResponse) {
+                    var validationData = validationResponse.data;
+
+                    if (validationData.success) {
+                        // Password is correct, proceed with deletion
+                        console.log(dataToDelete);
+                        var postData = IPService.DeleteUser(dataToDelete);
+
+                        postData.then(function (response) {
+                            var result = response.data;
+
+                            if (result.success) {
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Your account has been deleted successfully.",
+                                    icon: "success",
+                                    confirmButtonText: "OK"
+                                }).then(() => {
+                                    window.location.href = "Home/Signin";
+                                    sessionStorage.clear();
+                                });
+                            } else {
+                                Swal.fire("Error!", "Error deleting user: " + result.message, "error");
+                            }
+                        }, function (error) {
+                            console.error("Error deleting user: ", error);
+                            Swal.fire("Error!", "An error occurred while deleting.", "error");
+                        });
+
+                    } else {
+                        // Incorrect password
+                        Swal.fire("Error!", "Incorrect password. Please try again.", "error");
+                    }
+                }, function (error) {
+                    console.error("Error validating password: ", error);
+                    Swal.fire("Error!", "An error occurred while validating the password.", "error");
+                });
+            }
+        });
+    };
+
+
+
+
+
+
+
+
+
+
+
+    $scope.DeleteUserAd = function (eDATA) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.DeleteUserAd(eDATA);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "User has been deleted successfully.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error deleting user: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error deleting user: ", error);
+                    Swal.fire("Error!", "An error occurred while deleting.", "error");
+                });
+            }
+        });
+    };
+
 
 
 

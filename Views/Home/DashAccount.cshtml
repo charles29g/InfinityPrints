@@ -157,12 +157,20 @@
     <div class="sidebar">
         <h1>Infinity Prints</h1>
         <ul>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="DashAdmin()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-home " style="font-size: 18px;"></i>
                     </span>
                     Homepage
+                </a>
+            </li>
+            <li ng-show="Customer()" style="margin-bottom: 5px;">
+                <a ng-click="Homepage()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                    </span>
+                    Go Back to Homepage
                 </a>
             </li>
             <li style="margin-bottom: 5px;" class="active">
@@ -174,7 +182,7 @@
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Reviews()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-star" style="font-size: 18px;"></i>
@@ -182,7 +190,7 @@
                     Reviews
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Service()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
@@ -190,15 +198,15 @@
                     Services
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Orders()">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="Orders()" x>
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-box-open" style="font-size: 18px;"></i>
                     </span>
                     Orders
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Users()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-users" style="font-size: 18px;"></i>
@@ -206,7 +214,7 @@
                     Users
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Payment()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-credit-card" style="font-size: 18px;"></i>
@@ -214,7 +222,7 @@
                     Payment
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Chat()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-comments" style="font-size: 18px;"></i>
@@ -230,15 +238,15 @@
                     User Guide
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Status()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-spinner active" style="font-size: 18px;"></i>
+                        <i class="fas fa-spinner " style="font-size: 18px;"></i>
                     </span>
                     Status
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Receipts()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-receipt" style="font-size: 18px;"></i>
@@ -246,8 +254,8 @@
                     Receipts
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Receipts()">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="Logs()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-file-alt" " style="font-size: 18px;"></i>
                     </span>
@@ -267,7 +275,7 @@
     </div>
 
     <div class="content" ng-init="loadUsers()">
-        <h2>Account</h2>
+        <h3>Your Account Information</h3>
         <hr>
         <div ng-repeat="pDATA in UsersData | filter:{UserID: UserID} ">
 
@@ -309,7 +317,7 @@
                 </div>
 
                 <div class="button-group">
-                    <button type="button" class="btn btn-red">Delete Account</button>
+                    <button type="button" class="btn btn-red" ng-click="DeleteUser(pDATA)" ng-show="RoleEmpCustOnly()">Delete Account</button>
                     <button type="button" class="btn btn-green" ng-click="updateSelf(pDATA)">Update Details</button>
 
                 </div>
