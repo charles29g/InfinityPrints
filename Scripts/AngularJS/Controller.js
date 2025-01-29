@@ -184,19 +184,19 @@
                 var Email = $scope.email2;
                 console.log("UserID created: ", userId);
 
-                // Encrypt the userId using AES before passing it
+                 Encrypt the userId using AES before passing it
 
 
 
-                //swal.fire({
-                //    title: 'Success!',
-                //    //text: response.message,
-                //    icon: 'success',
-                //    confirmButtonText: 'OK',
-                //}).then(() => {
-                    // Call SendEmail with the encryptedUserId
+                swal.fire({
+                    title: 'Success!',
+                    //text: response.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                }).then(() => {
+                     Call SendEmail with the encryptedUserId
                     $scope.sendEmail(userId, Email);
-                //});
+                });
             } else {
                 swal.fire({
                     title: 'Error!',
