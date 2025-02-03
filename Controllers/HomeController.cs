@@ -135,6 +135,12 @@ namespace InfinityPrints.Controllers
             return View();
         }
 
+        public ActionResult ReviewPageForm()
+        {
+
+            return View();
+        }
+
         public ActionResult DashAdmin()
         {
 
@@ -1032,6 +1038,46 @@ namespace InfinityPrints.Controllers
         }
 
 
+
+        public JsonResult InsertContent(tbl_contentModel ContentDataAdd
+)
+        {
+            System.Diagnostics.Debug.WriteLine(ContentDataAdd
+ + "Home");
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+
+
+                    var dbnew = new tbl_contentModel()
+                    {
+
+                        ContName = ContentDataAdd.ContName,
+
+                        Desc = ContentDataAdd.Desc,
+
+                        IMG_Path = ContentDataAdd.IMG_Path,
+
+                        CreatedAt = DateTime.Now,
+
+
+
+
+
+                    };
+
+                    db.tbl_content.Add(dbnew);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Review Added successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
 
 

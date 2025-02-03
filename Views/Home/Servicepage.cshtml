@@ -253,6 +253,26 @@
                 min-width: 120px;
             }
     }
+
+    .add-service-btn {
+        background-color: white;
+        color: black;
+        font-size: 1.5em;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        outline: auto;
+    }
+
+        .add-service-btn:hover {
+            background-color: #555;
+        }
+
 </style>
 <body>
     <nav class="nav-extended">
@@ -271,10 +291,10 @@
             <ul class="tabs">
                 <li class="tab "><a ng-click="Homepage()">Home</a></li>
                 <li class="tab "><a ng-click="Servicepage()" class="active">Services</a></li>
-                <li class="tab "><a href="#test3">Reviews</a></li>
+                <li class="tab "><a ng-click="Reviewpage()">Reviews</a></li>
                 <li class="tab "><a href="#test4">Order</a></li>
                 <li class="tab "><a href="#test5">FAQs</a></li>
-                <li class="tab "><a href="#test6">About Us</a></li>
+                <li class="tab "><a ng-click="About()">About Us</a></li>
             </ul>
         </div>
     </nav>
@@ -288,6 +308,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Add service button na nasa lower right -->
+    <a href='/Home/ServiceForm' class="add-service-btn">+ Add Service</a>
+
+
     <div class="row center">
         <h3 id="servicesTxt"><strong>Services Offered</strong></h3>
     </div>

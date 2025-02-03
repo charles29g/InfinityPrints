@@ -51,6 +51,23 @@ app.service("IPService", function ($http, $q, Upload) {
 
         return Insert;
     };
+
+    this.InsertContent = function (ContentDataAdd) {
+
+        console.log(ContentDataAdd + "Review")
+        var Insert = $http({
+            method: "post",
+            url: "Home/InsertContent",
+            data: {
+                ContentDataAdd
+            }
+
+
+        });
+
+        return Insert;
+    };
+
     this.SendEmailCP = function (emailData) {
         console.log(emailData);
 

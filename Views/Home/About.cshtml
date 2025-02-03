@@ -1,9 +1,36 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <p>Use this area to provide additional information.</p>
-</main>
+<body>
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <div class="row">
+                <div class="col s6">
+                    <a class="left" id="infinity">Infinity</a>
+                    <a class="left" id="prints">Prints</a>
+                </div>
+                <div class="col s6" style="text-align: right;">
+                    <a id="signIn">{{Name}}</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs">
+                <li class="tab "><a ng-click="Homepage()">Home</a></li>
+                <li class="tab "><a ng-click="Servicepage()" class="active">Services</a></li>
+                <li class="tab "><a ng-click="Reviewpage()">Reviews</a></li>
+                <li class="tab "><a href="#test4">Order</a></li>
+                <li class="tab "><a href="#test5">FAQs</a></li>
+                <li class="tab "><a ng-click="About()">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main aria-labelledby="title">
+        <h2 id="title">@ViewBag.Title.</h2>
+        <h3>@ViewBag.Message</h3>
+
+        <p>Use this area to provide additional information.</p>
+    </main>
+    </body>

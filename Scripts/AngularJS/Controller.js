@@ -526,6 +526,11 @@
     $scope.Servicepage = function () {
         window.location.href = "Home/Servicepage";
     };
+
+    $scope.Reviewpage = function () {
+        window.location.href = "Home/Reviewpage";
+    };
+
     $scope.ForgotPassword = function () {
         window.location.href = "Home/ForgotPasswordEmail";
     };
@@ -1078,6 +1083,102 @@
     };
 
 
+
+    $scope.AddContent = function () {
+
+        var ContentDataAdd = {
+            ContName: $scope.ContName,
+            Desc: $scope.Desc,
+
+            IMG_Path: "default/image/path",
+        };
+
+        function UploadFile(file) {
+            return new Promise(function (resolve, reject) {
+                if (file) {
+                    console.log("File selected for upload:", file.name);
+                    console.log("File size:", file.size);
+                    console.log("File type:", file.type);
+
+                    // Call the service to upload the file and get the filename back
+                    IPService.uploadFile(file).then(function (fileName) {
+                        console.log("Upload success. File name:", fileName);
+
+                        // Update the ServiceDataAdd with the received filename
+                        ContentDataAdd.ImagePath = "/Content/images/Reviews/" + fileName;
+
+                        // Resolve with the updated data
+                        resolve(fileName);
+                    }).catch(function (error) {
+                        console.error("Upload failed:", error);
+                        reject(error);
+                    });
+                } else {
+                    reject("No file selected");
+                }
+            });
+        }
+
+
+        console.log("Tour Data to be added:", ContentDataAdd);
+
+        if ($scope.file) {
+            UploadFile($scope.file).then(function (uploadResponse) {
+
+                var postData = IPService.InsertContent(ContentDataAdd);
+
+                postData.then(function (ReturnedData) {
+                    var response = ReturnedData.data;
+                    console.log(response);
+                    swal.fire({
+                        title: 'Success!',
+                        text: 'Service added successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        timer: 2000,
+                    });
+                }).catch(function (error) {
+                    console.error("Failed to add tour:", error);
+                    swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong while adding the service.',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                });
+            }).catch(function (error) {
+                console.error("File upload failed:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to upload the file.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        } else {
+            var postData = IPService.InsertContent(ContentDataAdd);
+
+            postData.then(function (ReturnedData) {
+                var response = ReturnedData.data;
+                console.log(response);
+                swal.fire({
+                    title: 'Success!',
+                    text: 'Tour added successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000,
+                });
+            }).catch(function (error) {
+                console.error("Failed to add tour:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong while adding the tour.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        }
+    };
 
 
 
