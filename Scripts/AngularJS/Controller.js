@@ -89,10 +89,11 @@
         });
     };
 
+    // Load sizes from the backend
     $scope.loadSizes = function () {
         var getData = IPService.LoadSizes();
         getData.then(function (ReturnedData) {
-            $scope.sizesData = ReturnedData.data;
+            $scope.SizesData = ReturnedData.data;
 
 
 
@@ -105,6 +106,18 @@
             });
         });
     };
+
+    // Filter sizes based on selected service
+    //$scope.updateSizes = function () {
+    //    console.log("Selected Service:", $scope.Service); // Log selected service
+    //    if ($scope.Service) {
+    //        // Filter sizes based on selected service
+    //        $scope.filteredSizes = $scope.SizesData.filter(size => size.ServiceID === parseInt($scope.Service));
+    //        console.log("Filtered Sizes:", $scope.filteredSizes); // Log filtered sizes
+    //    } else {
+    //        $scope.filteredSizes = []; // Clear options if no service is selected
+    //    }
+    //};
 
 
     $scope.loadLogs = function () {
@@ -529,6 +542,10 @@
 
     $scope.Reviewpage = function () {
         window.location.href = "Home/Reviewpage";
+    };
+
+    $scope.OrderPage = function () {
+        window.location.href = "Home/OrderPage";
     };
 
     $scope.ForgotPassword = function () {
@@ -1564,7 +1581,14 @@
     };
 
 
-
+    $scope.updateSizes = function () {
+        if ($scope.Service) {
+            // Filter sizes based on the selected service
+            $scope.filteredSizes = $scope.SizesData.filter(size => size.ServiceID === parseInt($scope.Service));
+        } else {
+            $scope.filteredSizes = []; // Clear options if no service is selected
+        }
+    };
 
 
 
@@ -1658,6 +1682,33 @@
     };
 
 
+    $scope.FileQuantity = 0; // Initial file quantity
+
+    // Function to handle file quantity change
+    $scope.updateFileFields = function () {
+        $scope.fileFields = []; // Clear previous fields
+        for (let i = 0; i < $scope.FileQuantity; i++) {
+            $scope.fileFields.push({}); // Add empty object for each file field
+        }
+    };
+
+    // Function to handle price calculation (you can customize it based on your logic)
+    $scope.calculatePrice = function () {
+        return $scope.FileQuantity * 10; // Example: $10 per file, you can change this logic
+    };
+
+    $scope.updateFileQuantity = function () {
+        $scope.FileQuantity = parseInt($scope.FileQuantity, 10);
+    };
+
+    $scope.getFileQuantityArray = function () {
+        return Array.from({ length: $scope.FileQuantity || 0 }, (_, i) => i);
+    };
+
+    $scope.file = [];
+    $scope.Service = [];
+    $scope.Size = [];
+    $scope.Quantity = [];
 
 
 })

@@ -1124,6 +1124,7 @@
     <Content Include="Views\Home\Reviewpage.cshtml" />
     <Content Include="Views\Home\ReviewPageForm.cshtml" />
     <Content Include="Views\Home\DashTaskAuthorization.cshtml" />
+    <Content Include="Views\Home\OrderPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

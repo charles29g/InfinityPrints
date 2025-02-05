@@ -135,6 +135,12 @@ namespace InfinityPrints.Controllers
             return View();
         }
 
+        public ActionResult OrderPage()
+        {
+
+            return View();
+        }
+
         public ActionResult ReviewPageForm()
         {
 
@@ -329,23 +335,25 @@ namespace InfinityPrints.Controllers
         {
             using (var db = new InfinityPrintsContext())
             {
-
                 var SizesInfo = db.tbl_sizes
-     .Select(size => new
-     {
-         size.SizeID,
-         size.ServiceID,
-         size.SizeName,
-         size.Price,
-         size.CreatedAt,
-         size.UpdatedAt
-     })
-     .ToList();
+                    .Select(size => new
+                    {
+                        size.SizeID,
+                        size.ServiceID,
+                        size.SizeName,
+                        size.Price,
+                        size.CreatedAt,
+                        size.UpdatedAt
+                    })
+                    .ToList();
 
+                // Log the sizes data to confirm it's returning the correct data.
+                System.Diagnostics.Debug.WriteLine("SizesInfo: " + string.Join(", ", SizesInfo.Select(x => x.ServiceID)));
 
                 return Json(SizesInfo, JsonRequestBehavior.AllowGet);
             }
         }
+
 
 
         public JsonResult LoadLogs()
