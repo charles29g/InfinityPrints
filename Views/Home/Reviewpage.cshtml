@@ -464,7 +464,6 @@
                 min-width: 120px;
             }
     }
-
 </style>
 
 <body>
@@ -514,7 +513,7 @@
             <div class="card">
                 <div class="action-buttons">
                     <button class="update-btn" onclick="updateReview()">✎</button>
-                    <button class="delete-btn" onclick="deleteReview()">×</button>
+                    <button class="delete-btn" ng-click="DeleteReviewsEmployee(DATA)">×</button>
                 </div>
                 <div class="card-feedback-image">
                     <img ng-src={{DATA.IMG_Path}} alt={{DATA.ContName}}>
@@ -528,61 +527,6 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="row" id="feedbacks-section">
-        <div class="col s12 m4">
-
-            <div class="card">
-                <div class="action-buttons">
-                    <button class="update-btn" onclick="updateReview()">✎</button>
-                    <button class="delete-btn" onclick="deleteReview()">×</button>
-                </div>
-                <div class="card-feedback-image">
-                    <img src="~/Content/images/infinityprintsimg.png" alt="Service 1">
-                </div>
-                <div class="card-feedback">
-                    <h5 class="service-rating"> Rating: </h5>
-                    <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m4">
-            <div>
-                <h5 class="rating-title center">Review 2</h5>
-            </div>
-            <div class="card">
-                <div class="action-buttons">
-                    <button class="update-btn" onclick="updateReview()">✎</button>
-                    <button class="delete-btn" onclick="deleteReview()">×</button>
-                </div>
-                <div class="card-feedback-image">
-                    <img src="~/Content/images/infinityprintsimg.png" alt="Service 2">
-                </div>
-                <div class="card-feedback">
-                    <h5 class="service-rating"> Rating: </h5>
-                    <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m4">
-            <div>
-                <h5 class="rating-title center">Review 3</h5>
-            </div>
-            <div class="card">
-                <div class="action-buttons">
-                    <button class="update-btn" onclick="updateReview()">✎</button>
-                    <button class="delete-btn" onclick="deleteReview()">×</button>
-                </div>
-                <div class="card-feedback-image">
-                    <img src="~/Content/images/infinityprintsimg.png" alt="Service 3">
-                </div>
-                <div class="card-feedback">
-                    <h5 class="service-rating"> Rating: </h5>
-                    <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                </div>
-            </div>
-        </div>
     </div>
 
 
@@ -619,7 +563,7 @@
                                     <i class="material-icons upload-icon">file_upload</i>
                                     Upload Review Image
                                 </label>
-                                <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />
+                                <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file)" accept="image/*" />
 
 
                             </div>

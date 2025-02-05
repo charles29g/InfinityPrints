@@ -1093,7 +1093,7 @@
             IMG_Path: "default/image/path",
         };
 
-        function UploadFile(file) {
+        function UploadFile2(file) {
             return new Promise(function (resolve, reject) {
                 if (file) {
                     console.log("File selected for upload:", file.name);
@@ -1101,11 +1101,11 @@
                     console.log("File type:", file.type);
 
                     // Call the service to upload the file and get the filename back
-                    IPService.uploadFile(file).then(function (fileName) {
+                    IPService.uploadFile2(file).then(function (fileName) {
                         console.log("Upload success. File name:", fileName);
 
                         // Update the ServiceDataAdd with the received filename
-                        ContentDataAdd.ImagePath = "/Content/images/Reviews/" + fileName;
+                        ContentDataAdd.IMG_Path = "/Content/images/Reviews/" + fileName;
 
                         // Resolve with the updated data
                         resolve(fileName);
@@ -1123,7 +1123,7 @@
         console.log("Tour Data to be added:", ContentDataAdd);
 
         if ($scope.file) {
-            UploadFile($scope.file).then(function (uploadResponse) {
+            UploadFile2($scope.file).then(function (uploadResponse) {
 
                 var postData = IPService.InsertContent(ContentDataAdd);
 
@@ -1424,6 +1424,97 @@
 
 
 
+
+
+
+
+    $scope.DeleteServiceEmployee = function (eDATA) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This request will forwarded to the owner !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, send it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.DeleteServiceEmployee(eDATA);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Service deletion successfully requested.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error requesting deleting service: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error deleting services: ", error);
+                    Swal.fire("Error!", "An error occurred while deleting.", "error");
+                });
+            }
+        });
+    };
+
+
+
+    $scope.DeleteReviewsEmployee = function (eDATA) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This request will forwarded to the owner !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, send it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.DeleteReviewEmployee(eDATA);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Reviews deletion successfully requested.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error requesting deleting service: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error deleting reviews: ", error);
+                    Swal.fire("Error!", "An error occurred while deleting.", "error");
+                });
+            }
+        });
+    };
 
 
 

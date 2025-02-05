@@ -279,7 +279,37 @@ app.service("IPService", function ($http, $q, Upload) {
         return deferred.promise;
     };
 
+    this.uploadFile2 = function (file) {
+        var deferred = $q.defer();
 
+        var formData = new FormData();
+        formData.append('file', file);
+        console.log("File being sent:", file.name);
+
+        $http.post('Home/Upload2', formData, {
+            headers: {
+                'Content-Type': undefined
+            },
+            transformRequest: angular.identity
+        })
+            .then(function (response) {
+                if (response.data.success) {
+                    console.log("Upload success:", response);
+                    // Resolve the promise with the filename returned from the server
+                    deferred.resolve(response.data.fileName);
+                } else {
+                    console.error("Upload failed:", response);
+                    deferred.reject(response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Upload error:", error);
+                deferred.reject(error);
+            });
+
+        console.log("upload service return");
+        return deferred.promise;
+    };
 
 
     this.DeleteUser = function (dataToDelete) {
@@ -295,7 +325,30 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
+    this.DeleteServiceEmployee = function (dataToDelete) {
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteServiceEmployee",
+            data: {
+                dataToDelete, //userID: sessionStorage.getItem("userID")
+            }
+        });
 
+        return Delete;
 
+    };
+
+    this.DeleteReviewEmployee = function (dataToDelete) {
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteReviewEmployee",
+            data: {
+                dataToDelete, //userID: sessionStorage.getItem("userID")
+            }
+        });
+
+        return Delete;
+
+    };
 
 })

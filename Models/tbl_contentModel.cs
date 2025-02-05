@@ -14,6 +14,7 @@ namespace InfinityPrints.Models
         public string IMG_Path { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string Request { get; set; }
 
     }
 }
