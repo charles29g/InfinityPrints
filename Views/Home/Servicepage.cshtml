@@ -273,6 +273,52 @@
             background-color: #555;
         }
 
+    .search-btn {
+        padding-left: 30vh;
+        padding-right: 30vh;
+    }
+
+
+    .action-buttons {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 5px;
+    }
+
+    .update-btn, .delete-btn {
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .update-btn {
+        background-color: blue;
+        color: white;
+    }
+
+    .delete-btn {
+        background-color: red;
+        color: white;
+    }
+
+    .card-image img, .card-feedback-image img {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio for responsiveness */
+        display: block;
+        object-fit: cover; /* Ensure the image covers the container */
+        aspect-ratio: 16 / 9; /* Balanced aspect ratio */
+    }
+
+    #services-section, #feedbacks-section {
+        margin-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 </style>
 <body>
     <nav class="nav-extended">
@@ -316,11 +362,16 @@
     <div class="row center">
         <h3 id="servicesTxt"><strong>Services Offered</strong></h3>
     </div>
+    <div class="search-btn center"><input type="search" ng-model="filter" class="search-btn" placeholder="Search Bar" /></div>
 
-    <div class="row" id="services-section" ng-init="loadServices()">
-        <div class="col s12 m4" ng-repeat="DATA in ServicesData">
+    <div class="row" id="feedbacks-section" ng-init="loadServices()">
+        <div class="col s12 m4" ng-repeat="DATA in ServicesData | filter:{ServiceName: filter}">
             <div class="card">
-                <div class="card-image">
+                <div class="action-buttons">
+                    <button class="update-btn" onclick="DeleteReviewsEmployee()">✎</button>
+                    <button class="delete-btn" ng-click="DeleteServiceEmployee(DATA)">×</button>
+                </div>
+                <div class="card-feedback-image">
                     <img ng-src={{DATA.ImagePath}} alt={{DATA.ServiceName}}>
 
                 </div>

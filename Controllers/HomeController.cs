@@ -892,6 +892,62 @@ namespace InfinityPrints.Controllers
         }
 
 
+        public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_services.FirstOrDefault(x => x.ServiceID == dataToDelete.ServiceID);
+                    if (recordToDelete != null)
+                    {
+
+                        recordToDelete.Request = "True";
+                        db.SaveChanges();
+
+                        //LogAction("Deleted a user account", UserID);
+
+                        return Json(new { success = true, message = "You requested to delete this service" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "service not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+        public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_content.FirstOrDefault(x => x.ContID == dataToDelete.ContID);
+                    if (recordToDelete != null)
+                    {
+
+                        recordToDelete.Request = "True";
+                        db.SaveChanges();
+
+                        //LogAction("Deleted a user account", UserID);
+
+                        return Json(new { success = true, message = "You requested to delete this service" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "service not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
 
 
@@ -950,6 +1006,54 @@ namespace InfinityPrints.Controllers
 
 
 
+
+        [HttpPost]
+
+        public JsonResult Upload2()
+        {
+            System.Diagnostics.Debug.WriteLine("Upload action hit");
+
+            // Map the physical path to a virtual path
+            string uploadPath = Server.MapPath("~/Content/images/Reviews/");
+
+            // Ensure the directory exists
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+                System.Diagnostics.Debug.WriteLine("Directory created");
+            }
+
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    string originalFileName = Path.GetFileName(file.FileName);
+                    string fileName = Path.Combine(uploadPath, originalFileName);
+
+                    // Check if the file already exists and create a unique filename
+                    int fileCounter = 1;
+                    while (System.IO.File.Exists(fileName))
+                    {
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(originalFileName);
+                        string extension = Path.GetExtension(originalFileName);
+                        fileName = Path.Combine(uploadPath, $"{fileNameWithoutExtension}({fileCounter}){extension}");
+                        fileCounter++;
+                    }
+
+                    // Save the file
+                    file.SaveAs(fileName);
+
+                    System.Diagnostics.Debug.WriteLine($"File uploaded successfully: {fileName}");
+
+                    // Return the file name as part of the response
+                    return Json(new { success = true, message = "File uploaded successfully", fileName = Path.GetFileName(fileName) });
+                }
+            }
+
+            return Json(new { success = false, message = "No file received" });
+        }
 
 
 
