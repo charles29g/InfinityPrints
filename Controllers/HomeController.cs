@@ -146,6 +146,11 @@ namespace InfinityPrints.Controllers
 
             return View();
         }
+        public ActionResult DashTaskAuthorization()
+        {
+
+            return View();
+        }
         public JsonResult LoadServices()
         {
             using (var db = new InfinityPrintsContext())
