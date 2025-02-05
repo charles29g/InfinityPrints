@@ -167,6 +167,7 @@ namespace InfinityPrints.Controllers
 
          services.CreatedAt,
          services.UpdatedAt,
+         services.Request,
      })
      .ToList();
 
@@ -245,6 +246,7 @@ namespace InfinityPrints.Controllers
          users.RoleID,
          users.CreatedAt,
          users.UpdatedAt,
+         users.Request,
      })
      .ToList();
 
@@ -267,6 +269,7 @@ namespace InfinityPrints.Controllers
          content.IMG_Path,
          content.CreatedAt,
          content.UpdatedAt,
+         content.Request,
      })
      .ToList();
 
@@ -897,7 +900,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete)
+        public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -907,7 +910,7 @@ namespace InfinityPrints.Controllers
                     if (recordToDelete != null)
                     {
 
-                        recordToDelete.Request = "True";
+                        recordToDelete.Request = action; ;
                         db.SaveChanges();
 
                         //LogAction("Deleted a user account", UserID);
@@ -925,7 +928,7 @@ namespace InfinityPrints.Controllers
                 }
             }
         }
-        public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete)
+        public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete, string action)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -935,7 +938,7 @@ namespace InfinityPrints.Controllers
                     if (recordToDelete != null)
                     {
 
-                        recordToDelete.Request = "True";
+                        recordToDelete.Request = action;
                         db.SaveChanges();
 
                         //LogAction("Deleted a user account", UserID);
@@ -1220,7 +1223,87 @@ namespace InfinityPrints.Controllers
 
 
 
+        public JsonResult DeleteServices(tbl_servicesModel dataToDelete)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_services.FirstOrDefault(x => x.ServiceID == dataToDelete.ServiceID);
+                    if (recordToDelete != null)
+                    {
+                        db.tbl_services.Remove(recordToDelete);
+                        db.SaveChanges();
+                        //LogAction("Deleted a tour package", UserID);
 
+                        return Json(new { success = true, message = "Service deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Service not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+        public JsonResult DeleteReviews(tbl_contentModel dataToDelete)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_content.FirstOrDefault(x => x.ContID == dataToDelete.ContID);
+                    if (recordToDelete != null)
+                    {
+                        db.tbl_content.Remove(recordToDelete);
+                        db.SaveChanges();
+                        //LogAction("Deleted a tour package", UserID);
+
+                        return Json(new { success = true, message = "Review deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Review not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+        public JsonResult DeleteAccounts(tbl_usersModel dataToDelete)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_users.FirstOrDefault(x => x.UserID == dataToDelete.UserID);
+                    if (recordToDelete != null)
+                    {
+                        db.tbl_users.Remove(recordToDelete);
+                        db.SaveChanges();
+                        //LogAction("Deleted a tour package", UserID);
+
+                        return Json(new { success = true, message = "Account deleted successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Account not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
 
 

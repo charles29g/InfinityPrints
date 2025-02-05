@@ -325,12 +325,12 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
-    this.DeleteServiceEmployee = function (dataToDelete) {
+    this.DeleteServiceEmployee = function (dataToDelete, action) {
         var Delete = $http({
             method: "post",
             url: "Home/DeleteServiceEmployee",
             data: {
-                dataToDelete, //userID: sessionStorage.getItem("userID")
+                dataToDelete, action
             }
         });
 
@@ -338,17 +338,64 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
-    this.DeleteReviewEmployee = function (dataToDelete) {
+    this.DeleteReviewEmployee = function (dataToDelete, action) {
         var Delete = $http({
             method: "post",
             url: "Home/DeleteReviewEmployee",
             data: {
-                dataToDelete, //userID: sessionStorage.getItem("userID")
+                dataToDelete,
+                action//userID: sessionStorage.getItem("userID")
             }
         });
 
         return Delete;
 
     };
+
+
+
+
+
+
+    this.DeleteServices = function (dataToDelete) {
+        console.log(dataToDelete + " Service");
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteServices",
+            data: {
+                dataToDelete
+            }
+        });
+
+        return Delete;
+    };
+
+
+    this.DeleteReviews = function (dataToDelete) {
+        console.log(dataToDelete + " Service");
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteReviews",
+            data: {
+                dataToDelete
+            }
+        });
+
+        return Delete;
+    };
+
+    this.DeleteAccounts = function (dataToDelete) {
+        console.log(dataToDelete + " Service");
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteAccounts",
+            data: {
+                dataToDelete
+            }
+        });
+
+        return Delete;
+    };
+
 
 })

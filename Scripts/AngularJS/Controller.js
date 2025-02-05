@@ -33,7 +33,7 @@
             $(document).ready(function () {
 
 
-                $('#myTable').DataTable();
+                $('#myTable3').DataTable();
             });
         });
     };
@@ -50,7 +50,7 @@
             $(document).ready(function () {
 
 
-                $('#myTable').DataTable();
+                $('#myTable2').DataTable();
             });
         });
     };
@@ -1293,6 +1293,147 @@
     //};
 
 
+    $scope.DeleteServices = function (ServiceData) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(ServiceData);
+                console.log(ServiceData + " controller");
+
+                var postData = {
+                    ServiceID: ServiceData.ServiceID
+                };
+
+                var postDataPromise = IPService.DeleteServices(postData);
+
+                postDataPromise.then(function (response) {
+                    var result = response.data;
+                    console.log(result);
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Service has been deleted successfully.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error deleting record: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+
+    $scope.DeleteReviews = function (ContentData) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(ContentData);
+                console.log(ContentData + " controller");
+
+                var postData = {
+                    ContID: ContentData.ContID
+                };
+
+                var postDataPromise = IPService.DeleteReviews(postData);
+
+                postDataPromise.then(function (response) {
+                    var result = response.data;
+                    console.log(result);
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Review has been deleted successfully.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error deleting record: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    $scope.DeleteAccounts = function (ContentData) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(ContentData);
+                console.log(ContentData + " controller");
+
+                var postData = {
+                    UserID: ContentData.UserID
+                };
+
+                var postDataPromise = IPService.DeleteAccounts(postData);
+
+                postDataPromise.then(function (response) {
+                    var result = response.data;
+                    console.log(result);
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Acccount has been deleted successfully.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error deleting record: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                });
+            }
+        });
+    };
 
     $scope.DeleteUser = function (dataToDelete) {
         Swal.fire({
@@ -1379,7 +1520,7 @@
 
 
 
-    $scope.DeleteUserAd = function (eDATA) {
+    $scope.DeleteUserAd = function (eDATA, Action) {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -1428,7 +1569,7 @@
 
 
 
-    $scope.DeleteServiceEmployee = function (eDATA) {
+    $scope.DeleteServiceEmployee = function (eDATA, action) {
         Swal.fire({
             title: "Are you sure?",
             text: "This request will forwarded to the owner !",
@@ -1441,7 +1582,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log(eDATA);
-                var postData = IPService.DeleteServiceEmployee(eDATA);
+                var postData = IPService.DeleteServiceEmployee(eDATA, action);
 
                 postData.then(function (response) {
                     var result = response.data;
@@ -1473,7 +1614,7 @@
 
 
 
-    $scope.DeleteReviewsEmployee = function (eDATA) {
+    $scope.DeleteReviewsEmployee = function (eDATA, action) {
         Swal.fire({
             title: "Are you sure?",
             text: "This request will forwarded to the owner !",
@@ -1486,7 +1627,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log(eDATA);
-                var postData = IPService.DeleteReviewEmployee(eDATA);
+                var postData = IPService.DeleteReviewEmployee(eDATA, action);
 
                 postData.then(function (response) {
                     var result = response.data;

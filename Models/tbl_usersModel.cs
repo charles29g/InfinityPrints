@@ -18,5 +18,6 @@ namespace InfinityPrints.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string IsActive { get; set; }
+        public string Request { get; set; }
     }
 }

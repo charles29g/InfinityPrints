@@ -173,7 +173,7 @@
         <div class="row white-text m2" ng-init="loadUsers()">
 
             <div class="table-wrapper">
-                <table id="myTable" class="display">
+                <table id="myTable3" class="display">
                     <thead>
                         <tr>
                             <th>User ID</th>
@@ -211,7 +211,7 @@
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                             <td>{{DateFormat(pDATA.UpdatedAt)}}</td>
                             <td><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-save" ng-click="updateUser(pDATA)"><i class="fas fa-save"></i></a></td>
-                            <td><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-delete" ng-click="DeleteUserAd(pDATA)"><i class="fas fa-trash"></i></a></td>
+                            <td><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-delete" ng-click="DeleteUserAd(pDATA,'True')"><i class="fas fa-trash"></i></a></td>
                             <td></td>
                         </tr>
                     </tbody>

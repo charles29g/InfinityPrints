@@ -4,7 +4,7 @@
 
 <style>
     .main-content {
-     min-height: 0;
+        min-height: 0;
     }
 </style>
 <body>
@@ -129,133 +129,108 @@
     </div>
 
     <div class="main-content">
-        <p style="text-align: right;">{{RoleID }} Dashboard</p>
         <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
-            Employee Service Deletion Request
+            Service Deletion Request
         </h1>
-        <div class="row white-text m2"> <!--ng-init="loadOrders()"-->
+        <div class="row white-text m2" ng-init="loadServices()">
 
             <div class="table-wrapper">
                 <table id="myTable" class="display">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>User ID</th>
-                            <th>File Quantity</th>
-                            <th>File Path</th>
-                            <th>Size</th>
-                            <th>Total Price</th>
-                            <th>Request</th>
-                            <th>Created At</th>
-                            <th>StatusID</th>
+                            <th>Service ID</th>
+                            <th>Service Name</th>
+                            <th>Description</th>
+
                             <th>Delete</th>
+                            <th>Deny</th>
 
                         </tr>
                     </thead>
-                    @*<tbody>
-                        <tr ng-repeat="pDATA in OrdersData">
-                            <td>{{pDATA.OrderID}}</td>
-                            <td>{{pDATA.UserID}}</td>
-                            <td>{{pDATA.FileQuantity}}</td>
-                            <td>{{pDATA.FilePath}}</td>
-                            <td>{{pDATA.Size}}</td>
-                            <td>{{pDATA.TotalPrice}}</td>
-                            <td>{{pDATA.Request}}</td>
-                            <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td>{{pDATA.StatusID}}</td>
-                            <td></td>
+                    <tbody>
+                        <tr ng-repeat="pDATA in ServicesData | filter:{Request : 'True'}">
+                            <td>{{pDATA.ServiceID}}</td>
+                            <td>{{pDATA.ServiceName}}</td>
+                            <td>{{pDATA.Description}}</td>
+                            <td><button ng-click="DeleteServices(pDATA)">Approve</button></td>
+                            <td><button ng-click="DeleteServiceEmployee(pDATA,'')">Deny</button></td>
                         </tr>
-                    </tbody>*@
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <div class="main-content">
-        @*<p style="text-align: right;">{{RoleID }} Dashboard</p>*@
         <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
-            Reviews
+            Review Deletion Requests
         </h1>
-        <div class="row white-text m2"> <!--ng-init="loadOrders()"-->
+        <div class="row white-text m2" ng-init="loadContents()">
 
             <div class="table-wrapper">
-                <table id="myTable" class="display">
+                <table id="myTable2" class="display">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>User ID</th>
-                            <th>File Quantity</th>  
-                            <th>File Path</th>
-                            <th>Size</th>
-                            <th>Total Price</th>
-                            <th>Request</th>
-                            <th>Created At</th>
-                            <th>StatusID</th>
+                            <th>Content ID</th>
+                            <th>Content Name</th>
+                            <th>Description </th>
+
                             <th>Delete</th>
+                            <th>Deny</th>
 
                         </tr>
                     </thead>
-                    @*<tbody>
-                        <tr ng-repeat="pDATA in OrdersData">
-                            <td>{{pDATA.OrderID}}</td>
-                            <td>{{pDATA.UserID}}</td>
-                            <td>{{pDATA.FileQuantity}}</td>
-                            <td>{{pDATA.FilePath}}</td>
-                            <td>{{pDATA.Size}}</td>
-                            <td>{{pDATA.TotalPrice}}</td>
-                            <td>{{pDATA.Request}}</td>
-                            <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td>{{pDATA.StatusID}}</td>
-                            <td></td>
+                    <tbody>
+                        <tr ng-repeat="pDATA in ContentsData | filter:{Request:'True'}">
+                            <td>{{pDATA.ContID}}</td>
+                            <td>{{pDATA.ContName}}</td>
+                            <td>{{pDATA.Desc}}</td>
+
+                            <td><button ng-click="DeleteReviews(pDATA)">Approve</button></td>
+                            <td><button ng-click="DeleteReviewsEmployee(pDATA,'')">Deny</button></td>
                         </tr>
-                    </tbody>*@
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-     <div class="main-content">
-        @*<p style="text-align: right;">{{RoleID }} Dashboard</p>*@
+    <div class="main-content">
         <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
-            Users
+            User Deletion Request
         </h1>
-        <div class="row white-text m2"> <!--ng-init="loadOrders()"-->
+        <div class="row white-text m2" ng-init="loadUsers()">
 
             <div class="table-wrapper">
-                <table id="myTable" class="display">
+                <table id="myTable3" class="display">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
                             <th>User ID</th>
-                            <th>File Quantity</th>  
-                            <th>File Path</th>
-                            <th>Size</th>
-                            <th>Total Price</th>
-                            <th>Request</th>
-                            <th>Created At</th>
-                            <th>StatusID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
                             <th>Delete</th>
+                            <th>Deny</th>
 
                         </tr>
                     </thead>
-                    @*<tbody>
-                        <tr ng-repeat="pDATA in OrdersData">
-                            <td>{{pDATA.OrderID}}</td>
+                    <tbody>
+                        <tr ng-repeat="pDATA in UsersData | filter:{Request : 'True'}">
                             <td>{{pDATA.UserID}}</td>
-                            <td>{{pDATA.FileQuantity}}</td>
-                            <td>{{pDATA.FilePath}}</td>
-                            <td>{{pDATA.Size}}</td>
-                            <td>{{pDATA.TotalPrice}}</td>
-                            <td>{{pDATA.Request}}</td>
-                            <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td>{{pDATA.StatusID}}</td>
-                            <td></td>
+                            <td>{{pDATA.FName}}</td>
+                            <td>{{pDATA.LName}}</td>
+                            <td>{{pDATA.UName}}</td>
+                            <td>{{pDATA.Email}}</td>
+                            <td>{{pDATA.RoleID}}</td>
+                            <td><button ng-click="DeleteAccounts(pDATA,'True')">Approve</button></td>
+                            <td><button ng-click="DeleteAccounts(pDATA,'')">Deny</button></td>
                         </tr>
-                    </tbody>*@
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
-
 
 </body>
