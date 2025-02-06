@@ -206,31 +206,75 @@
             }
     }
 
-    .header {
-        background: #9c5c91;
+
+    .order-page {
+        background: url('../../content/images/infinityprintsimg.png');
+        padding: 60px;
         color: white;
-        padding: 20px;
-        border-radius: 10px 10px 0 0;
+        font-weight: bold;
+        text-align: center;
+        font-size: 2rem;
+        position: relative;
+        border-radius: 50px;
     }
 
-    .form-group, .form-row {
-        margin-bottom: 15px;
+    .order-banner h1 {
+        background-color: rgba(0, 0, 0, 0.5);
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+
+    .user-info-txt {
+        font-weight:bold;
+        color: #6f0d4a;
+        text-align:center;
+        margin-top:30px; 
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px; 
+    }
+
+    .col {
+        flex: 1;
+        min-width: 45%;
     }
 
     label {
         font-weight: bold;
-        color: #5a2d5a;
+        color: #6f0d4a;
     }
 
-    input, select {
+/*    input, select {
         width: 100%;
-        padding: 8px;
+        padding-left:5px;
         border: 1px solid #ccc;
-        border-radius: 5px;
+            
+    }*/
+
+    #input-field {
+        box-sizing: border-box;
+        border:1px solid;
+        border-radius:5px;
+        padding:5px;
     }
+
 
     hr {
-        border: 1px solid #9c5c91;
+        border-bottom: 2px solid #6f0d4a;
+        border-top:0px;
+        border-left:0px;
+        border-right:0px;
+        padding-top:20px;       
+    }
+
+    .file-qty-txt {
+        text-align: center;
+        font-weight: bold;
+        color: #6f0d4a;
     }
 
     button {
@@ -248,7 +292,7 @@
 
     #FileQuantity {
         display: block; /* Ensure it's not hidden */
-        width: 100%; /* Make it full width */
+        width: 50%; /* Make it full width */
         padding: 8px; /* Add padding for better appearance */
         border: 1px solid #ccc; /* Add border */
         border-radius: 5px; /* Rounded corners */
@@ -344,46 +388,49 @@
 
 
     <div class="container">
-        <div class="header text-center">
-            <h1>Order</h1>
+        <div class="order-page">
+            <div class="order-banner text-center">
+                <h1>Order</h1>
+            </div>
         </div>
-
         <div class="content" ng-init="loadUsers(); loadServices(); loadSizes();">
             <div ng-repeat="pDATA in UsersData | filter:{UserID: UserID} ">
 
-                <h3 class="text-center">User Information</h3>
+                <h5 class="user-info-txt">User Information</h5>
                 <form method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Company Name</label>
-                        <input type="text" class="form-control" ng-model="CompanyName" required />
+                        <input type="text" class="form-control validate" id="input-field" ng-model="CompanyName" required  />
                     </div>
 
                     <div class="form-row">
-                        <div class="col-md-6">
+                        <div class="col s6">
                             <label>First Name</label>
-                            <input type="text" class="form-control" ng-model="pDATA.FName" disabled />
+                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.FName" disabled />
                         </div>
-                        <div class="col-md-6">
+                        <div class="col s6">  
                             <label>Last Name</label>
-                            <input type="text" class="form-control" ng-model="pDATA.LName" disabled />
+                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.LName" disabled />
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="col-md-6">
+                        <div class="col s6">
                             <label>Mobile Number</label>
-                            <input type="text" class="form-control" ng-model="pDATA.PhoneNum" ng-change="PhoneNum()" disabled />
+                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.PhoneNum" ng-change="PhoneNum()" disabled />
                         </div>
-                        <div class="col-md-6">
+                        <div class="col s6">
                             <label>Email</label>
-                            <input type="text" class="form-control" ng-model="pDATA.Email" disabled />
+                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.Email" disabled />
                         </div>
                     </div>
+
+
 
                     <hr />
 
                     <div class="form-group">
-                        <label>File Quantity</label>
+                        <p class="file-qty-txt">File Quantity</p>
                         <select id="FileQuantity" required ng-model="FileQuantity" ng-change="updateFileFields()">
                             <option value="0" disabled>Please select One</option>
                             <option value="1" selected>1</option>
