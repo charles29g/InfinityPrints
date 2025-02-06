@@ -236,7 +236,56 @@
         var emailData = {
             toEmail: email,  // Target email address
             subject: "Infinity Prints Account Activation",      // Subject of the email
-            body: `<h1>Infinity Prints</h1><p>Please click the <a href="${url}">link</a> to activate your account</p>` // Body of the email (HTML format)
+            body: `<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;">
+  <table align="center" width="600" style="background-color: #ffffff; border-collapse: collapse;">
+    <tr>
+      <td style="text-align: center; padding: 20px;">
+        <img src="logo-placeholder.png" alt="Logo" style="width: 80px;" />
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #f44336; text-align: center; padding: 20px;">
+        <img src="email-icon.png" alt="Email Icon" style="width: 50px;" />
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 40px 30px; text-align: center;">
+        <h1 style="color: #333;">Email verification</h1>
+        <p style="font-size: 16px; color: #555;">Hi User,</p>
+        <p style="font-size: 16px; color: #555;">
+          You're almost set to start enjoying Infinity Prints. Simply click the link below to verify your email address and get started. The link expires in 48 hours.
+        </p>
+        <a href="${url}" style="background-color: #f44336; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px;">Verify my email address</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 20px 30px; text-align: center; color: #555;">
+        <hr style="border: 0; border-top: 1px solid #ddd;" />
+        <p style="margin: 15px 0;">
+          <a href="#" style="margin: 0 5px;">
+            <img src="facebook-icon.png" alt="Facebook" style="width: 24px;">
+          </a>
+          <a href="#" style="margin: 0 5px;">
+            <img src="snapchat-icon.png" alt="Snapchat" style="width: 24px;">
+          </a>
+          <a href="#" style="margin: 0 5px;">
+            <img src="linkedin-icon.png" alt="LinkedIn" style="width: 24px;">
+          </a>
+          <a href="#" style="margin: 0 5px;">
+            <img src="instagram-icon.png" alt="Instagram" style="width: 24px;">
+          </a>
+        </p>
+        <p style="font-size: 14px; color: #999;">
+          800 Broadway Suite 1500, New York, NY 000423, USA
+        </p>
+        <p style="font-size: 14px;">
+          <a href="#" style="color: #999; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: #999; text-decoration: none;">Contact Details</a>
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
+` // Body of the email (HTML format)
         };
 
         var sendEmailRequest = IPService.SendEmail(emailData);
