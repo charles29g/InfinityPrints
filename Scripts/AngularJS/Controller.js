@@ -223,7 +223,35 @@
         var emailData = {
             toEmail: email,  // Target email address
             subject: "Infinity Prints Account Activation",      // Subject of the email
-            body: `<h1>Infinity Prints</h1><p>Please click the <a href="${url}">link</a> to activate your account</p>` // Body of the email (HTML format)
+            body: `<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Email Verification</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 20px auto; background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-align: center;">
+        <div style="background-color: #e74c3c; padding: 20px; border-radius: 8px 8px 0 0;">
+            <img src="logo.png" alt="Logo" style="width: 50px; height: 50px;">
+        </div>
+        <h1 style="color: #333; font-size: 24px;">Email Verification</h1>
+        <p style="color: #555; font-size: 16px; margin: 20px 0;">
+            Hi User},<br>
+            You're almost set to start enjoying Infinity Prints. Simply click the link below to verify your email address and get started. The link expires in 48 hours.
+        </p>
+        <a href="${url}" style="display: inline-block; padding: 12px 20px; color: #ffffff; background-color: #e74c3c; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold;">
+            Verify my email address
+        </a>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+        <div style="margin-top: 20px; font-size: 14px; color: #777;">
+            800 Broadway Suit 1500 New York, NY 000423, USA<br>
+            <a href="#" style="color: #777; text-decoration: none;">Privacy Policy</a> | 
+            <a href="#" style="color: #777; text-decoration: none;">Contact Details</a>
+        </div>
+    </div>
+</body>
+</html>
+` // Body of the email (HTML format)
         };
 
         var sendEmailRequest = IPService.SendEmail(emailData);
