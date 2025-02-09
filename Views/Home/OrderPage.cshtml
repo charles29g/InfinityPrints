@@ -232,7 +232,7 @@
         margin-top:30px; 
     }
 
-    .form-row {
+    .form-row{
         display: flex;
         flex-wrap: wrap;
         gap: 15px; 
@@ -243,9 +243,13 @@
         min-width: 45%;
     }
 
-    label {
+    label{
         font-weight: bold;
         color: #6f0d4a;
+    }
+
+    label .file-upload{
+        margin-top:50px;
     }
 
 /*    input, select {
@@ -255,7 +259,7 @@
             
     }*/
 
-    #input-field {
+    #companyName, #fname, #lname, #phoneNum, #email3 {
         box-sizing: border-box;
         border:1px solid;
         border-radius:5px;
@@ -263,18 +267,21 @@
     }
 
 
+
     hr {
         border-bottom: 2px solid #6f0d4a;
         border-top:0px;
         border-left:0px;
         border-right:0px;
-        padding-top:20px;       
+        padding-top:50px;
+        width:100%;
     }
 
     .file-qty-txt {
         text-align: center;
         font-weight: bold;
         color: #6f0d4a;
+        margin-top:50px;
     }
 
     button {
@@ -298,6 +305,7 @@
         border-radius: 5px; /* Rounded corners */
         background-color: white; /* Ensure background is white */
         font-size: 14px; /* Set font size */
+        justify-self:center;
     }
 
         #FileQuantity option:disabled {
@@ -306,7 +314,7 @@
 
     #Service {
         display: block; /* Ensure it's not hidden */
-        width: 100%; /* Make it full width */
+        /*width: 410px;*/ /* Make it full width */
         padding: 8px; /* Add padding for better appearance */
         border: 1px solid #ccc; /* Add border */
         border-radius: 5px; /* Rounded corners */
@@ -320,7 +328,7 @@
 
     #Size {
         display: block; /* Ensure it's not hidden */
-        width: 100%; /* Make it full width */
+        /*width: 410px;*/ /* Make it full width */
         padding: 8px; /* Add padding for better appearance */
         border: 1px solid #ccc; /* Add border */
         border-radius: 5px; /* Rounded corners */
@@ -334,7 +342,7 @@
 
     #Quantity {
         display: block; /* Ensure it's not hidden */
-        width: 100%; /* Make it full width */
+        /*width: 100%;*/ /* Make it full width */
         padding: 8px; /* Add padding for better appearance */
         border: 1px solid #ccc; /* Add border */
         border-radius: 5px; /* Rounded corners */
@@ -354,11 +362,75 @@
         border-radius: 5px; /* Rounded corners */
         background-color: white; /* Ensure background is white */
         font-size: 14px; /* Set font size */
+        justify-self:center 
     }
 
         #PaymentTerms option:disabled {
             color: #999; /* Gray out the text */
         }
+
+    .file-upload-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+/*        width: 50%;*/
+        height: 45px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        position: relative;
+        box-sizing: border-box;
+        padding: 5px;
+    }
+
+    .file-upload-container input {
+        opacity: 0;
+/*        width: 100%;
+        height: 100%;*/
+        position: absolute;
+        cursor: pointer;
+    }
+
+        .file-upload-container i {
+            font-size: 16px;
+            color: #6f0d4a;
+        }
+
+    #file-upload-txt{
+        padding-top: 10px;
+    }
+
+    h5 {
+        font-weight: bold;
+        color: #6f0d4a;
+    }
+
+    #additional-notes{
+        width:100%;
+        height:200px;
+        border-radius:5px;
+    }
+
+    #total {
+        color: white;
+        font-weight: bold;
+        border: 2px solid #6f0d4a;
+        border-radius: 50px;
+        font-size: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: #6f0d4a;
+    }
+
+    .payterms-container{
+        width:50%;
+        justify-self:center;
+        margin-top:50px
+    }
+    
+    
 </style>
 <body>
     <nav class="nav-extended">
@@ -398,36 +470,39 @@
 
                 <h5 class="user-info-txt">User Information</h5>
                 <form method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label>Company Name</label>
-                        <input type="text" class="form-control validate" id="input-field" ng-model="CompanyName" required  />
+                    <div class="row">
+                        <div class="row">
+                            <div class="col s12">
+                                <label for="companyName">Company Name</label>
+                                <input type="text" class="form-control validate" id="companyName" ng-model="CompanyName" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s6">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" id="fname" ng-model="pDATA.FName" disabled />
+                            </div>
+                            <div class="col s6">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" id="lname" ng-model="pDATA.LName" disabled />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s6">
+                                <label for="phoneNum">Mobile Number</label>
+                                <input type="text" class="form-control" id="phoneNum" ng-model="pDATA.PhoneNum" ng-change="PhoneNum()" disabled />
+                            </div>
+                            <div class="col s6">
+                                <label for="email3">Email</label>
+                                <input type="text" class="form-control" id="email3" ng-model="pDATA.Email" disabled />
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="col s6">
-                            <label>First Name</label>
-                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.FName" disabled />
-                        </div>
-                        <div class="col s6">  
-                            <label>Last Name</label>
-                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.LName" disabled />
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="col s6">
-                            <label>Mobile Number</label>
-                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.PhoneNum" ng-change="PhoneNum()" disabled />
-                        </div>
-                        <div class="col s6">
-                            <label>Email</label>
-                            <input type="text" class="form-control" id="input-field" ng-model="pDATA.Email" disabled />
-                        </div>
-                    </div>
-
-
 
                     <hr />
+
 
                     <div class="form-group">
                         <p class="file-qty-txt">File Quantity</p>
@@ -439,59 +514,97 @@
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
+                        <p class="center">Example: 1 .pdf and 1 .txt = 2 file</p>
                     </div>
 
                     <hr />
-                    <h4>File Upload</h4>
+                    @*<h4>File Upload</h4>
+        <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />*@
+                <div class="upload-container">
+                    <div class="row">
+                        <div class="col s6"id="file-upload-txt">
+                            <label for="file-upload" >File Upload </label>
+                            <label class="file-upload-container">
+                                <i class="fas fa-upload"></i>
+                                <input id="file-upload" type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />
+                            </label>
+                        </div>
+                        @*<div class="col s6">
+                <label>File Upload </label>
+                <label class="file-upload-container">
+                    <i class="fas fa-upload"></i>
                     <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />
+                </label>
 
-
-                    <div class="form-group">
-                        <label>Service</label>
-                        <select id="Service" required ng-model="Service">
-                            <option value="" selected disabled>Please select One</option>
-                            <option ng-repeat="service in ServicesData" value="{{service.ServiceID}}">
-                                {{service.ServiceName}}
-                            </option>
-                        </select>
+            </div>*@
                     </div>
 
-                    <div class="form-group">
-                        <label>Size</label>
-                        <select id="Size" required ng-model="Size">
-                            <option value="" selected disabled>Please select One</option>
-                            <option ng-repeat="pDATA in sizesData" value="{{size.SizeID}}">
-                                {{size.SizeName}}
-                            </option>
-                        </select>
+                    <div class="row">
+                        <div class="col s6">
+                            <label for="Service">Service</label>
+                            <select id="Service" required ng-model="Service">
+                                <option value="" selected disabled>Please select One</option>
+                                <option ng-repeat="service in ServicesData" value="{{service.ServiceID}}">
+                                    {{service.ServiceName}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <select id="Quantity" required ng-model="Quantity">
-                            <option value="0" selected disabled>Please select One</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <div class="row">
+                        <div class="col s6">
+                            <label for="Size">Size</label>
+                            <select id="Size" required ng-model="Size">
+                                <option value="" selected disabled>Please select One</option>
+                                <option ng-repeat="pDATA in sizesData" value="{{size.SizeID}}">
+                                    {{size.SizeName}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
-                    <h5>Price: </h5>
-
-                    <h6>Additional Notes: </h6>
-
-                    <h3>Total: </h3>
-
-                    <div class="form-group">
-                        <label>Payment Terms</label>
-                        <select id="PaymentTerms" required ng-model="PaymentTerms">
-                            <option value="0" selected disabled>Please select One</option>
-                            <option value="FullPayment">Full Payment</option>
-                            <option value="Fifty">50/50</option>
-                        </select>
+                    <div class="row">
+                        <div class="col s6">
+                            <label for="Quantity">Quantity</label>
+                            <select id="Quantity" required ng-model="Quantity">
+                                <option value="0" selected disabled>Please select One</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col center">
+                            <h5 class="">Price: </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <h6>Additional Notes:</h6>
+                        <textarea id="additional-notes" class="form-control" placeholder="Enter your notes here..."></textarea>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col s12 center">
+                            <span id="total">Total: </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="payterms-container">
+                            <label for="PaymentTerms">Payment Terms</label>
+                            <select id="PaymentTerms" required ng-model="PaymentTerms">
+                                <option value="0" selected disabled>Please select One</option>
+                                <option value="FullPayment">Full Payment</option>
+                                <option value="Fifty">50/50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                     <button type="submit" class="btn btn-primary">Submit Order</button>
                 </form>
