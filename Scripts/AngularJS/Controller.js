@@ -555,6 +555,10 @@
         window.location.href = "Home/Servicepage";
     };
 
+    $scope.OrderPage = function () {
+        window.location.href = "Home/OrderPage";
+    };
+
     $scope.Reviewpage = function () {
         window.location.href = "Home/Reviewpage";
     };
@@ -1640,6 +1644,56 @@
         });
     };
 
+
+    $scope.FileQuantity = 1; // Initialize to 1
+    $scope.services = [];
+    $scope.sizes = [];
+    $scope.quantities = [];
+    $scope.files = [];
+
+
+    $scope.getNumber = function (num) {
+        return new Array(parseInt(num) || 0);
+    };
+
+    $scope.filteredSizes = [];
+
+
+    $scope.updateContainers = function () {
+        console.log("File quantity updated to:", $scope.FileQuantity);
+
+        let quantity = parseInt($scope.FileQuantity) || 1;
+
+        $scope.files = new Array(quantity).fill(null);
+        $scope.services = new Array(quantity).fill(null);
+        $scope.sizes = new Array(quantity).fill(null);
+        $scope.quantities = new Array(quantity).fill(null);
+
+        // Initialize filteredSizes array.  This is CRUCIAL and must be done here.
+        $scope.filteredSizes = new Array(quantity);
+
+        // Ensure ServicesData exists before updating bindings AND initializing filteredSizes
+        if (!$scope.ServicesData || !$scope.ServicesData.length) {
+            console.warn("ServicesData is empty or not yet loaded.");
+
+            return; 
+        }
+
+        // Now that ServicesData is available, you can safely initialize filteredSizes:
+        for (let i = 0; i < quantity; i++) {
+            $scope.filteredSizes[i] = []; // Initialize each element of filteredSizes to an empty array
+        }
+    };
+
+
+    $scope.updateSizes = function (index) {
+        var selectedServiceID = $scope.services[index].ServiceID;
+
+        // Filter sizes based on the selected service
+        $scope.filteredSizes[index] = $scope.SizesData.filter(function (size) {
+            return size.ServiceID === selectedServiceID; // Only sizes for the selected service
+        });
+    };
 
 
     $scope.DeleteReviewsEmployee = function (eDATA, action) {

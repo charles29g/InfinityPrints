@@ -463,7 +463,7 @@
                 <h1>Order</h1>
             </div>
         </div>
-        <div class="content" ng-init="loadUsers(); loadServices(); ">
+        <div class="content" ng-init="loadUsers(); loadServices(); loadSizes()">
             <div ng-repeat="pDATA in UsersData | filter:{UserID: UserID} ">
 
                 <h5 class="user-info-txt">User Information</h5>
@@ -472,7 +472,7 @@
                         <div class="row">
                             <div class="col s12">
                                 <label for="companyName">Company Name</label>
-                                <input type="text" class="form-control validate" id="companyName" ng-model="CompanyName" required />
+                                <input type="text" class="form-control validate" id="companyName" ng-model="CompanyName"/>
                             </div>
                         </div>
 
@@ -502,84 +502,75 @@
                     <hr />
 
 
-                    <div class="form-group">
-                        <p class="file-qty-txt">File Quantity</p>
-                        <select id="FileQuantity" required ng-model="FileQuantity" ng-change="updateFileFields()">
-                            <option value="0" disabled>Please select One</option>
-                            <option value="1" selected>1</option>
+
+                        <label for="FileQuantity">File Quantity:</label>
+                        <select id="FileQuantity" ng-model="FileQuantity" ng-change="updateContainers()">
+                            <option value="" disabled>Please select One</option>
+                            <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
-                        <p class="center">Example: 1 .pdf and 1 .txt = 2 file</p>
-                    </div>
 
-                    <hr />
-                    @*<h4>File Upload</h4>
-                        <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />*@
-                    <div class="upload-container">
-                        <div class="row">
-                            <div class="col s6" id="file-upload-txt">
-                                <label for="file-upload">File Upload </label>
-                                <label class="file-upload-container">
-                                    <i class="fas fa-upload"></i>
-                                    <input id="file-upload" type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />
-                                </label>
-                            </div>
-                            @*<div class="col s6">
-                                    <label>File Upload </label>
-                                    <label class="file-upload-container">
-                                        <i class="fas fa-upload"></i>
-                                        <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />
-                                    </label>
+                        <div ng-repeat="n in getNumber(FileQuantity) track by $index">
+                            <div class="upload-container">
+                                <div class="row">
+                                    <div class="col s6" id="file-upload-txt">
+                                        <label for="file-upload-{{$index}}">File Upload {{$index + 1}}</label>
+                                        <label class="file-upload-container">
+                                            <i class="fas fa-upload"></i>
+                                            <input id="file-upload-{{$index}}" type="file" ngf-select ng-model="files[$index]" name="file{{$index}}"
+                                                   ngf-change="UploadFile(files[$index])" accept="image/*" />
+                                        </label>
+                                        <span ng-if="files[$index]">{{ files[$index].name }}</span>
+                                    </div>
+                                </div>
 
-                                </div>*@
-                        </div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label for="Service">Service</label>
+                                        <select id="Service" required ng-model="services[$index]"
+                                                ng-change="updateSizes($index)"
+                                                ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
+                                            <option value="" disabled>Please select One</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                        <div class="row">
-                            <div class="col s6">
-                                <label for="Service">Service</label>
-                                <select id="Service" required ng-model="Service">
-                                    <option value="" selected disabled>Please select One</option>
-                                    <option ng-repeat="service in ServicesData" value="{{service.ServiceID}}">
-                                        {{service.ServiceName}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label for="Size">Size</label>
+                                        <select id="Size" required ng-model="sizes[$index]"
+                                                ng-options="size.SizeID as size.SizeName for size in filteredSizes[$index]">
+                                            <option value="" disabled>Please select One</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                        <div class="row">
-                            <div class="col s6">
-                                <label for="Size">Size</label>
-                                <select id="Size" required ng-model="Size" ng-init="loadSizes()"
-                                        ng-options="size.SizeID as size.SizeName for size in sizesData">
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label for="Quantity">Quantity</label>
+                                        <select id="Quantity" required ng-model="quantities[$index]">
+                                            <option value="" disabled>Please select One</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                                    <option value="" selected disabled>Please select One</option>
-
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col s6">
-                                <label for="Quantity">Quantity</label>
-                                <select id="Quantity" required ng-model="Quantity">
-                                    <option value="0" selected disabled>Please select One</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+                                <div class="row">
+                                    <div class="col center">
+                                        <h5 class="">Price: </h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col center">
-                                <h5 class="">Price: </h5>
-                            </div>
-                        </div>
-                    </div>
+
+
                     <div class="row">
                         <div class="col s12">
                             <h6>Additional Notes:</h6>
@@ -596,7 +587,7 @@
                             <div class="payterms-container">
                                 <label for="PaymentTerms">Payment Terms</label>
                                 <select id="PaymentTerms" required ng-model="PaymentTerms">
-                                    <option value="0" selected disabled>Please select One</option>
+                                    <option value="" disabled>Please select One</option>
                                     <option value="FullPayment">Full Payment</option>
                                     <option value="Fifty">50/50</option>
                                 </select>
@@ -609,4 +600,6 @@
             </div>
         </div>
     </div>
+
+
 </body>
