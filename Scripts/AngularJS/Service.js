@@ -52,6 +52,22 @@ app.service("IPService", function ($http, $q, Upload) {
         return Insert;
     };
 
+    this.InsertSizes = function (SizesDataAdd) {
+
+        console.log(SizesDataAdd + "Size")
+        var Insert = $http({
+            method: "post",
+            url: "Home/InsertSizes",
+            data: {
+                SizesDataAdd
+            }
+
+
+        });
+
+        return Insert;
+    };
+
     this.InsertContent = function (ContentDataAdd) {
 
         console.log(ContentDataAdd + "Review")
@@ -338,6 +354,19 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
+    this.UpdateServiceEmployee = function (dataToUpdate, action) {
+        var Update = $http({
+            method: "post",
+            url: "Home/UpdateServiceEmployee",
+            data: {
+                dataToUpdate, action
+            }
+        });
+
+        return Delete;
+
+    };
+
     this.DeleteReviewEmployee = function (dataToDelete, action) {
         var Delete = $http({
             method: "post",
@@ -354,7 +383,9 @@ app.service("IPService", function ($http, $q, Upload) {
 
 
 
-
+    this.updateService = function(service) {
+        return $http.post('/Home/UpdateService', service);
+    },
 
 
     this.DeleteServices = function (dataToDelete) {

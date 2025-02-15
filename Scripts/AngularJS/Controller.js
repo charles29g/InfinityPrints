@@ -1115,6 +1115,75 @@
     };
 
 
+    $scope.AddSizes = function () {
+
+        var SizesDataAdd = {
+            SizeName: $scope.SizeName,
+            Price: $scope.Price,
+        };
+
+
+        console.log("Size Data to be added:", SizesDataAdd);
+
+        if ($scope.file) {
+            UploadFile($scope.file).then(function (uploadResponse) {
+
+                var postData = IPService.InsertSizes(SizesDataAdd);
+
+                postData.then(function (ReturnedData) {
+                    var response = ReturnedData.data;
+                    console.log(response);
+                    swal.fire({
+                        title: 'Success!',
+                        text: 'Service added successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        timer: 2000,
+                    });
+                }).catch(function (error) {
+                    console.error("Failed to add tour:", error);
+                    swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong while adding the service.',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                });
+            }).catch(function (error) {
+                console.error("File upload failed:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to upload the file.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        } else {
+            var postData = IPService.InsertSizes(SizesDataAdd);
+
+            postData.then(function (ReturnedData) {
+                var response = ReturnedData.data;
+                console.log(response);
+                swal.fire({
+                    title: 'Success!',
+                    text: 'Tour added successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000,
+                });
+            }).catch(function (error) {
+                console.error("Failed to add tour:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong while adding the tour.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        }
+    };
+
+
 
     $scope.AddContent = function () {
 
@@ -1644,6 +1713,49 @@
         });
     };
 
+    $scope.UpdateServiceEmployee = function (eDATA, action) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This request will forwarded to the owner !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, send it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.UpdateServiceEmployee(eDATA, action);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Service deletion successfully requested.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error requesting deleting service: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error deleting services: ", error);
+                    Swal.fire("Error!", "An error occurred while deleting.", "error");
+                });
+            }
+        });
+    };
+
 
     $scope.FileQuantity = 1; // Initialize to 1
     $scope.services = [];
@@ -1739,6 +1851,66 @@
         });
     };
 
+
+
+    $scope.ServicesData = [];
+    $scope.selectedService = {};
+    $scope.imageSrc = '';
+
+    // Load services
+    $scope.loadServices = function () {
+        Service.getServices().then(function (response) {
+            $scope.ServicesData = response.data;
+        });
+    };
+
+    // Open update service form
+    $scope.openUpdateService = function (service) {
+        $scope.selectedService = angular.copy(service);
+        $scope.imageSrc = service.ImagePath;
+        document.querySelector('.update-container').style.display = 'block';
+    };
+
+    // Update service
+    $scope.updateService = function (service) {
+        Service.updateService(service).then(function (response) {
+            if (response.data.success) {
+                $scope.loadServices();
+                closeUpdateService();
+            }
+        });
+    };
+
+    // Upload file for update
+    $scope.updateUploadFile = function (file) {
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $scope.$apply(function () {
+                    $scope.imageSrc = e.target.result;
+                    $scope.selectedService.ImagePath = e.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Check if user is an employee
+    $scope.RoleEmp = function () {
+        // Implement role check logic here
+        return true; // Placeholder
+    };
+
+    // Delete service
+    $scope.DeleteServiceEmployee = function (service, confirm) {
+        if (confirm) {
+            Service.deleteService(service.ServiceID).then(function (response) {
+                if (response.data.success) {
+                    $scope.loadServices();
+                }
+            });
+        }
+    };
 
 
 

@@ -13,6 +13,7 @@ using Org.BouncyCastle.Ocsp;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
+using System.Web.Services.Description;
 namespace InfinityPrints.Controllers
 {
     public class HomeController : Controller
@@ -907,6 +908,60 @@ namespace InfinityPrints.Controllers
             }
         }
 
+        public JsonResult UpdateServiceEmployee(tbl_servicesModel dataToUpdate, string action)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToUpdate = db.tbl_services.FirstOrDefault(x => x.ServiceID == dataToUpdate.ServiceID);
+                    if (recordToUpdate != null)
+                    {
+
+
+
+                        //LogAction("Updated a user account", UserID);
+
+                        return Json(new { success = true, message = "You requested to update this service" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "service not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult UpdateService(tbl_servicesModel service)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                var existingService = db.tbl_services.FirstOrDefault(s => s.ServiceID == service.ServiceID);
+                if (existingService != null)
+                {
+                    existingService.ServiceName = service.ServiceName;
+                    existingService.Description = service.Description;
+                    existingService.Material = service.Material;
+                    existingService.ImagePath = service.ImagePath;
+                }
+                return Json(new { success = true });
+            }
+        }
+
+        public class Service
+        {
+            public int ServiceID { get; set; }
+            public string ServiceName { get; set; }
+            public string Description { get; set; }
+            public string Material { get; set; }
+            public string ImagePath { get; set; }
+        }
 
         public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action)
         {
@@ -1113,42 +1168,33 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult InsertServices(tbl_servicesModel ServiceDataAdd
-)
+        public JsonResult InsertSizes(tbl_sizesModel SizesDataAdd)
         {
-            System.Diagnostics.Debug.WriteLine(ServiceDataAdd
- + "Home");
+            System.Diagnostics.Debug.WriteLine(SizesDataAdd+ "Home");
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
                 try
                 {
 
 
-                    var dbnew = new tbl_servicesModel()
+                    var dbnew = new tbl_sizesModel()
                     {
+                        ServiceID = SizesDataAdd.ServiceID,
 
-                        ServiceName = ServiceDataAdd.ServiceName,
+                        SizeName = SizesDataAdd.SizeName,
 
-                        Description = ServiceDataAdd.Description,
-
-                        Material = ServiceDataAdd.Material,
-
-                        ImagePath = ServiceDataAdd.ImagePath,
+                        Price = SizesDataAdd.Price,
 
 
                         CreatedAt = DateTime.Now,
 
 
-
-
-
                     };
 
-                    db.tbl_services.Add(dbnew);
+                    db.tbl_sizes.Add(dbnew);
                     db.SaveChanges();
-                    //LogAction("Added new tour package", UserID);
 
-                    return Json(new { success = true, message = "Services Added successfully" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Sizes Added successfully" }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
