@@ -353,6 +353,23 @@
         z-index: 10; /* Ensure it overlaps other content */
     }
 
+    .centered-container2 {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 100% !important;
+        height: auto !important;
+        display: none;
+        justify-content: center !important;
+        align-items: center !important;
+        z-index: 11 !important;
+    }
+
+        .centered-container2.show {
+            display: flex !important; /* Show the container when 'show' class is added */
+        }
+
     .container {
         background: white; /* Adds contrast if needed */
         border-radius: 12px; /* Rounded corners */
@@ -512,7 +529,7 @@
         <div class="col s12 m4" ng-repeat="DATA in ContentsData">
             <div class="card">
                 <div class="action-buttons">
-                    <button class="update-btn" onclick="updateReview()">✎</button>
+                    <button class="update-btn" onclick="openContainer2()">✎</button>
                     <button class="delete-btn" ng-click="DeleteReviewsEmployee(DATA,'True')">×</button>
                 </div>
                 <div class="card-feedback-image">
@@ -525,9 +542,74 @@
                     <p>{{DATA.Desc}}</p>
                 </div>
             </div>
-        </div>
 
+            <div class="centered-container2" style="display:none;">
+
+
+                <div class="container">
+                    <button class="close-button" onclick="closeContainer2()">×</button>
+
+                    <div class="col s12 " style="padding-left:40px; padding-right:40px">
+
+                        <a class="left" id="txtuser">Update</a>
+                        <a class="left" style="margin-left:5px" id="user">Review</a>
+
+                        <div class="row">
+
+                            <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
+
+                                <div class="row">
+                                    <div class="col s12 image-preview" ng-show="true">
+                                        <div class="preview-container">
+                                            <!-- Placeholder -->
+                                            <div class="placeholder-text" ng-show="!imageSrc">
+                                                Upload Image
+                                            </div>
+                                            <!-- Image Preview -->
+                                            <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col s12 file-upload">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <i class="material-icons upload-icon">file_upload</i>
+                                            Upload Review Image
+                                        </label>
+                                        <input id="file-upload" type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file)" accept="image/*" />
+
+
+                                    </div>
+
+
+                                    <div class="col s12 input-icons">
+
+                                        <input id="ContName" class="input-field " type="text" placeholder="Review Title" required ng-model="DATA.ContName" />
+
+                                    </div>
+
+                                    <div class="col s12 input-icons">
+
+                                        <input id="Desc" class="input-field " type="text" placeholder="Review Description" required ng-model="DATA.Desc" />
+
+                                    </div>
+
+
+
+
+
+                                </div>
+                            </form>
+                            <div class="button">
+                                <button class="button1" ng-click="AddContent()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 
 
 
@@ -554,16 +636,17 @@
                                         Upload Image
                                     </div>
                                     <!-- Image Preview -->
-                                    <img ng-src={{imageSrc}} alt="Image Preview" class="preview-img" ng-show="imageSrc" />
+                                    <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
+
 
                                 </div>
                             </div>
                             <div class="col s12 file-upload">
-                                <label for="file-upload" class="custom-file-upload">
+                                <label for="file-upload4" class="custom-file-upload">
                                     <i class="material-icons upload-icon">file_upload</i>
                                     Upload Review Image
                                 </label>
-                                <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file)" accept="image/*" />
+                                <input type="file" id="file-upload4" style="display:none;" ngf-select ng-model="file" name="file" ngf-change="previewImage(file); UploadFile2(file)" accept="image/*" />
 
 
                             </div>
@@ -594,6 +677,7 @@
     </div>
 
 
+
     <script>
         function closeContainer() {
             const container = document.querySelector('.centered-container');
@@ -605,7 +689,17 @@
             container.style.display = 'block';
         }
 
-    </script>
 
+        function openContainer2() {
+            console.log("Opening container 2");
+            document.querySelector('.centered-container2').classList.add('show');
+        }
+
+        function closeContainer2() {
+            console.log("Closing container 2");
+            document.querySelector('.centered-container2').classList.remove('show');
+        }
+
+
+    </script>
 </body>
-</html>

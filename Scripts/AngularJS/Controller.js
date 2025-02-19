@@ -678,19 +678,32 @@
 
     $scope.imageSrc = null;
 
-    $scope.previewImage = function (input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
+    //$scope.previewImage = function (input) {
+    //    if (input.files && input.files[0]) {
+    //        const reader = new FileReader();
 
-            reader.onload = function (e) {
-                $scope.$apply(function () {
-                    $scope.imageSrc = e.target.result;
-                });
-            };
+    //        reader.onload = function (e) {
+    //            $scope.$apply(function () {
+    //                $scope.imageSrc = e.target.result;
+    //            });
+    //        };
 
-            reader.readAsDataURL(input.files[0]); // Read only the first file
-        }
-    };
+    //        reader.readAsDataURL(input.files[0]); // Read only the first file
+    //    }
+    //};
+    //$scope.previewImage = function (file) {
+    //    if (file) {
+    //        const reader = new FileReader();
+
+    //        reader.onload = function (e) {
+    //            $scope.$apply(function () {
+    //                $scope.imageSrc = e.target.result;
+    //            });
+    //        };
+
+    //        reader.readAsDataURL(file); // Directly read the file
+    //    }
+    //};
 
     $scope.loginfunc = function () {
         var loginData = {
@@ -1028,6 +1041,8 @@
         };
 
         function UploadFile(file) {
+
+
             return new Promise(function (resolve, reject) {
                 if (file) {
                     console.log("File selected for upload:", file.name);
@@ -1185,16 +1200,47 @@
 
 
 
-    $scope.AddContent = function () {
 
+    $scope.previewImage = function (file) {
+
+
+
+
+        if (file) {
+
+            console.log("previewImage called with file:", file);
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                console.log("FileReader result:", e.target.result);
+
+                // Ensure Angular's digest cycle is triggered to update the view
+                $scope.$apply(function () {
+                    $scope.imageSrc = e.target.result; // Update the image source
+                });
+            };
+            reader.onerror = function (error) {
+                console.error("FileReader error:", error);
+            };
+            reader.readAsDataURL(file); // Directly read the file as data URL
+        }
+    }
+
+
+    $scope.AddContent = function () {
         var ContentDataAdd = {
             ContName: $scope.ContName,
             Desc: $scope.Desc,
-
-            IMG_Path: "default/image/path",
+            IMG_Path: "default/image/path", // Default image path
         };
 
+
+
         function UploadFile2(file) {
+            console.log("Upload called with file:", file);
+
+
             return new Promise(function (resolve, reject) {
                 if (file) {
                     console.log("File selected for upload:", file.name);
@@ -1205,7 +1251,7 @@
                     IPService.uploadFile2(file).then(function (fileName) {
                         console.log("Upload success. File name:", fileName);
 
-                        // Update the ServiceDataAdd with the received filename
+                        // Update the ContentDataAdd with the received filename
                         ContentDataAdd.IMG_Path = "/Content/images/Reviews/" + fileName;
 
                         // Resolve with the updated data
@@ -1220,12 +1266,11 @@
             });
         }
 
-
         console.log("Tour Data to be added:", ContentDataAdd);
 
         if ($scope.file) {
             UploadFile2($scope.file).then(function (uploadResponse) {
-
+                // Once the file is uploaded, insert content data into the database
                 var postData = IPService.InsertContent(ContentDataAdd);
 
                 postData.then(function (ReturnedData) {
@@ -1257,6 +1302,7 @@
                 });
             });
         } else {
+            // If no file is selected, just insert content data without an image
             var postData = IPService.InsertContent(ContentDataAdd);
 
             postData.then(function (ReturnedData) {
@@ -1788,7 +1834,7 @@
         if (!$scope.ServicesData || !$scope.ServicesData.length) {
             console.warn("ServicesData is empty or not yet loaded.");
 
-            return; 
+            return;
         }
 
         // Now that ServicesData is available, you can safely initialize filteredSizes:
