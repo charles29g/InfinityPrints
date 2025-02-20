@@ -3,27 +3,47 @@
 }
 
 <body>
-    <nav class="nav-extended">
-        <div class="nav-wrapper">
-            <div class="row">
-                <div class="col s6">
-                    <a class="left" id="infinity">Infinity</a>
-                    <a class="left" id="prints">Prints</a>
-                </div>
-                <div class="col s6" style="text-align: right;">
-                    <p id="signIn" href="~/Home/SignIn">{{Name}}</p>
+    @*<nav class="nav-extended">
+            <div class="nav-wrapper">
+                <div class="row">
+                    <div class="col s6">
+                        <a class="left" id="infinity">Infinity</a>
+                        <a class="left" id="prints">Prints</a>
+                    </div>
+                    <div class="col s6" style="text-align: right;">
+                        <p id="signIn" href="~/Home/SignIn">{{Name}}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="nav-content">
-            <ul class="tabs">
-                <li class="tab "><a ng-click="SignIn()">Home</a></li>
-                <li class="tab "><a>Services</a></li>
-                <li class="tab "><a>Reviews</a></li>
-                <li class="tab disabled"><a>Order</a></li>
-                <li class="tab "><a href="#test5">FAQs</a></li>
-                <li class="tab "><a href="#test6">About Us</a></li>
-            </ul>
+            <div class="nav-content">
+                <ul class="tabs">
+                    <li class="tab "><a ng-click="SignIn()">Home</a></li>
+                    <li class="tab "><a>Services</a></li>
+                    <li class="tab "><a>Reviews</a></li>
+                    <li class="tab disabled"><a>Order</a></li>
+                    <li class="tab "><a href="#test5">FAQs</a></li>
+                    <li class="tab "><a href="#test6">About Us</a></li>
+                </ul>
+            </div>
+        </nav>*@
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <div>
+                <a id="infinity">Infinity</a>
+                <a id="prints">Prints</a>
+            </div>
+
+            <div class="nav-content">
+                <ul class="tabs">
+                    <li class="tab active"><a ng-click="Homepage()">Home</a></li>
+                    <li class="tab"><a ng-click="Servicepage()">Services</a></li>
+                    <li class="tab"><a ng-click="Reviewpage()">Reviews</a></li>
+                    <li class="tab"><a ng-click="OrderPage()">Order</a></li>
+                    <li class="tab"><a href="#test5">FAQs</a></li>
+                    <li class="tab"><a ng-click="About()">About Us</a></li>
+                </ul>
+                <a id="signIn">Sign In</a>
+            </div>
         </div>
     </nav>
 
