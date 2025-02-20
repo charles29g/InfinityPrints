@@ -1,9 +1,13 @@
 ﻿@{
     Layout = "~/Views/Shared/_HomepageLayout.cshtml";
 }
-
-
 <style>
+    body {
+        padding-left: 40px;
+        padding-right: 40px;
+        font-family: 'Poppins', sans-serif !important;
+    }
+
     #FileQuantity {
         display: block; /* Ensure it's not hidden */
         width: 50%; /* Make it full width */
@@ -204,8 +208,7 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Modern shadow effect */
         max-width: 600px; /* Optional, limits the width */
         width: 90%; /* Makes it responsive */
-        position: relative; 
-           
+        position: relative;
     }
 
 
@@ -256,60 +259,7 @@
     }
 
 
-/*    nav {
-        background-color: white;
-        box-shadow: none;
-        outline: none;
-        border-bottom: 2px solid #6f0d4a;
-    }
 
-    .nav-content {
-        width: 100%;
-        overflow: hidden;
-        margin-bottom: 1vh
-    }
-
-        .nav-content .tabs {
-            display: flex;
-            justify-content: space-evenly;
-            width: 100%;
-            padding-left: 0px;
-            margin: 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            white-space: nowrap;
-        }
-
-            .nav-content .tabs .tab {
-                flex-shrink: 0;
-                text-align: center;
-            }
-
-                .nav-content .tabs .tab a {
-                    display: block;
-                    padding: 10px 0;
-                    font-size: 17px;
-                    color: #6f0d4a !important;
-                }
-
-                    .nav-content .tabs .tab a:hover,
-                    .nav-content .tabs .tab a:focus {
-                        color: #6f0d4a;
-                    }
-
-    @@media (max-width: 768px) {
-        .nav-content .tabs {
-            flex-wrap: nowrap;
-            -webkit-overflow-scrolling: touch;
-            justify-content: flex-start;
-        }
-
-            .nav-content .tabs .tab {
-                flex-grow: 0;
-                min-width: 120px;
-            }
-    }
-*/
     .add-service-btn {
         background-color: white;
         color: black;
@@ -377,23 +327,24 @@
     }
 </style>
 <body>
-    
+
     <nav class="nav-extended">
         <div class="nav-wrapper">
             <div>
                 <a id="infinity">Infinity</a>
                 <a id="prints">Prints</a>
             </div>
+
             <div class="nav-content">
                 <ul class="tabs">
-                    <li class="tab"><a ng-click="Homepage()" >Home</a></li>
+                    <li class="tab"><a ng-click="Homepage()">Home</a></li>
                     <li class="tab active"><a ng-click="Servicepage()">Services</a></li>
                     <li class="tab"><a ng-click="Reviewpage()">Reviews</a></li>
                     <li class="tab"><a ng-click="OrderPage()">Order</a></li>
                     <li class="tab"><a href="#test5">FAQs</a></li>
                     <li class="tab"><a ng-click="About()">About Us</a></li>
                 </ul>
-                <a id="signIn">{{Name}}</a>
+                <a id="signIn">Sign In</a>
             </div>
         </div>
     </nav>
@@ -575,11 +526,11 @@
                         <div class="row">
 
                             <label for="FileQuantity">Service:</label>
-                                    <label for="Service">Service</label>
-                                    <select id="Service" required ng-model="services[$index]"
-                                            ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
-                                        <option value="" disabled>Please select One</option>
-                                    </select>
+                            <label for="Service">Service</label>
+                            <select id="Service" required ng-model="services[$index]"
+                                    ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
+                                <option value="" disabled>Please select One</option>
+                            </select>
 
                             <label for="FileQuantity">Size Quantity:</label>
                             <select id="FileQuantity" ng-model="FileQuantity" ng-change="updateContainers()">
