@@ -449,6 +449,22 @@
         return pDATA.RoleID !== "Owner";
     };
 
+    $scope.selectedContent = null; // Initially no content selected
+
+    $scope.editContent = function (DATA) {
+        $scope.selectedContent = angular.copy(DATA); // Copy the selected item to edit
+        console.log("Edit content")
+    };
+
+    $scope.closeContainer2 = function () {
+        $scope.selectedContent = null; // Clear selection when closing modal
+    };
+
+    $scope.AddContent = function (content) {
+        console.log("Updating content:", content);
+        // Handle content update here
+    };
+
 
 
 
