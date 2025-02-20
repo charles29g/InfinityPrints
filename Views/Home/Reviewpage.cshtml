@@ -1,5 +1,10 @@
-﻿<style>
-    nav {
+﻿
+@{
+    Layout = "~/Views/Shared/_HomepageLayout.cshtml";
+}
+
+<style>
+    /*nav {
         background-color: white;
         box-shadow: none;
         outline: none;
@@ -37,9 +42,9 @@
                     .nav-content .tabs .tab a:hover,
                     .nav-content .tabs .tab a:focus {
                         transform: scale(1.1);
-                        transition: transform 0.1s ease;
-                        /*                            border-bottom: solid; */
-                        font-weight: bold;
+                        transition: transform 0.1s ease;*/
+    /*                            border-bottom: solid; */
+    /*font-weight: bold;
                     }
 
                     .nav-content .tabs .tab a.active {
@@ -56,7 +61,7 @@
         color: gray;
         cursor: default;
         text-decoration: none;
-    }
+    }*/
 
     @@media (max-width: 768px) {
         .nav-content .tabs {
@@ -428,7 +433,7 @@
     }
 
 
-    nav {
+    /*    nav {
         background-color: white;
         box-shadow: none;
         outline: none;
@@ -467,7 +472,7 @@
                     .nav-content .tabs .tab a:hover,
                     .nav-content .tabs .tab a:focus {
                         color: #6f0d4a;
-                    }
+                    }*/
 
     @@media (max-width: 768px) {
         .nav-content .tabs {
@@ -484,27 +489,47 @@
 </style>
 
 <body>
-    <nav class="nav-extended">
-        <div class="nav-wrapper">
-            <div class="row">
-                <div class="col s6">
-                    <a class="left" id="infinity">Infinity</a>
-                    <a class="left" id="prints">Prints</a>
-                </div>
-                <div class="col s6" style="text-align: right;">
-                    <a id="signIn">Name</a>
+    @*<nav class="nav-extended">
+            <div class="nav-wrapper">
+                <div class="row">
+                    <div class="col s6">
+                        <a class="left" id="infinity">Infinity</a>
+                        <a class="left" id="prints">Prints</a>
+                    </div>
+                    <div class="col s6" style="text-align: right;">
+                        <a id="signIn">Name</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="nav-content">
-            <ul class="tabs">
-                <li class="tab "><a ng-click="Homepage()">Home</a></li>
-                <li class="tab "><a ng-click="Servicepage()">Services</a></li>
-                <li class="tab "><a ng-click="Reviewpage()" class="active">Reviews</a></li>
-                <li class="tab "><a ng-click="OrderPage()">Order</a></li>
-                <li class="tab "><a href="#test5">FAQs</a></li>
-                <li class="tab "><a ng-click="About()">About Us</a></li>
-            </ul>
+            <div class="nav-content">
+                <ul class="tabs">
+                    <li class="tab "><a ng-click="Homepage()">Home</a></li>
+                    <li class="tab "><a ng-click="Servicepage()">Services</a></li>
+                    <li class="tab "><a ng-click="Reviewpage()" class="active">Reviews</a></li>
+                    <li class="tab "><a ng-click="OrderPage()">Order</a></li>
+                    <li class="tab "><a href="#test5">FAQs</a></li>
+                    <li class="tab "><a ng-click="About()">About Us</a></li>
+                </ul>
+            </div>
+        </nav>*@
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <div>
+                <a id="infinity">Infinity</a>
+                <a id="prints">Prints</a>
+            </div>
+
+            <div class="nav-content">
+                <ul class="tabs">
+                    <li class="tab"><a ng-click="Homepage()">Home</a></li>
+                    <li class="tab"><a ng-click="Servicepage()">Services</a></li>
+                    <li class="tab active"><a ng-click="Reviewpage()">Reviews</a></li>
+                    <li class="tab"><a ng-click="OrderPage()">Order</a></li>
+                    <li class="tab"><a href="#test5">FAQs</a></li>
+                    <li class="tab"><a ng-click="About()">About Us</a></li>
+                </ul>
+                <a id="signIn">Sign In</a>
+            </div>
         </div>
     </nav>
 
