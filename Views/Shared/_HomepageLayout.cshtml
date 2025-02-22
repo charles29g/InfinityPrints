@@ -16,6 +16,10 @@
 <body ng-app="InfinityPrints" ng-controller="IPController">
     <style>
         body {
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        .body {
             padding-left: 40px;
             padding-right: 40px;
             font-family: 'Poppins', sans-serif !important;
@@ -27,30 +31,31 @@
 
         nav {
             background-color: white;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
-            opacity:0;
+            opacity: 0;
             align-items: center;
             justify-content: space-between;
             padding: 10px 20px;
             animation: fadeInNavbar 0.6s ease-out forwards;
             transform: translateY(-20px);
         }
-            @@keyframes fadeInNavbar {
-                from {
-                    opacity: 0;
-                    transform: translateY(-20px);
-                }
 
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+        @@keyframes fadeInNavbar {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
             }
-        
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
 
         /* Navbar wrapper for better alignment */
         .nav-wrapper {
@@ -60,14 +65,8 @@
             justify-content: space-between;
         }
 
-        .tabs, .tabs .tab, .tabs  .tab a {
-            display: block !important;
-            height: auto !important;
-        }
-
-          
         #infinity {
-            margin-left: 10px;
+            /*            margin-left: 10px;*/
             font-weight: bold;
             font-size: 40px;
             color: black;
@@ -83,9 +82,19 @@
             font-size: 16px;
             color: black;
             font-weight: bold;
-            width:80px
+            width: 80px
         }
 
+        .nav-content {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            color: black;
+        }
+
+        nav ul li.active {
+            background-color: #6f0d4a;
+        }
 
         .tabs {
             position: relative;
@@ -93,219 +102,294 @@
             overflow-y: hidden;
             height: 48px;
             width: 100%;
-            background-color: 
-        nav {
-            background-color: white;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
-            position: sticky;
-            top: 0;
+            background-color: #fff;
+            margin: 0 auto;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+            .tabs .tab {
+                display: flex;
+                margin-right: 5px;
+            }
+
+
+                .tabs .tab a {
+                    color: black;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0 24px;
+                    font-size: 14px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    text-transform: capitalize;
+                    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+                }
+
+                    .tabs .tab a.active {
+                        color: white;
+                        background-color: #6f0d4a;
+                        font-weight: bolder;
+                        border: 1px solid;
+                        border-radius: 50px;
+                        border-color: #6f0d4a;
+                        text-transform: uppercase;
+                    }
+
+                    .tabs .tab a:hover {
+                        color: white;
+                        background-color: #8a265f;
+                        font-weight: bold;
+                        border: 1px solid;
+                        border-radius: 50px;
+                        border-color: #8a265f;
+                        text-transform: uppercase;
+                        opacity: 90%;
+                    }
+
+
+
+        @@media (max-width: 1135px),(max-width: 1024px) {
+            #infinity, #prints {
+                font-size: 40px;
+            }
+
+            .nav-wrapper {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+                padding: 5px 10px;
+            }
+
+            .tabs {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                font-size: 14px;
+            }
+
+                .tabs .tab a {
+                    padding: 2px 20px;
+                    font-size: 14px;
+                }
+        }
+        /* 🔹 Make tabs smaller at max-width: 1020px */
+        @@media (max-width: 1015px), (max-width: 945px) {
+            #infinity, #prints {
+                font-size: 40px;
+            }
+
+            .nav-wrapper {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                padding: 5px 10px;
+            }
+
+            .tabs {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                font-size: 13px;
+            }
+
+                .tabs .tab a {
+                    padding: 2px 10px;
+                    font-size: 13px;
+                }
+        }
+
+        /*        May burger*/
+        @@media(max-width: 365px),(max-width: 375px), (max-width: 850px) {
+
+            #infinity, #prints {
+                font-size: 40px;
+            }
+
+            .tabs {
+                display: none;
+            }
+
+                .tabs.active {
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    top: 60px;
+                    left: 0;
+                    width: 100%;
+                    background: white;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+                    z-index: 1000;
+                    padding: 10px 0;
+                    text-align: center;
+                }
+
+                .tabs .tab {
+                    padding: 10px;
+                    border-bottom: 1px solid #ddd;
+                }
+            /* Burger Icon */
+            .menu-toggle {
+                display: block;
+                font-size: 20px;
+                cursor: pointer;
+                /*                padding: 10px;*/
+                color: black;
+            }
+        }
+
+        .right-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            padding: 10px;
+        }
+
+        /* 🔹 Mobile Menu (Hidden by Default) */
+        .mobile-menu {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            width: 220px;
+            background: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
             z-index: 1000;
-            display: flex;
-            opacity:0;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            animation: fadeInNavbar 0.6s ease-out forwards;
-            transform: translateY(-20px);
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
-            @@keyframes fadeInNavbar {
-                from {
-                    opacity: 0;
-                    transform: translateY(-20px);
-                }
 
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+            /* 🔹 Show menu with animation */
+            .mobile-menu.active {
+                display: block;
+                opacity: 1;
+                transform: translateY(0);
             }
-        
 
-        /* Navbar wrapper for better alignment */
-        .nav-wrapper {
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .tabs, .tabs .tab, .tabs  .tab a {
-            display: block !important;
-            height: auto !important;
-        }
-
-          
-        #infinity {
-            margin-left: 10px;
-            font-weight: bold;
-            font-size: 40px;
-            color: black;
-        }
-
-        #prints {
-            font-weight: bold;
-            font-size: 40px;
-            color: #6f0d4a;
-        }
-
-        #signIn {
-            font-size: 16px;
-            color: black;
-            font-weight: bold;
-            width:80px
-        }
-
-
-        .tabs {
-            position: relative;
-            overflow-x: auto;
-            overflow-y: hidden;
-            height: 48px;
-            width: 100%;
-            background-color: white;
-            margin: 0 auto;
-            white-space: nowrap;
-            color: black;
-            display: block !important;
-            height: 100px !important;
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            color:black;
-        }
-
-        .tabs {
-            display: block;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-
-        }
-
-            .tabs .tab {
-                display: inline-block;
-                text-align: center;
-                line-height: 0px;
-                height: 50px;
-                padding: 10px;
-                padding-top: 40px;
+            /* 🔹 Mobile Menu Items */
+            .mobile-menu ul {
+                list-style: none;
+                padding: 0;
                 margin: 0;
-                text-transform: capitalize;
-                transition: all 0.3s ease-in-out;
             }
 
-                .tabs .tab a {
-                    color: black !important;
-                    font-size: 16px;
-                    font-weight: bold;
-                    text-decoration: none;
-                    padding: 10px 15px;
-                    display: block !important;
-                    height: 50px !important;
-                }
-                .tabs .tab.active {
-                    background-color: #6f0d4a !important;
-                    color: white !important;
-                    border-radius: 10px; /* Reduce if needed */
-                    /*padding: 10px 20px;*/ /* Ensure consistent spacing */
+                .mobile-menu ul li {
+                    padding: 12px;
+                    text-align: center;
+                    border-bottom: 1px solid #ddd;
                 }
 
-                    .tabs .tab.active a {
-                        color: white !important; /* Ensure text is readable */
+                    .mobile-menu ul li a {
+                        text-decoration: none;
+                        color: black;
+                        font-size: 16px;
+                        display: block;
+                        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+                    }
+                    .mobile-menu ul li.active {
+                        background-color: #6f0d4a;
+                        font-weight: bold;
                     }
 
-                
+                        .mobile-menu ul li.active a {
+                            color: white;
+                        }
 
-
-                    
-
-        @@media (max-width: 768px) {
-            .nav-content .tabs {
-                flex-wrap: nowrap;
-                -webkit-overflow-scrolling: touch;
-                justify-content: flex-start;
-            }
-
-                .nav-content .tabs .tab {
-                    flex-grow: 0;
-                    min-width: 120px;
-                }
-        }
-;
-            margin: 0 auto;
-            white-space: nowrap;
-            color: black;
-            display: block !important;
-            height: 100px !important;
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            color:;
-        }
-
-        .tabs {
-            display: block;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-
-        }
-
-            .tabs .tab {
-                display: inline-block;
-                text-align: center;
-                line-height: 0px;
-                height: 50px;
-                padding: 10px;
-                padding-top: 40px;
-                margin: 0;
-                text-transform: capitalize;
-                transition: all 0.3s ease-in-out;
-            }
-
-                .tabs .tab a {
-                    color: black !important;
-                    font-size: 16px;
-                    font-weight: bold;
-                    text-decoration: none;
-                    padding: 10px 15px;
-                    display: block !important;
-                    height: 50px !important;
-                }
-                .tabs .tab.active {
-                    background-color: #6f0d4a !important;
-                    color: white !important;
-                    border-radius: 10px; /* Reduce if needed */
-                    /*padding: 10px 20px;*/ /* Ensure consistent spacing */
-                }
-
-                    .tabs .tab.active a {
-                        color: white !important; /* Ensure text is readable */
+                    /* 🔹 Hover Effect */
+                    .mobile-menu ul li:hover {
+                        background-color: #6f0d4a;
                     }
 
+                        .mobile-menu ul li:hover a {
+                            color: white;
+                        }
                     
-
-        @@media (max-width: 768px) {
-            .nav-content .tabs {
-                flex-wrap: nowrap;
-                -webkit-overflow-scrolling: touch;
-                justify-content: flex-start;
+            /* 🔹 Ensure Vertical Layout */
+            .mobile-menu ul {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
             }
 
-                .nav-content .tabs .tab {
-                    flex-grow: 0;
-                    min-width: 120px;
-                }
+        /* 🔹 Hide burger icon above 850px */
+        @@media (min-width: 851px) {
+            .menu-toggle {
+                display: none !important;
+            }
+
+            .tabs {
+                display: flex !important;
+            }
+        }
+
+        /* 🔹 Show burger icon only at 850px and below */
+        @@media (max-width: 850px) {
+            .tabs {
+                display: none; /* Hide tabs */
+            }
+
+            .menu-toggle {
+                display: block !important;
+                font-size: 20px;
+                cursor: pointer;
+                color: black;
+                padding: 10px;
+            }
         }
 
 
-        
+        @@media only screen and (max-width: 768px) {
+            #prints {
+                font-weight: bold;
+                font-size: 40px;
+                color: #6f0d4a !important;
+                margin-left: 0px !important;
+            }
+
+            #infinity {
+                margin-left: 0px !important;
+                font-weight: bold;
+                font-size: 40px;
+                color: black !important;
+            }
+
+            #greet {
+                font-weight: bold;
+                font-size: 40px !important;
+                color: black;
+            }
+
+            #infinity2 {
+                margin-left: 10px;
+                font-weight: bold;
+                font-size: 40px !important;
+                color: #6f0d4a;
+            }
+
+            #prints2 {
+                font-weight: bold;
+                font-size: 40px !important;
+                color: black;
+            }
+        }
+
+        @@media (max-width: 376px) {
+            #infinity, #prints {
+                font-size: 30px !important;
+            }
+        }
+
+
+
         #txtuser {
             font-weight: bold;
             font-size: 20px;
@@ -574,7 +658,7 @@
 
         #row-greet {
             margin-bottom: 0px;
-            margin-top:50px;
+            margin-top: 50px;
         }
 
         #servicesTxt, #feedbacksTxt {
@@ -1009,7 +1093,7 @@
                 this.style.display = 'none'; // Hide the "View more" link
             });
         </script>*@
-    <script>
+    @*<script>
         //var modal = document.getElementById("termsModal");
         // var btn = document.getElementById("terms");
         // var span = document.getElementsByClassName("close")[0];
@@ -1030,7 +1114,34 @@
         //         modal.style.display = "none";
         //    }
         //  };
-    </script>
+    </script>*@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        // Toggle menu when clicking the hamburger icon
+        menuToggle.addEventListener("click", function () {
+            mobileMenu.classList.toggle("active");
+        });
+
+        // Close menu when the cursor leaves the dropdown
+        mobileMenu.addEventListener("mouseleave", function () {
+            mobileMenu.classList.remove("active");
+        });
+
+        // Optional: Close when clicking outside the menu
+        document.addEventListener("click", function (event) {
+            if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                mobileMenu.classList.remove("active");
+            }
+        });
+    });
+
+
+
+</script>
+
 
 
 
