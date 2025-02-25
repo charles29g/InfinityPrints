@@ -3,370 +3,387 @@
 }
 
 <body>
+
     @*<nav class="nav-extended">
             <div class="nav-wrapper">
-                <div class="row">
-                    <div class="col s6">
-                        <a class="left" id="infinity">Infinity</a>
-                        <a class="left" id="prints">Prints</a>
-                    </div>
-                    <div class="col s6" style="text-align: right;">
-                        <p id="signIn" href="~/Home/SignIn">{{Name}}</p>
-                    </div>
+                <div>
+                    <a id="infinity">Infinity</a>
+                    <a id="prints">Prints</a>
+                </div>
+
+                <div class="nav-content">
+                    <ul class="tabs">
+                        <li class="tab active"><a ng-click="Homepage()">Home</a></li>
+                        <li class="tab"><a ng-click="Servicepage()">Services</a></li>
+                        <li class="tab"><a ng-click="Reviewpage()">Reviews</a></li>
+                        <li class="tab"><a ng-click="OrderPage()">Order</a></li>
+                        <li class="tab"><a href="#test5">FAQs</a></li>
+                        <li class="tab"><a ng-click="About()">About Us</a></li>
+                    </ul>
+                    <a id="signIn">Sign In</a>
                 </div>
             </div>
-            <div class="nav-content">
-                <ul class="tabs">
-                    <li class="tab "><a ng-click="SignIn()">Home</a></li>
-                    <li class="tab "><a>Services</a></li>
-                    <li class="tab "><a>Reviews</a></li>
-                    <li class="tab disabled"><a>Order</a></li>
-                    <li class="tab "><a href="#test5">FAQs</a></li>
-                    <li class="tab "><a href="#test6">About Us</a></li>
-                </ul>
-            </div>
         </nav>*@
+
     <nav class="nav-extended">
         <div class="nav-wrapper">
             <div>
                 <a id="infinity">Infinity</a>
                 <a id="prints">Prints</a>
             </div>
-
             <div class="nav-content">
                 <ul class="tabs">
-                    <li class="tab active"><a ng-click="Homepage()">Home</a></li>
+                    <li class="tab"><a ng-click="Homepage()">Home</a></li>
                     <li class="tab"><a ng-click="Servicepage()">Services</a></li>
                     <li class="tab"><a ng-click="Reviewpage()">Reviews</a></li>
                     <li class="tab"><a ng-click="OrderPage()">Order</a></li>
-                    <li class="tab"><a href="#test5">FAQs</a></li>
-                    <li class="tab"><a ng-click="About()">About Us</a></li>
+                    <li class="tab"><a ng-click="FAQpage()">FAQs</a></li>
+                    <li class="tab"><a ng-click="AboutusPage()">About Us</a></li>
+                    <li class="tab"><span>{{Name}}</span></li>
+
                 </ul>
-                <a id="signIn">Sign In</a>
+                <div class="right-menu">
+                    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+                </div>
             </div>
+        </div>
+
+        <!-- Hidden Dropdown Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a ng-click="SignIn()">{{Name}}</a></li>
+                <li><a ng-click="Homepage()">Home</a></li>
+                <li><a ng-click="Servicepage()">Services</a></li>
+                <li><a ng-click="Reviewpage()">Reviews</a></li>
+                <li><a ng-click="OrderPage()">Order</a></li>
+                <li><a ng-click="FAQpage()">FAQs</a></li>
+                <li><a ng-click="AboutusPage()">About Us</a></li>
+            </ul>
         </div>
     </nav>
 
-    <div class="row">
-        <h5 id="txtSign">Log In</h5>
-    </div>
-
-    <div class="container-fluid">
+    <div class="body">
         <div class="row">
-            <!-- Sign In Form -->
-            <div class="col s12 m5" style="padding-left:40px; padding-right:40px">
-                <a class="left" id="txtuser">Existing</a>
-                <a class="left" style="margin-left:5px" id="user">User</a>
-                <div class="row">
-                    <div class="col s12" style="margin-top:10px;">
-                        <!-- Email -->
-                        <div class="input-icons">
-                            <i class="material-icons input-icon">email</i>
-                            <input id="email" class="input-field validate" type="email" placeholder="Email" required ng-model="email" name="email" />
-                            <span class="helper-text red-text" ng-show="SignInForm.email.$touched && SignInForm.email.$error.required">
-                                Email is required.
-                            </span>
-                            <span class="helper-text red-text" ng-show="SignInForm.email.$touched && SignInForm.email.$error.email">
-                                Please enter a valid email address.
-                            </span>
-                        </div>
+            <h5 id="txtSign">Log In</h5>
+        </div>
 
-                        <!-- Password -->
-                        <div class="input-icons" ng-class="{'invalid': SignInForm.password.$touched && SignInForm.password.$invalid || SignInForm.$submitted && SignInForm.password.$invalid}">
-                            <i class="material-icons input-icon">lock</i>
-                            <input id="pass" class="input-field validate"
-                                   type="{{showPassword ? 'text' : 'password'}}"
-                                   placeholder="Password" required ng-model="password" name="password" />
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sign In Form -->
+                <div class="col s12 m5" style="padding-left:40px; padding-right:40px">
+                    <a class="left" id="txtuser">Existing</a>
+                    <a class="left" style="margin-left:5px" id="user">User</a>
+                    <div class="row">
+                        <div class="col s12" style="margin-top:10px;">
+                            <!-- Email -->
+                            <div class="input-icons">
+                                <i class="material-icons input-icon">email</i>
+                                <input id="email" class="input-field validate" type="email" placeholder="Email" required ng-model="email" name="email" />
+                                <span class="helper-text red-text" ng-show="SignInForm.email.$touched && SignInForm.email.$error.required">
+                                    Email is required.
+                                </span>
+                                <span class="helper-text red-text" ng-show="SignInForm.email.$touched && SignInForm.email.$error.email">
+                                    Please enter a valid email address.
+                                </span>
+                            </div>
 
-                            <!-- Visibility icon -->
-                            <i class="material-icons input-icon-right"
-                               ng-click="showPassword = !showPassword">
-                                {{showPassword ? 'visibility_off' : 'visibility'}}
-                            </i>
+                            <!-- Password -->
+                            <div class="input-icons" ng-class="{'invalid': SignInForm.password.$touched && SignInForm.password.$invalid || SignInForm.$submitted && SignInForm.password.$invalid}">
+                                <i class="material-icons input-icon">lock</i>
+                                <input id="pass" class="input-field validate"
+                                       type="{{showPassword ? 'text' : 'password'}}"
+                                       placeholder="Password" required ng-model="password" name="password" />
 
-                            <!-- Error message -->
-                            <span class="helper-text red-text" ng-show="SignInForm.password.$touched && SignInForm.password.$error.required">
-                                Password is required.
-                            </span>
-                        </div>
+                                <!-- Visibility icon -->
+                                <i class="material-icons input-icon-right"
+                                   ng-click="showPassword = !showPassword">
+                                    {{showPassword ? 'visibility_off' : 'visibility'}}
+                                </i>
 
-                        <div class="button-container">
-                            <button class="btn" type="submit" ng-click="loginfunc()">Login</button>
-                        </div>
-                        <div class="resetpass">
-                            <a class="reset" ng-click="ForgotPassword()">Forgot Password?</a>
+                                <!-- Error message -->
+                                <span class="helper-text red-text" ng-show="SignInForm.password.$touched && SignInForm.password.$error.required">
+                                    Password is required.
+                                </span>
+                            </div>
+
+                            <div class="button-container">
+                                <button class="btn" type="submit" ng-click="loginfunc()">Login</button>
+                            </div>
+                            <div class="resetpass">
+                                <a class="reset" ng-click="ForgotPassword()">Forgot Password?</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col col-divider"></div>
+                <div class="col col-divider"></div>
 
-            <!-- Sign Up Form -->
-            <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
-                <a class="left" id="txtuser">New</a>
-                <a class="left" style="margin-left:5px" id="user">User</a>
+                <!-- Sign Up Form -->
+                <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
+                    <a class="left" id="txtuser">New</a>
+                    <a class="left" style="margin-left:5px" id="user">User</a>
 
-                <div class="row">
-                    <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
-                        <div class="row">
-                            <!-- First Name -->
-                            <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.fName.$touched && signUpForm.fName.$invalid || signUpForm.$submitted && signUpForm.fName.$invalid}">
-                                <i class="material-icons input-icon">person</i>
-                                <input id="fname" class="input-field validate" type="text" placeholder="First Name" required ng-model="firstName" ng-minlength="1" minlength="1" maxlength="50" name="fName" ng-pattern="/^[a-zA-Z0-9 ]+$/" autocomplete="off" />
-                                <span class="helper-text red-text" ng-show="signUpForm.fName.$error.required && (signUpForm.fName.$touched || signUpForm.$submitted)">First name is required</span>
-                                <span class="helper-text red-text" ng-show="signUpForm.fName.$error.maxlength && (signUpForm.fName.$touched || signUpForm.$submitted)">First name must not exceed to 50 characters.</span>
-                            </div>
+                    <div class="row">
+                        <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
+                            <div class="row">
+                                <!-- First Name -->
+                                <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.fName.$touched && signUpForm.fName.$invalid || signUpForm.$submitted && signUpForm.fName.$invalid}">
+                                    <i class="material-icons input-icon">person</i>
+                                    <input id="fname" class="input-field validate" type="text" placeholder="First Name" required ng-model="firstName" ng-minlength="1" minlength="1" maxlength="50" name="fName" ng-pattern="/^[a-zA-Z0-9 ]+$/" autocomplete="off" />
+                                    <span class="helper-text red-text" ng-show="signUpForm.fName.$error.required && (signUpForm.fName.$touched || signUpForm.$submitted)">First name is required</span>
+                                    <span class="helper-text red-text" ng-show="signUpForm.fName.$error.maxlength && (signUpForm.fName.$touched || signUpForm.$submitted)">First name must not exceed to 50 characters.</span>
+                                </div>
 
-                            <!-- Last Name -->
-                            <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.lname.$touched && signUpForm.lname.$invalid || signUpForm.$submitted && signUpForm.lname.$invalid}">
-                                <i class="material-icons input-icon">person</i>
-                                <input id="lname" class="input-field validate" type="text" placeholder="Last Name" required ng-model="lastName" ng-minlength="1" minlength="1" maxlength="50" name="lName" ng-pattern="/^[a-zA-Z0-9 ]+$/" autocomplete="off" />
-                                <span class="helper-text red-text" ng-show="signUpForm.lName.$error.required && (signUpForm.lName.$touched || signUpForm.$submitted)">Last Name is required.</span>
-                                <span class="helper-text red-text" ng-show="signUpForm.lName.$error.maxlength && (signUpForm.lName.$touched || signUpForm.$submitted)">Last Name cannot exceed 50 characters.</span>
-                            </div>
+                                <!-- Last Name -->
+                                <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.lname.$touched && signUpForm.lname.$invalid || signUpForm.$submitted && signUpForm.lname.$invalid}">
+                                    <i class="material-icons input-icon">person</i>
+                                    <input id="lname" class="input-field validate" type="text" placeholder="Last Name" required ng-model="lastName" ng-minlength="1" minlength="1" maxlength="50" name="lName" ng-pattern="/^[a-zA-Z0-9 ]+$/" autocomplete="off" />
+                                    <span class="helper-text red-text" ng-show="signUpForm.lName.$error.required && (signUpForm.lName.$touched || signUpForm.$submitted)">Last Name is required.</span>
+                                    <span class="helper-text red-text" ng-show="signUpForm.lName.$error.maxlength && (signUpForm.lName.$touched || signUpForm.$submitted)">Last Name cannot exceed 50 characters.</span>
+                                </div>
 
-                            <!-- Phone Number -->
-                            <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.phone.$touched && signUpForm.phone.$invalid || signUpForm.$submitted && signUpForm.phone.$invalid}">
-                                <i class="material-icons input-icon">phone</i>
-                                <input id="phone" class="input-field validate" type="text" placeholder="Phone No." required ng-model="phone" name="phone" minlength="11" maxlength="12" ng-pattern="/^(09|\+639)\d{9}$/" autocomplete="off" />
-                                <span class="helper-text red-text" ng-show="(signUpForm.phone.$error.required && (signUpForm.phone.$touched || signUpForm.$submitted)) ||
+                                <!-- Phone Number -->
+                                <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.phone.$touched && signUpForm.phone.$invalid || signUpForm.$submitted && signUpForm.phone.$invalid}">
+                                    <i class="material-icons input-icon">phone</i>
+                                    <input id="phone" class="input-field validate" type="text" placeholder="Phone No." required ng-model="phone" name="phone" minlength="11" maxlength="12" ng-pattern="/^(09|\+639)\d{9}$/" autocomplete="off" />
+                                    <span class="helper-text red-text" ng-show="(signUpForm.phone.$error.required && (signUpForm.phone.$touched || signUpForm.$submitted)) ||
                                                   (signUpForm.phone.$error.pattern && (signUpForm.phone.$touched || signUpForm.$submitted))">
-                                    <span ng-show="signUpForm.phone.$error.required && (signUpForm.phone.$touched || signUpForm.$submitted)">
-                                        Phone number is required.
+                                        <span ng-show="signUpForm.phone.$error.required && (signUpForm.phone.$touched || signUpForm.$submitted)">
+                                            Phone number is required.
+                                        </span>
+                                        <span ng-show="signUpForm.phone.$error.pattern && (signUpForm.phone.$touched || signUpForm.$submitted)">
+                                            Enter a valid Philippine number (e.g., 09123456789, +639123456789).
+                                        </span>
                                     </span>
-                                    <span ng-show="signUpForm.phone.$error.pattern && (signUpForm.phone.$touched || signUpForm.$submitted)">
-                                        Enter a valid Philippine number (e.g., 09123456789, +639123456789).
-                                    </span>
-                                </span>
-                            </div>
+                                </div>
 
-                            <!-- Email -->
-                            <div class="col s6 input-icons"
-                                 ng-class="{'invalid': signUpForm.email2.$touched && (signUpForm.email2.$invalid || signUpForm.email2.$error.pattern) || signUpForm.$submitted && signUpForm.email2.$invalid}">
-                                <i class="material-icons input-icon">email</i>
-                                <input id="email2" class="input-field validate" type="email" placeholder="Email" required maxlength="60"
-                                       ng-model="email2" name="email2" ng-pattern="emailPattern" />
+                                <!-- Email -->
+                                <div class="col s6 input-icons"
+                                     ng-class="{'invalid': signUpForm.email2.$touched && (signUpForm.email2.$invalid || signUpForm.email2.$error.pattern) || signUpForm.$submitted && signUpForm.email2.$invalid}">
+                                    <i class="material-icons input-icon">email</i>
+                                    <input id="email2" class="input-field validate" type="email" placeholder="Email" required maxlength="60"
+                                           ng-model="email2" name="email2" ng-pattern="emailPattern" />
 
-                                <span class="helper-text red-text" ng-show="(signUpForm.email2.$error.required && (signUpForm.email2.$touched || signUpForm.$submitted)) ||
+                                    <span class="helper-text red-text" ng-show="(signUpForm.email2.$error.required && (signUpForm.email2.$touched || signUpForm.$submitted)) ||
                                     (signUpForm.email2.$error.pattern && (signUpForm.email2.$touched || signUpForm.$submitted))">
-                                    <span ng-show="signUpForm.email2.$error.required && (signUpForm.email2.$touched || signUpForm.$submitted)">
-                                        Email is required.
+                                        <span ng-show="signUpForm.email2.$error.required && (signUpForm.email2.$touched || signUpForm.$submitted)">
+                                            Email is required.
+                                        </span>
+                                        <span ng-show="signUpForm.email2.$error.email && (signUpForm.email2.$touched || signUpForm.$submitted)">
+                                            Please enter a valid Email address (e.g., user@domain.com).
+                                        </span>
                                     </span>
-                                    <span ng-show="signUpForm.email2.$error.email && (signUpForm.email2.$touched || signUpForm.$submitted)">
-                                        Please enter a valid Email address (e.g., user@domain.com).
-                                    </span>
-                                </span>
-                            </div>
+                                </div>
 
 
-                            <!-- Username -->
-                            <div class="col s12 input-icons" ng-class="{'invalid': signUpForm.username.$touched && signUpForm.username.$invalid || signUpForm.$submitted && signUpForm.username.$invalid}">
-                                <i class="material-icons input-icon">person</i>
-                                <input id="uname" class="input-field validate" type="text" placeholder="Username" required ng-model="username" name="username" ng-minlength="3" minlength="3" maxlength="15" />
-                                <span class="helper-text red-text"
-                                      ng-show="(signUpForm.username.$error.required && (signUpForm.username.$touched || signUpForm.$submitted)) ||
+                                <!-- Username -->
+                                <div class="col s12 input-icons" ng-class="{'invalid': signUpForm.username.$touched && signUpForm.username.$invalid || signUpForm.$submitted && signUpForm.username.$invalid}">
+                                    <i class="material-icons input-icon">person</i>
+                                    <input id="uname" class="input-field validate" type="text" placeholder="Username" required ng-model="username" name="username" ng-minlength="3" minlength="3" maxlength="15" />
+                                    <span class="helper-text red-text"
+                                          ng-show="(signUpForm.username.$error.required && (signUpForm.username.$touched || signUpForm.$submitted)) ||
                                             (signUpForm.username.$error.minlength && (signUpForm.username.$touched || signUpForm.$submitted))">
-                                    <span ng-show="signUpForm.username.$error.required && (signUpForm.username.$touched || signUpForm.$submitted)">
-                                        Username is required.
+                                        <span ng-show="signUpForm.username.$error.required && (signUpForm.username.$touched || signUpForm.$submitted)">
+                                            Username is required.
+                                        </span>
+                                        <span ng-show="signUpForm.username.$error.minlength && (signUpForm.username.$touched || signUpForm.$submitted)">
+                                            Username must be at least 3 characters long.
+                                        </span>
                                     </span>
-                                    <span ng-show="signUpForm.username.$error.minlength && (signUpForm.username.$touched || signUpForm.$submitted)">
-                                        Username must be at least 3 characters long.
+                                </div>
+
+
+                                <!-- Password -->
+                                <div class="col s12 input-icons" ng-class="{'invalid': signUpForm.password2.$touched && signUpForm.password2.$invalid || signUpForm.$submitted && signUpForm.password2.$invalid}">
+                                    <i class="material-icons input-icon">lock</i>
+                                    <input id="pass2" class="input-field validate" type="{{showPassword2 ? 'text' : 'password'}}" placeholder="Password" required ng-model="password2" name="password2"
+                                           ng-minlength="8" minlength="8" maxlength="15" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/" />
+
+                                    <!-- Visibility icon -->
+                                    <i class="material-icons input-icon input-icon-right2" ng-click="showPassword2 = !showPassword2">
+                                        {{showPassword2 ? 'visibility_off' : 'visibility'}}
+                                    </i>
+
+                                    <!-- Error messages -->
+                                    <span class="helper-text red-text" ng-show="signUpForm.password2.$touched && signUpForm.password2.$error.required">
+                                        Password is required.
                                     </span>
-                                </span>
-                            </div>
-
-
-                            <!-- Password -->
-                            <div class="col s12 input-icons" ng-class="{'invalid': signUpForm.password2.$touched && signUpForm.password2.$invalid || signUpForm.$submitted && signUpForm.password2.$invalid}">
-                                <i class="material-icons input-icon">lock</i>
-                                <input id="pass2" class="input-field validate" type="{{showPassword2 ? 'text' : 'password'}}" placeholder="Password" required ng-model="password2" name="password2"
-                                       ng-minlength="8" minlength="8" maxlength="15" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/" />
-
-                                <!-- Visibility icon -->
-                                <i class="material-icons input-icon input-icon-right2" ng-click="showPassword2 = !showPassword2">
-                                    {{showPassword2 ? 'visibility_off' : 'visibility'}}
-                                </i>
-
-                                <!-- Error messages -->
-                                <span class="helper-text red-text" ng-show="signUpForm.password2.$touched && signUpForm.password2.$error.required">
-                                    Password is required.
-                                </span>
-                                <span class="helper-text red-text" ng-show="signUpForm.password2.$touched && signUpForm.password2.$error.minlength">
-                                    Password must be at least 8 characters long.
-                                </span>
-                                <span class="helper-text red-text" ng-show="signUpForm.password2.$touched && signUpForm.password2.$viewValue.length >= 8 && signUpForm.password2.$error.pattern">
-                                    Password must contain at least one uppercase letter, one lowercase letter, and one number.
-                                </span>
-                            </div>
+                                    <span class="helper-text red-text" ng-show="signUpForm.password2.$touched && signUpForm.password2.$error.minlength">
+                                        Password must be at least 8 characters long.
+                                    </span>
+                                    <span class="helper-text red-text" ng-show="signUpForm.password2.$touched && signUpForm.password2.$viewValue.length >= 8 && signUpForm.password2.$error.pattern">
+                                        Password must contain at least one uppercase letter, one lowercase letter, and one number.
+                                    </span>
+                                </div>
 
 
 
 
-                            <!-- Confirm Password -->
-                            <div class="col s12 input-icons" ng-class="{'invalid': signUpForm.confpass.$touched && (signUpForm.confpass.$error.required || confirmPassword !== password2) || signUpForm.$submitted && (signUpForm.confpass.$error.required || confirmPassword !== password2)}">
-                                <i class="material-icons input-icon">lock</i>
-                                <input id="confpass" class="input-field validate" maxlength="15" type="{{showConfirmPassword ? 'text' : 'password'}}" placeholder="Confirm Password" required ng-model="confirmPassword" name="confpass" ng-minlength="8" />
-                                <i class="material-icons input-icon input-icon-right2" ng-click="showConfirmPassword = !showConfirmPassword">
-                                    {{showConfirmPassword ? 'visibility_off' : 'visibility'}}
-                                </i>
+                                <!-- Confirm Password -->
+                                <div class="col s12 input-icons" ng-class="{'invalid': signUpForm.confpass.$touched && (signUpForm.confpass.$error.required || confirmPassword !== password2) || signUpForm.$submitted && (signUpForm.confpass.$error.required || confirmPassword !== password2)}">
+                                    <i class="material-icons input-icon">lock</i>
+                                    <input id="confpass" class="input-field validate" maxlength="15" type="{{showConfirmPassword ? 'text' : 'password'}}" placeholder="Confirm Password" required ng-model="confirmPassword" name="confpass" ng-minlength="8" />
+                                    <i class="material-icons input-icon input-icon-right2" ng-click="showConfirmPassword = !showConfirmPassword">
+                                        {{showConfirmPassword ? 'visibility_off' : 'visibility'}}
+                                    </i>
 
-                                <!-- Error messages -->
-                                <!-- Password mismatch -->
-                                <span class="helper-text red-text" ng-show="signUpForm.confpass.$touched && confirmPassword !== password2 && confirmPassword !== ''">
-                                    Passwords do not match.
-                                </span>
-                                <!-- Required error -->
-                                <span class="helper-text red-text" ng-show="signUpForm.confpass.$touched && confirmPassword === ''">
-                                    Confirm Password is required.
-                                </span>
-                            </div>
+                                    <!-- Error messages -->
+                                    <!-- Password mismatch -->
+                                    <span class="helper-text red-text" ng-show="signUpForm.confpass.$touched && confirmPassword !== password2 && confirmPassword !== ''">
+                                        Passwords do not match.
+                                    </span>
+                                    <!-- Required error -->
+                                    <span class="helper-text red-text" ng-show="signUpForm.confpass.$touched && confirmPassword === ''">
+                                        Confirm Password is required.
+                                    </span>
+                                </div>
 
-                            <!-- Terms & Conditions Checkbox -->
-                            <div class="checkbox-container">
-                                <label>
-                                    <input class="check" type="checkbox" required id="terms" name="terms">
-                                    <span id="terms">I accept terms & conditions</span>
-                                </label>
-                                <span class="helper-text red-text" ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">
-                                    You must accept the terms and conditions.
-                                </span>
-                            </div>
+                                <!-- Terms & Conditions Checkbox -->
+                                <div class="checkbox-container">
+                                    <label>
+                                        <input class="check" type="checkbox" required id="terms" name="terms">
+                                        <span id="terms">I accept terms & conditions</span>
+                                    </label>
+                                    <span class="helper-text red-text" ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">
+                                        You must accept the terms and conditions.
+                                    </span>
+                                </div>
 
-                            <!-- Modal -->
-                            <div id="termsModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
+                                <!-- Modal -->
+                                <div id="termsModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
 
-                                    <!-- Header Section with Background Color -->
-                                    <div class="terms-header">
-                                        <h2>Terms & Conditions</h2>
-                                        <p>By using our service, you agree to abide by the following terms and conditions...</p>
-                                    </div>
+                                        <!-- Header Section with Background Color -->
+                                        <div class="terms-header">
+                                            <h2>Terms & Conditions</h2>
+                                            <p>By using our service, you agree to abide by the following terms and conditions...</p>
+                                        </div>
 
-                                    <!-- Card for the Terms & Conditions Content -->
-                                    <div class="terms-card">
-                                        <h4> Infinity Prints: Terms and Conditions</h4>
-                                        <h5> 1. Payment Terms </h5>
-                                        <strong>
-                                            1.1 Individual/Personal Orders
-                                        </strong>
-                                        <p>
-                                            50% down payment required at the time of order placement.
-                                            Remaining 50% balance due upon order pick-up.
-                                        </p>
-                                        <p> No items released without full payment.</p>
-                                        <strong>
-                                            1.2 Corporate Accounts
-                                        </strong>
-                                        <h5>Approved corporate accounts may avail of payment terms:</h5>
-                                        <p> 15-day terms: Payment due within 15 days from invoice issuance.</p>
-                                        <p>30-day terms: Payment due within 30 days from invoice issuance.</p>
-                                        <p> Corporate accounts subject to prior approval and credit verification.</p>
-                                        <p> Late payments may incur additional charges as specified in the agreement.<p>
-
+                                        <!-- Card for the Terms & Conditions Content -->
+                                        <div class="terms-card">
+                                            <h4> Infinity Prints: Terms and Conditions</h4>
+                                            <h5> 1. Payment Terms </h5>
                                             <strong>
-                                                1.3 Payment Methods
+                                                1.1 Individual/Personal Orders
                                             </strong>
-                                        <p>
-                                            Payments can be made via cash, credit/debit cards, or other approved methods.
-                                            Specific payment methods may vary based on customer preferences and business availability.
-                                        </p>
-                                        <h5>
-                                            2. Order Management
-                                        </h5>
-                                        <strong>
-                                            2.1 Order Approval
-                                        </strong><p>
-                                            Orders are subject to review and approval by the business.
-                                            The owner or authorized employees may approve, decline, or cancel orders.
-                                        </p>
-                                        <strong>
-                                            2.2 Order Updates
-                                        </strong>
-                                        <p>Customers will be updated on the status of their orders throughout the process.</p>
-                                        <strong>
-                                            2.3 Custom Orders
-                                        </strong>
-                                        <p> Orders requiring customization are subject to extended timelines, which will be communicated during order placement.</p>
-                                        <strong>
-                                            2.4 Walk-In Orders
-                                        </strong>
-                                        <p>Employees are authorized to create orders on behalf of walk-in customers and add them to the system for tracking and fulfillment.</p>
-                                        <h5>
-                                            3. Customer Support
-                                        </h5>
-                                        <p>Customers may reach out for support or inquiries through available communication channels.</p>
-                                        <p>Employees and the owner are available to address order-related concerns, including updates on order statuses or other queries.</p>
-                                        <h5>
-                                            4. Refunds and Exchanges
-                                        </h5>
-                                        <p>Refunds or exchanges are only permitted for defective or incorrect items.</p>
-                                        <p> Claims must be reported within 3 days of receiving the item.</p>
-                                        <p>Custom orders are non-refundable and non-exchangeable, except in cases of defects or errors attributable to the business.</p>
-                                        <h5>
-                                            5. Disclaimers
-                                        </h5>
-                                        <p>Infinity Prints is not responsible for delays caused by unforeseen circumstances such as natural disasters, technical issues, or supply chain disruptions.</p>
-                                        <p>Customers are responsible for providing accurate order information. Errors resulting from customer-provided details are not the responsibility of the business.</p>
-                                        <h5>
-                                            6. Changes to Terms and Conditions
-                                        </h5>
-                                        <p>These terms and conditions are subject to change without prior notice.</p>
-                                        <p>Updated terms will be communicated via our website or in-store.</p>
+                                            <p>
+                                                50% down payment required at the time of order placement.
+                                                Remaining 50% balance due upon order pick-up.
+                                            </p>
+                                            <p> No items released without full payment.</p>
+                                            <strong>
+                                                1.2 Corporate Accounts
+                                            </strong>
+                                            <h5>Approved corporate accounts may avail of payment terms:</h5>
+                                            <p> 15-day terms: Payment due within 15 days from invoice issuance.</p>
+                                            <p>30-day terms: Payment due within 30 days from invoice issuance.</p>
+                                            <p> Corporate accounts subject to prior approval and credit verification.</p>
+                                            <p> Late payments may incur additional charges as specified in the agreement.<p>
 
-                                        <h4>
-                                            Account Security
-                                        </h4>
-                                        <h5>
-                                            1. Account Creation and Responsibility
-                                        </h5>
-                                        <p>  Customers are responsible for creating and maintaining a secure password for their accounts. </p>
-                                        <p> Infinity Prints recommends using a strong password that includes a combination of uppercase and lowercase letters, numbers, and symbols.</p>
-                                        <p> Customers are solely responsible for all activity that occurs under their account. </p>
-                                        <h5>
-                                            1.2 Confidentiality
-                                        </h5>
-                                        <p> Customers must keep their account information, including passwords and any other sensitive data, confidential and not share it with unauthorized individuals.</p>
-                                        <p> Customers must notify Infinity Prints immediately of any suspected unauthorized use of their account or any security breach.</p>
-                                        <h5>
-                                            1.3 Account Access
-                                        </h5>
-                                        <p>Infinity Prints reserves the right to suspend or terminate a customer's account if it suspects any fraudulent activity or violation of these Terms and Conditions.</p>
-                                        <h5>
-                                            1.4 Data Security
-                                        </h5>
-                                        <p>Infinity Prints takes reasonable measures to protect customer data from unauthorized access, use, disclosure, alteration, or destruction.</p>
-                                        <p> However, Infinity Prints cannot guarantee the complete security of any data transmitted over the internet or stored electronically. This is due to potential risks posed by hackers and other cyber threats that exist in the digital space. While our website has security measures to protect your information, it is important to acknowledge that no system can be entirely immune to such risks.</p>
+                                                <strong>
+                                                    1.3 Payment Methods
+                                                </strong>
+                                            <p>
+                                                Payments can be made via cash, credit/debit cards, or other approved methods.
+                                                Specific payment methods may vary based on customer preferences and business availability.
+                                            </p>
+                                            <h5>
+                                                2. Order Management
+                                            </h5>
+                                            <strong>
+                                                2.1 Order Approval
+                                            </strong><p>
+                                                Orders are subject to review and approval by the business.
+                                                The owner or authorized employees may approve, decline, or cancel orders.
+                                            </p>
+                                            <strong>
+                                                2.2 Order Updates
+                                            </strong>
+                                            <p>Customers will be updated on the status of their orders throughout the process.</p>
+                                            <strong>
+                                                2.3 Custom Orders
+                                            </strong>
+                                            <p> Orders requiring customization are subject to extended timelines, which will be communicated during order placement.</p>
+                                            <strong>
+                                                2.4 Walk-In Orders
+                                            </strong>
+                                            <p>Employees are authorized to create orders on behalf of walk-in customers and add them to the system for tracking and fulfillment.</p>
+                                            <h5>
+                                                3. Customer Support
+                                            </h5>
+                                            <p>Customers may reach out for support or inquiries through available communication channels.</p>
+                                            <p>Employees and the owner are available to address order-related concerns, including updates on order statuses or other queries.</p>
+                                            <h5>
+                                                4. Refunds and Exchanges
+                                            </h5>
+                                            <p>Refunds or exchanges are only permitted for defective or incorrect items.</p>
+                                            <p> Claims must be reported within 3 days of receiving the item.</p>
+                                            <p>Custom orders are non-refundable and non-exchangeable, except in cases of defects or errors attributable to the business.</p>
+                                            <h5>
+                                                5. Disclaimers
+                                            </h5>
+                                            <p>Infinity Prints is not responsible for delays caused by unforeseen circumstances such as natural disasters, technical issues, or supply chain disruptions.</p>
+                                            <p>Customers are responsible for providing accurate order information. Errors resulting from customer-provided details are not the responsibility of the business.</p>
+                                            <h5>
+                                                6. Changes to Terms and Conditions
+                                            </h5>
+                                            <p>These terms and conditions are subject to change without prior notice.</p>
+                                            <p>Updated terms will be communicated via our website or in-store.</p>
+
+                                            <h4>
+                                                Account Security
+                                            </h4>
+                                            <h5>
+                                                1. Account Creation and Responsibility
+                                            </h5>
+                                            <p>  Customers are responsible for creating and maintaining a secure password for their accounts. </p>
+                                            <p> Infinity Prints recommends using a strong password that includes a combination of uppercase and lowercase letters, numbers, and symbols.</p>
+                                            <p> Customers are solely responsible for all activity that occurs under their account. </p>
+                                            <h5>
+                                                1.2 Confidentiality
+                                            </h5>
+                                            <p> Customers must keep their account information, including passwords and any other sensitive data, confidential and not share it with unauthorized individuals.</p>
+                                            <p> Customers must notify Infinity Prints immediately of any suspected unauthorized use of their account or any security breach.</p>
+                                            <h5>
+                                                1.3 Account Access
+                                            </h5>
+                                            <p>Infinity Prints reserves the right to suspend or terminate a customer's account if it suspects any fraudulent activity or violation of these Terms and Conditions.</p>
+                                            <h5>
+                                                1.4 Data Security
+                                            </h5>
+                                            <p>Infinity Prints takes reasonable measures to protect customer data from unauthorized access, use, disclosure, alteration, or destruction.</p>
+                                            <p> However, Infinity Prints cannot guarantee the complete security of any data transmitted over the internet or stored electronically. This is due to potential risks posed by hackers and other cyber threats that exist in the digital space. While our website has security measures to protect your information, it is important to acknowledge that no system can be entirely immune to such risks.</p>
 
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
 
 
 
-                            <!-- Terms & Conditions -->
-                            <!--<div class="checkbox-container">
-                                <label>
-                                    <input class="check" type="checkbox" required ng-model="termsAccepted" />
-                                    <span id="terms">I accept terms & conditions</span>
-                                </label>
-                                <span class="helper-text red-text" S ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">You must accept the terms and conditions.</span>
-                            </div>-->
-                            <!-- Submit Button -->
-                            <div class="button-container2">
+                                <!-- Terms & Conditions -->
+                                <!--<div class="checkbox-container">
+                                    <label>
+                                        <input class="check" type="checkbox" required ng-model="termsAccepted" />
+                                        <span id="terms">I accept terms & conditions</span>
+                                    </label>
+                                    <span class="helper-text red-text" S ng-show="signUpForm.check.$error.required && (signUpForm.check.$touched || signUpForm.$submitted)">You must accept the terms and conditions.</span>
+                                </div>-->
                                 <!-- Submit Button -->
-                                <button class="btn waves-effect waves-light" type="submit" ng-click="InsertReg()" ng-disabled="signUpForm.$invalid">Submit</button>
+                                <div class="button-container2">
+                                    <!-- Submit Button -->
+                                    <button class="btn waves-effect waves-light" type="submit" ng-click="InsertReg()" ng-disabled="signUpForm.$invalid">Submit</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
+
+
+
             </div>
-
-
-
         </div>
     </div>
 </body>

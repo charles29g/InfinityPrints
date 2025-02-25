@@ -142,6 +142,17 @@ namespace InfinityPrints.Controllers
             return View();
         }
 
+        public ActionResult FAQpage()
+        {
+
+            return View();
+        }
+        public ActionResult AboutusPage()
+        {
+
+            return View();
+        }
+
         public ActionResult ReviewPageForm()
         {
 

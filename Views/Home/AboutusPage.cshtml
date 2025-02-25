@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomepageLayout.cshtml";
+}
+
+<body>
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <div>
+                <a id="infinity">Infinity</a>
+                <a id="prints">Prints</a>
+            </div>
+            <div class="nav-content">
+                <ul class="tabs">
+                    <li class="tab"><a ng-click="Homepage()">Home</a></li>
+                    <li class="tab"><a ng-click="Servicepage()">Services</a></li>
+                    <li class="tab"><a ng-click="Reviewpage()">Reviews</a></li>
+                    <li class="tab"><a ng-click="OrderPage()">Order</a></li>
+                    <li class="tab"><a ng-click="FAQpage()">FAQs</a></li>
+                    <li class="tab"><a ng-click="AboutusPage()" class="active">About Us</a></li>
+                    <li class="tab"><a ng-click="SignIn()">{{Name}}</a></li>
+
+                </ul>
+                <div class="right-menu">
+                    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden Dropdown Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a ng-click="SignIn()">{{Name}}</a></li>
+                <li><a ng-click="Homepage()">Home</a></li>
+                <li><a ng-click="Servicepage()">Services</a></li>
+                <li><a ng-click="Reviewpage()">Reviews</a></li>
+                <li><a ng-click="OrderPage()">Order</a></li>
+                <li><a ng-click="FAQpage()">FAQs</a></li>
+                <li class="active"><a ng-click="About()">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="body">
+    </div>
+</body>

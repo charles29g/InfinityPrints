@@ -595,6 +595,12 @@
     $scope.Reviewpage = function () {
         window.location.href = "Home/Reviewpage";
     };
+    $scope.FAQpage = function () {
+        window.location.href = "Home/FAQpage";
+    };
+    $scope.AboutusPage = function () {
+        window.location.href = "Home/AboutusPage";
+    };
 
     $scope.ForgotPassword = function () {
         window.location.href = "Home/ForgotPasswordEmail";

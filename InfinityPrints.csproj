@@ -1097,7 +1097,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ConfirmationPage.cshtml" />
@@ -1125,6 +1124,8 @@
     <Content Include="Views\Home\ReviewPageForm.cshtml" />
     <Content Include="Views\Home\DashTaskAuthorization.cshtml" />
     <Content Include="Views\Home\OrderPage.cshtml" />
+    <Content Include="Views\Home\FAQpage.cshtml" />
+    <Content Include="Views\Home\AboutusPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
