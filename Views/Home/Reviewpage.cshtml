@@ -358,240 +358,152 @@
         font-weight: 600;
         color: #000; /* Black text color */
     }
-
-
-    nav {
-        background-color: white;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        display: flex;
-        opacity: 0;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 20px;
-        animation: fadeInNavbar 0.6s ease-out forwards;
-        transform: translateY(-20px);
-    }
-
-    @@keyframes fadeInNavbar {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-
-    /* Navbar wrapper for better alignment */
-    .nav-wrapper {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .tabs, .tabs .tab, .tabs .tab a {
-        display: block !important;
-        height: auto !important;
-    }
-
-
-    #infinity {
-        margin-left: 10px;
-        font-weight: bold;
-        font-size: 40px;
-        color: black;
-    }
-
-    #prints {
-        font-weight: bold;
-        font-size: 40px;
-        color: #6f0d4a;
-    }
-
-    #signIn {
-        font-size: 16px;
-        color: black;
-        font-weight: bold;
-        width: 80px
-    }
-
-
-    .tabs {
-        position: relative;
-        overflow-x: auto;
-        overflow-y: hidden;
-        height: 48px;
-        width: 100%;
-        background-color: white;
-        margin: 0 auto;
-        white-space: nowrap;
-        color: black;
-        display: block !important;
-        height: 100px !important;
-    }
-
-    .nav-content {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        color: black;
-    }
-
-    .tabs {
-        display: block;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-        .tabs .tab {
-            display: inline-block;
-            text-align: center;
-            line-height: 0px;
-            height: 50px;
-            padding: 10px;
-            padding-top: 40px;
-            margin: 0;
-            text-transform: capitalize;
-            transition: all 0.3s ease-in-out;
-        }
-
-            .tabs .tab a {
-                color: black !important;
-                font-size: 16px;
-                font-weight: bold;
-                text-decoration: none;
-                padding: 10px 15px;
-                display: block !important;
-                height: 50px !important;
-            }
-
-            .tabs .tab.active {
-                background-color: #6f0d4a !important;
-                color: white !important;
-                border-radius: 10px; /* Reduce if needed */
-                /*padding: 10px 20px;*/ /* Ensure consistent spacing */
-            }
-
-                .tabs .tab.active a {
-                    color: white !important; /* Ensure text is readable */
-                }
-
-
-
-
-
-
-    @@media (max-width: 768px) {
-        .nav-content .tabs {
-            flex-wrap: nowrap;
-            -webkit-overflow-scrolling: touch;
-            justify-content: flex-start;
-        }
-
-            .nav-content .tabs .tab {
-                flex-grow: 0;
-                min-width: 120px;
-            }
-    }
 </style>
 
 <body>
-    @*<nav class="nav-extended">
-            <div class="nav-wrapper">
-                <div class="row">
-                    <div class="col s6">
-                        <a class="left" id="infinity">Infinity</a>
-                        <a class="left" id="prints">Prints</a>
-                    </div>
-                    <div class="col s6" style="text-align: right;">
-                        <a id="signIn">Name</a>
-                    </div>
-                </div>
-            </div>
-            <div class="nav-content">
-                <ul class="tabs">
-                    <li class="tab "><a ng-click="Homepage()">Home</a></li>
-                    <li class="tab "><a ng-click="Servicepage()">Services</a></li>
-                    <li class="tab "><a ng-click="Reviewpage()" class="active">Reviews</a></li>
-                    <li class="tab "><a ng-click="OrderPage()">Order</a></li>
-                    <li class="tab "><a href="#test5">FAQs</a></li>
-                    <li class="tab "><a ng-click="About()">About Us</a></li>
-                </ul>
-            </div>
-        </nav>*@
     <nav class="nav-extended">
         <div class="nav-wrapper">
             <div>
                 <a id="infinity">Infinity</a>
                 <a id="prints">Prints</a>
             </div>
-
             <div class="nav-content">
                 <ul class="tabs">
                     <li class="tab"><a ng-click="Homepage()">Home</a></li>
                     <li class="tab"><a ng-click="Servicepage()">Services</a></li>
-                    <li class="tab active"><a ng-click="Reviewpage()">Reviews</a></li>
+                    <li class="tab"><a ng-click="Reviewpage()" class="active">Reviews</a></li>
                     <li class="tab"><a ng-click="OrderPage()">Order</a></li>
                     <li class="tab"><a href="#test5">FAQs</a></li>
                     <li class="tab"><a ng-click="About()">About Us</a></li>
+                    <li class="tab"><a>{{Name}}</a></li>
+
                 </ul>
-                <a id="signIn">Sign In</a>
+                <div class="right-menu">
+                    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+                </div>
             </div>
+        </div>
+
+        <!-- Hidden Dropdown Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a ng-click="Homepage()">Home</a></li>
+                <li><a ng-click="Servicepage()">Services</a></li>
+                <li class="active"><a ng-click="Reviewpage()">Reviews</a></li>
+                <li><a ng-click="OrderPage()">Order</a></li>
+                <li><a href="#test5">FAQs</a></li>
+                <li><a ng-click="About()">About Us</a></li>
+            </ul>
         </div>
     </nav>
 
-    <div class="col s12 m4" style="margin-top:5vh" ng-if="RoleEmp()">
-        <div class="modern-card" onclick="openContainer()">
-            <div class="modern-card-icon">
-                <span>+</span>
-            </div>
-            <div class="modern-card-content">
-                <h5>Add Content</h5>
+    <div class="body">
+        <div class="col s12 m4" style="margin-top:5vh" ng-if="RoleEmp()">
+            <div class="modern-card" onclick="openContainer()">
+                <div class="modern-card-icon">
+                    <span>+</span>
+                </div>
+                <div class="modern-card-content">
+                    <h5>Add Content</h5>
+                </div>
             </div>
         </div>
-    </div>
 
-    <a onclick="window.location.href='/Home/ReviewPageForm'" class="add-review-btn">+ Add Review</a>
+        <a onclick="window.location.href='/Home/ReviewPageForm'" class="add-review-btn">+ Add Review</a>
 
-    <div class="row center">
-        <h3 id="feedbacksTxt"><strong>Feedbacks</strong></h3>
-    </div>
+        <div class="row center">
+            <h3 id="feedbacksTxt"><strong>Feedbacks</strong></h3>
+        </div>
 
-    <div class="row" id="feedbacks-section" ng-init="loadContents()">
-        <div class="col s12 m4" ng-repeat="DATA in ContentsData">
-            <div class="card">
-                <div class="action-buttons" ng-if="RoleEmp()">
-                    <button class="update-btn" ng-click="editContent(DATA)" onclick="openContainer2()">✎</button>
-                    <button class="delete-btn" ng-click="DeleteReviewsEmployee(DATA,'True')">×</button>
+        <div class="row" id="feedbacks-section" ng-init="loadContents()">
+            <div class="col s12 m4" ng-repeat="DATA in ContentsData">
+                <div class="card">
+                    <div class="action-buttons" ng-if="RoleEmp()">
+                        <button class="update-btn" ng-click="editContent(DATA)" onclick="openContainer2()">✎</button>
+                        <button class="delete-btn" ng-click="DeleteReviewsEmployee(DATA,'True')">×</button>
+                    </div>
+                    <div class="card-feedback-image">
+                        <img ng-src={{DATA.IMG_Path}} alt={{DATA.ContName}}>
+
+                    </div>
+                    <div class="card-content">
+                        <h5 class="service-title">{{DATA.ContName}}</h5>
+                        <label>Description</label>
+                        <p>{{DATA.Desc}}</p>
+                    </div>
                 </div>
-                <div class="card-feedback-image">
-                    <img ng-src={{DATA.IMG_Path}} alt={{DATA.ContName}}>
 
-                </div>
-                <div class="card-content">
-                    <h5 class="service-title">{{DATA.ContName}}</h5>
-                    <label>Description</label>
-                    <p>{{DATA.Desc}}</p>
+            </div>
+            <div class="centered-container2" style="display:none;">
+                <div class="container">
+                    <button class="close-button" onclick="closeContainer2()">×</button>
+                    <div class="col s12 " style="padding-left:40px; padding-right:40px">
+                        <a class="left" id="txtuser">Update</a>
+                        <a class="left" style="margin-left:5px" id="user">Review</a>
+                        <div class="row">
+                            <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
+                                <div class="row">
+                                    <div class="col s12 image-preview" ng-show="true">
+                                        <div class="preview-container">
+                                            <!-- Placeholder -->
+                                            <div class="placeholder-text" ng-show="!imageSrc">
+                                                Upload Image
+                                            </div>
+                                            <!-- Image Preview -->
+                                            <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
+                                        </div>
+                                    </div>
+                                    <div class="col s12 file-upload">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <i class="material-icons upload-icon">file_upload</i>
+                                            Upload Review Image
+                                        </label>
+                                        <input id="file-upload" type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file)" accept="image/*" />
+                                    </div>
+
+
+                                    <div class="col s12 input-icons">
+                                        <input id="ContName" class="input-field " type="text" required ng-model="selectedContent.ContName" />
+                                    </div>
+
+                                    <div class="col s12 input-icons">
+                                        <input id="Desc" class="input-field " type="text" required ng-model="selectedContent.Desc" />
+                                    </div>
+
+
+
+
+
+                                </div>
+                            </form>
+                            <div class="button">
+                                <button class="button1" ng-click="AddContent()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
-        <div class="centered-container2" style="display:none;">
+
+
+
+
+
+        <div class="centered-container" style="display:none;">
+
+
             <div class="container">
-                <button class="close-button" onclick="closeContainer2()">×</button>
-                <div class="col s12 " style="padding-left:40px; padding-right:40px">
-                    <a class="left" id="txtuser">Update</a>
+                <button class="close-button" onclick="closeContainer()">×</button>
+
+                <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
+
+                    <a class="left" id="txtuser">New</a>
                     <a class="left" style="margin-left:5px" id="user">Review</a>
+
                     <div class="row">
+
                         <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
+
                             <div class="row">
                                 <div class="col s12 image-preview" ng-show="true">
                                     <div class="preview-container">
@@ -601,23 +513,29 @@
                                         </div>
                                         <!-- Image Preview -->
                                         <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
+
+
                                     </div>
                                 </div>
                                 <div class="col s12 file-upload">
-                                    <label for="file-upload" class="custom-file-upload">
+                                    <label for="file-upload4" class="custom-file-upload">
                                         <i class="material-icons upload-icon">file_upload</i>
                                         Upload Review Image
                                     </label>
-                                    <input id="file-upload" type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file)" accept="image/*" />
+                                    <input type="file" id="file-upload4" style="display:none;" ngf-select ng-model="file" name="file" ngf-change="previewImage(file); UploadFile2(file)" accept="image/*" />
+
+
+                                </div>
+                                <div class="col s12 input-icons">
+
+                                    <input id="ContName" class="input-field " type="text" placeholder="Review Title" required ng-model="ContName" />
+
                                 </div>
 
-
                                 <div class="col s12 input-icons">
-                                    <input id="ContName" class="input-field " type="text" required ng-model="selectedContent.ContName" />
-                                </div>
 
-                                <div class="col s12 input-icons">
-                                    <input id="Desc" class="input-field " type="text" required ng-model="selectedContent.Desc" />
+                                    <input id="Desc" class="input-field " type="text" placeholder="Review Description" required ng-model="Desc" />
+
                                 </div>
 
 
@@ -633,102 +551,35 @@
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
-
-
-
-
-
-    <div class="centered-container" style="display:none;">
-
-
-        <div class="container">
-            <button class="close-button" onclick="closeContainer()">×</button>
-
-            <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
-
-                <a class="left" id="txtuser">New</a>
-                <a class="left" style="margin-left:5px" id="user">Review</a>
-
-                <div class="row">
-
-                    <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
-
-                        <div class="row">
-                            <div class="col s12 image-preview" ng-show="true">
-                                <div class="preview-container">
-                                    <!-- Placeholder -->
-                                    <div class="placeholder-text" ng-show="!imageSrc">
-                                        Upload Image
-                                    </div>
-                                    <!-- Image Preview -->
-                                    <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
-
-
-                                </div>
-                            </div>
-                            <div class="col s12 file-upload">
-                                <label for="file-upload4" class="custom-file-upload">
-                                    <i class="material-icons upload-icon">file_upload</i>
-                                    Upload Review Image
-                                </label>
-                                <input type="file" id="file-upload4" style="display:none;" ngf-select ng-model="file" name="file" ngf-change="previewImage(file); UploadFile2(file)" accept="image/*" />
-
-
-                            </div>
-                            <div class="col s12 input-icons">
-
-                                <input id="ContName" class="input-field " type="text" placeholder="Review Title" required ng-model="ContName" />
-
-                            </div>
-
-                            <div class="col s12 input-icons">
-
-                                <input id="Desc" class="input-field " type="text" placeholder="Review Description" required ng-model="Desc" />
-
-                            </div>
-
-
-
-
-
-                        </div>
-                    </form>
-                    <div class="button">
-                        <button class="button1" ng-click="AddContent()">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <script>
-        function closeContainer() {
-            const container = document.querySelector('.centered-container');
-            container.style.display = 'none'; // Hides the container
-        }
-
-        function openContainer() {
-            const container = document.querySelector('.centered-container');
-            container.style.display = 'block';
-        }
-
-
-        function openContainer2() {
-            console.log("Opening container 2");
-            document.querySelector('.centered-container2').classList.add('show');
-        }
-
-        function closeContainer2() {
-            console.log("Closing container 2");
-            document.querySelector('.centered-container2').classList.remove('show');
-        }
-
-
-
-
-    </script>
-
 </body>
+<script>
+    function closeContainer() {
+        const container = document.querySelector('.centered-container');
+        container.style.display = 'none'; // Hides the container
+    }
+
+    function openContainer() {
+        const container = document.querySelector('.centered-container');
+        container.style.display = 'block';
+    }
+
+
+    function openContainer2() {
+        console.log("Opening container 2");
+        document.querySelector('.centered-container2').classList.add('show');
+    }
+
+    function closeContainer2() {
+        console.log("Closing container 2");
+        document.querySelector('.centered-container2').classList.remove('show');
+    }
+
+
+
+
+</script>

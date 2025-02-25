@@ -151,62 +151,6 @@
         position: relative;
     }
 
-
-    nav {
-        background-color: white;
-        box-shadow: none;
-        outline: none;
-        border-bottom: 2px solid #6f0d4a;
-    }
-
-    .nav-content {
-        width: 100%;
-        overflow: hidden;
-        margin-bottom: 1vh
-    }
-
-        .nav-content .tabs {
-            display: flex;
-            justify-content: space-evenly;
-            width: 100%;
-            padding-left: 0px;
-            margin: 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            white-space: nowrap;
-        }
-
-            .nav-content .tabs .tab {
-                flex-shrink: 0;
-                text-align: center;
-            }
-
-                .nav-content .tabs .tab a {
-                    display: block;
-                    padding: 10px 0;
-                    font-size: 17px;
-                    color: #6f0d4a !important;
-                }
-
-                    .nav-content .tabs .tab a:hover,
-                    .nav-content .tabs .tab a:focus {
-                        color: #6f0d4a;
-                    }
-
-    @@media (max-width: 768px) {
-        .nav-content .tabs {
-            flex-wrap: nowrap;
-            -webkit-overflow-scrolling: touch;
-            justify-content: flex-start;
-        }
-
-            .nav-content .tabs .tab {
-                flex-grow: 0;
-                min-width: 120px;
-            }
-    }
-
-
     .order-page {
         background: url('../../content/images/infinityprintsimg.png');
         padding: 60px;
@@ -430,176 +374,189 @@
         margin-top: 50px
     }
 </style>
+
 <body>
+
     <nav class="nav-extended">
         <div class="nav-wrapper">
-            <div class="row">
-                <div class="col s6">
-                    <a class="left" id="infinity">Infinity</a>
-                    <a class="left" id="prints">Prints</a>
-                </div>
-                <div class="col s6" style="text-align: right;">
-                    <a id="signIn">{{Name}}</a>
+            <div>
+                <a id="infinity">Infinity</a>
+                <a id="prints">Prints</a>
+            </div>
+            <div class="nav-content">
+                <ul class="tabs">
+                    <li class="tab"><a ng-click="Homepage()">Home</a></li>
+                    <li class="tab"><a ng-click="Servicepage()">Services</a></li>
+                    <li class="tab"><a ng-click="Reviewpage()">Reviews</a></li>
+                    <li class="tab"><a ng-click="OrderPage()" class="active">Order</a></li>
+                    <li class="tab"><a href="#test5">FAQs</a></li>
+                    <li class="tab"><a ng-click="About()">About Us</a></li>
+                    <li class="tab"><a>{{Name}}</a></li>
+
+                </ul>
+                <div class="right-menu">
+                    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
                 </div>
             </div>
         </div>
-        <div class="nav-content">
-            <ul class="tabs">
-                <li class="tab "><a ng-click="Homepage()">Home</a></li>
-                <li class="tab "><a ng-click="Servicepage()">Services</a></li>
-                <li class="tab "><a ng-click="Reviewpage()">Reviews</a></li>
-                <li class="tab "><a ng-click="OrderPage()" class="active">Order</a></li>
-                <li class="tab "><a href="#test5">FAQs</a></li>
-                <li class="tab "><a ng-click="About()">About Us</a></li>
+
+        <!-- Hidden Dropdown Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a ng-click="Homepage()">Home</a></li>
+                <li><a ng-click="Servicepage()">Services</a></li>
+                <li><a ng-click="Reviewpage()">Reviews</a></li>
+                <li class="active"><a ng-click="OrderPage()">Order</a></li>
+                <li><a href="#test5">FAQs</a></li>
+                <li><a ng-click="About()">About Us</a></li>
             </ul>
         </div>
     </nav>
 
-
-
-    <div class="container">
-        <div class="order-page">
-            <div class="order-banner text-center">
-                <h1>Order</h1>
+    <div class="body">
+        <div class="container">
+            <div class="order-page">
+                <div class="order-banner text-center">
+                    <h1>Order</h1>
+                </div>
             </div>
-        </div>
-        <div class="content" ng-init="loadUsers(); loadServices(); loadSizes()">
-            <div ng-repeat="pDATA in UsersData | filter:{UserID: UserID} ">
+            <div class="content" ng-init="loadUsers(); loadServices(); loadSizes()">
+                <div ng-repeat="pDATA in UsersData | filter:{UserID: UserID} ">
 
-                <h5 class="user-info-txt">User Information</h5>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="row">
+                    <h5 class="user-info-txt">User Information</h5>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col s12">
+                                    <label for="companyName">Company Name</label>
+                                    <input type="text" class="form-control validate" id="companyName" ng-model="OrderData.CompanyName" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" class="form-control" id="fname" ng-model="pDATA.FName" disabled />
+                                </div>
+                                <div class="col s6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" class="form-control" id="lname" ng-model="pDATA.LName" disabled />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s6">
+                                    <label for="phoneNum">Mobile Number</label>
+                                    <input type="text" class="form-control" id="phoneNum" ng-model="pDATA.PhoneNum" ng-change="PhoneNum()" disabled />
+                                </div>
+                                <div class="col s6">
+                                    <label for="email3">Email</label>
+                                    <input type="text" class="form-control" id="email3" ng-model="pDATA.Email" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <label for="FileQuantity">File Quantity:</label>
+                        <select id="FileQuantity" ng-model="FileQuantity" ng-change="updateContainers()">
+                            <option value="" disabled>Please select One</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+
+                        <div ng-repeat="n in getNumber(FileQuantity) track by $index">
+                            <div class="upload-container">
+                                <div class="row">
+                                    <div class="col s6" id="file-upload-txt">
+                                        <label for="file-upload-{{$index}}">File Upload {{$index + 1}}</label>
+                                        <label class="file-upload-container">
+                                            <i class="fas fa-upload"></i>
+                                            <input id="file-upload-{{$index}}" type="file" ngf-select ng-model="files[$index]" name="file{{$index}}"
+                                                   ngf-change="UploadFile(files[$index])" accept="image/*" />
+                                        </label>
+                                        <span ng-if="files[$index]">{{ files[$index].name }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label for="Service">Service</label>
+                                        <select id="Service" required ng-model="services[$index]"
+                                                ng-change="updateSizes($index)"
+                                                ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
+                                            <option value="" disabled>Please select One</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label for="Size">Size</label>
+                                        <select id="Size" required ng-model="sizes[$index]"
+                                                ng-change="updatePrice($index)"
+                                                ng-options="size.SizeID as size.SizeName for size in filteredSizes[$index] ">
+                                            <option value="" disabled>Please select One</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s6">
+                                        <label for="Quantity">Quantity</label>
+                                        <select id="Quantity" required ng-model="quantities[$index]" ng-change="updateTotalPrice($index)">
+                                            <option value="" disabled>Please select One</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col center">
+                                        <h5 class="">Price: {{ (prices[$index] * quantities[$index]) || 0 | currency }}</h5>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
                         <div class="row">
                             <div class="col s12">
-                                <label for="companyName">Company Name</label>
-                                <input type="text" class="form-control validate" id="companyName" ng-model="OrderData.CompanyName" />
+                                <h6>Additional Requests:</h6>
+                                <textarea id="additional-notes" class="form-control" ng-model="OrderData.AdditionalRequests" placeholder="Enter your notes here..."></textarea>
                             </div>
                         </div>
-
+                        <div class="row" style="margin-top:20px">
+                            <div class="col s12 center">
+                                <span id="total">Total: {{ getTotal() | currency }}</span>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="col s6">
-                                <label for="fname">First Name</label>
-                                <input type="text" class="form-control" id="fname" ng-model="pDATA.FName" disabled />
-                            </div>
-                            <div class="col s6">
-                                <label for="lname">Last Name</label>
-                                <input type="text" class="form-control" id="lname" ng-model="pDATA.LName" disabled />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col s6">
-                                <label for="phoneNum">Mobile Number</label>
-                                <input type="text" class="form-control" id="phoneNum" ng-model="pDATA.PhoneNum" ng-change="PhoneNum()" disabled />
-                            </div>
-                            <div class="col s6">
-                                <label for="email3">Email</label>
-                                <input type="text" class="form-control" id="email3" ng-model="pDATA.Email" disabled />
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    <label for="FileQuantity">File Quantity:</label>
-                    <select id="FileQuantity" ng-model="FileQuantity" ng-change="updateContainers()">
-                        <option value="" disabled>Please select One</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-
-                    <div ng-repeat="n in getNumber(FileQuantity) track by $index">
-                        <div class="upload-container">
-                            <div class="row">
-                                <div class="col s6" id="file-upload-txt">
-                                    <label for="file-upload-{{$index}}">File Upload {{$index + 1}}</label>
-                                    <label class="file-upload-container">
-                                        <i class="fas fa-upload"></i>
-                                        <input id="file-upload-{{$index}}" type="file" ngf-select ng-model="files[$index]" name="file{{$index}}"
-                                               ngf-change="UploadFile(files[$index])" accept="image/*" />
-                                    </label>
-                                    <span ng-if="files[$index]">{{ files[$index].name }}</span>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col s6">
-                                    <label for="Service">Service</label>
-                                    <select id="Service" required ng-model="services[$index]"
-                                            ng-change="updateSizes($index)"
-                                            ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
+                            <div class="col s12">
+                                <div class="payterms-container">
+                                    <label for="PaymentTerms">Payment Terms</label>
+                                    <select id="PaymentTerms" ng-model="OrderData.PaymentTerm" required>
                                         <option value="" disabled>Please select One</option>
+                                        <option value="FullPayment">Full Payment</option>
+                                        <option value="Fifty">50/50</option>
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col s6">
-                                    <label for="Size">Size</label>
-                                    <select id="Size" required ng-model="sizes[$index]"
-                                            ng-change="updatePrice($index)"
-                                            ng-options="size.SizeID as size.SizeName for size in filteredSizes[$index] ">
-                                        <option value="" disabled>Please select One</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col s6">
-                                    <label for="Quantity">Quantity</label>
-                                    <select id="Quantity" required ng-model="quantities[$index]" ng-change="updateTotalPrice($index)">
-                                        <option value="" disabled>Please select One</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col center">
-                                    <h5 class="">Price: {{ (prices[$index] * quantities[$index]) || 0 | currency }}</h5>
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
 
-
-                    <div class="row">
-                        <div class="col s12">
-                            <h6>Additional Requests:</h6>
-                            <textarea id="additional-notes" class="form-control" ng-model="OrderData.AdditionalRequests" placeholder="Enter your notes here..."></textarea>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top:20px">
-                        <div class="col s12 center">
-                            <span id="total">Total: {{ getTotal() | currency }}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="payterms-container">
-                                <label for="PaymentTerms">Payment Terms</label>
-                                <select id="PaymentTerms" ng-model="OrderData.PaymentTerm" required>
-                                    <option value="" disabled>Please select One</option>
-                                    <option value="FullPayment">Full Payment</option>
-                                    <option value="Fifty">50/50</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" ng-click="AddOrder()">Submit Order</button>
-                </form>
+                        <button type="submit" class="btn btn-primary" ng-click="AddOrder()">Submit Order</button>
+                    </form>
+                </div>
             </div>
         </div>
+
     </div>
-
-
 </body>
