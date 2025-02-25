@@ -467,6 +467,64 @@ namespace InfinityPrints.Controllers
 
 
 
+        public JsonResult InsertOrder(tbl_ordersModel OrderDataAdd)
+        {
+            System.Diagnostics.Debug.WriteLine("Received Order Data: " + Newtonsoft.Json.JsonConvert.SerializeObject(OrderDataAdd));
+
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(OrderDataAdd.FilePath))
+                    {
+                        // ✅ Convert SizeID to SizeName
+                        List<string> sizeNames = new List<string>();
+                        if (!string.IsNullOrEmpty(OrderDataAdd.Size))
+                        {
+                            System.Diagnostics.Debug.WriteLine("Received SizeIDs: " + OrderDataAdd.Size);
+
+                            var sizeIds = OrderDataAdd.Size.Split(',').Select(int.Parse).ToList();
+                            sizeNames = db.tbl_sizes
+                                          .Where(s => sizeIds.Contains(s.SizeID))  // Match IDs
+                                          .Select(s => s.SizeName)  // Get Names
+                                          .ToList();
+                        }
+                        System.Diagnostics.Debug.WriteLine("Size Names: " + string.Join(",", sizeNames));
+                        var dbnew = new tbl_ordersModel()
+                        {
+                            UserID = OrderDataAdd.UserID,
+                            FileQuantity = OrderDataAdd.FileQuantity,
+                            FilePath = OrderDataAdd.FilePath.Trim(),
+                            Size = string.Join(",", sizeNames), // ✅ Store as comma-separated names
+                            TotalPrice = OrderDataAdd.TotalPrice,
+                            CreatedAt = DateTime.Now,
+                            StatusID = 1,
+                            Service = OrderDataAdd.Service,
+                            CompanyName = OrderDataAdd.CompanyName,
+                            AdditionalRequests = OrderDataAdd.AdditionalRequests,
+                            PaymentTerm = OrderDataAdd.PaymentTerm,
+                            Quantity = OrderDataAdd.Quantity,
+                            Request = OrderDataAdd.Request,
+
+                        };
+
+                        db.tbl_orders.Add(dbnew);
+                        db.SaveChanges();
+
+                        return Json(new { success = true, message = "Order Added successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "No file paths were provided." }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
 
 
 
@@ -1170,7 +1228,7 @@ namespace InfinityPrints.Controllers
 
         public JsonResult InsertSizes(tbl_sizesModel SizesDataAdd)
         {
-            System.Diagnostics.Debug.WriteLine(SizesDataAdd+ "Home");
+            System.Diagnostics.Debug.WriteLine(SizesDataAdd + "Home");
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
                 try
@@ -1359,9 +1417,49 @@ namespace InfinityPrints.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult UploadFile3()
+        {
+            try
+            {
+                var file = Request.Files[0]; // Assuming one file per request
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    var filePath = Path.Combine(Server.MapPath("~/Content/images/Orders/"), file.FileName);
+
+                    int count = 1;
+                    while (System.IO.File.Exists(filePath))
+                    {
+                        string newFileName = $"{fileName}({count}){fileExtension}";
+                        filePath = Path.Combine(Server.MapPath("~/Content/images/Orders/"), newFileName);
+                        count++;
+                    }
+
+                    file.SaveAs(filePath);
+                    string savedFileName = Path.GetFileName(filePath);
+                    return Json(new { success = true, fileName = savedFileName, filePath = "/Content/images/Orders/" + savedFileName });
+                }
+                return Json(new { success = false, message = "No file selected" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+
+
 
 
     }
 }
+
+
+
+
+
 
 

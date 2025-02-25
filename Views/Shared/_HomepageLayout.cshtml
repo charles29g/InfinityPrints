@@ -295,6 +295,7 @@
                         display: block;
                         transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
                     }
+
                     .mobile-menu ul li.active {
                         background-color: #6f0d4a;
                         font-weight: bold;
@@ -312,7 +313,7 @@
                         .mobile-menu ul li:hover a {
                             color: white;
                         }
-                    
+
             /* 🔹 Ensure Vertical Layout */
             .mobile-menu ul {
                 display: flex;
@@ -1094,53 +1095,53 @@
             });
         </script>*@
     @*<script>
-        //var modal = document.getElementById("termsModal");
-        // var btn = document.getElementById("terms");
-        // var span = document.getElementsByClassName("close")[0];
+            //var modal = document.getElementById("termsModal");
+            // var btn = document.getElementById("terms");
+            // var span = document.getElementsByClassName("close")[0];
 
-        //// Open modal on clicking "I accept terms & conditions"
-        //btn.onclick = function () {
-        //    modal.style.display = "block";
-        // };
+            //// Open modal on clicking "I accept terms & conditions"
+            //btn.onclick = function () {
+            //    modal.style.display = "block";
+            // };
 
-        // // Close modal when clicking the close button
-        // span.onclick = function () {
-        //    modal.style.display = "none";
-        // };
+            // // Close modal when clicking the close button
+            // span.onclick = function () {
+            //    modal.style.display = "none";
+            // };
 
-        // // Close modal when clicking outside the modal
-        //  window.onclick = function (event) {
-        //    if (event.target == modal) {
-        //         modal.style.display = "none";
-        //    }
-        //  };
-    </script>*@
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const menuToggle = document.getElementById("menu-toggle");
-        const mobileMenu = document.getElementById("mobile-menu");
+            // // Close modal when clicking outside the modal
+            //  window.onclick = function (event) {
+            //    if (event.target == modal) {
+            //         modal.style.display = "none";
+            //    }
+            //  };
+        </script>*@
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menu-toggle");
+            const mobileMenu = document.getElementById("mobile-menu");
 
-        // Toggle menu when clicking the hamburger icon
-        menuToggle.addEventListener("click", function () {
-            mobileMenu.classList.toggle("active");
+            // Toggle menu when clicking the hamburger icon
+            //menuToggle.addEventListener("click", function () {
+            //    mobileMenu.classList.toggle("active");
+            //});
+
+            // Close menu when the cursor leaves the dropdown
+            //mobileMenu.addEventListener("mouseleave", function () {
+            //    mobileMenu.classList.remove("active");
+            //});
+
+            // Optional: Close when clicking outside the menu
+            //document.addEventListener("click", function (event) {
+            //    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+            //        mobileMenu.classList.remove("active");
+            //    }
+            //});
         });
 
-        // Close menu when the cursor leaves the dropdown
-        mobileMenu.addEventListener("mouseleave", function () {
-            mobileMenu.classList.remove("active");
-        });
-
-        // Optional: Close when clicking outside the menu
-        document.addEventListener("click", function (event) {
-            if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                mobileMenu.classList.remove("active");
-            }
-        });
-    });
 
 
-
-</script>
+    </script>
 
 
 

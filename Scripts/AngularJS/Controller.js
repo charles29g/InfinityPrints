@@ -1861,13 +1861,20 @@
 
 
     $scope.updateSizes = function (index) {
-        var selectedServiceID = $scope.services[index].ServiceID;
+        console.log("SizesData (Object):", $scope.sizesData);
+        console.log("Selected Service:", $scope.services[index]);
 
-        // Filter sizes based on the selected service
-        $scope.filteredSizes[index] = $scope.SizesData.filter(function (size) {
-            return size.ServiceID === selectedServiceID; // Only sizes for the selected service
+        var selectedServiceID = $scope.services[index];
+
+        // Use Object.values() directly in filter without modifying SizesData
+        $scope.filteredSizes[index] = Object.values($scope.sizesData).filter(function (sizesData) {
+            console.log(sizesData.ServiceID, selectedServiceID, "ServiceID");
+            return sizesData.ServiceID === selectedServiceID; // Match service ID
         });
+
+        console.log("Filtered Sizes:", $scope.filteredSizes[index]);
     };
+
 
 
     $scope.DeleteReviewsEmployee = function (eDATA, action) {
@@ -1920,11 +1927,11 @@
     $scope.imageSrc = '';
 
     // Load services
-    $scope.loadServices = function () {
-        Service.getServices().then(function (response) {
-            $scope.ServicesData = response.data;
-        });
-    };
+    //$scope.loadServices = function () {
+    //    IPService.getServices().then(function (response) {
+    //        $scope.ServicesData = response.data;
+    //    });
+    //};
 
     // Open update service form
     $scope.openUpdateService = function (service) {
@@ -1973,6 +1980,169 @@
             });
         }
     };
+    $scope.OrderData = {
+        AdditionalRequests: "",
+        CompanyName: "",
+        PaymentTerm: "",
+        Service: [],
+
+    };
+    $scope.AddOrder = function () {
+        if ($scope.isSubmitting) {
+            console.log("Order submission already in progress...");
+            return; // Stop execution if already submitting
+        }
+
+        console.log("Current Form Data:");
+        console.log("CompanyName:", $scope.CompanyName);
+        console.log("PaymentTerm:", $scope.PaymentTerm);
+        console.log("AdditionalRequests:", $scope.AdditionalRequests);
+
+        $scope.isSubmitting = true; // Lock submission
+        console.log("Submitting Order...");
+
+        var OrderDataAdd = {
+            services: ($scope.services || []).join(','),
+            UserID: $scope.UserID,
+            CompanyName: $scope.OrderData.CompanyName,
+            PaymentTerm: $scope.OrderData.PaymentTerm,
+            AdditionalRequests: $scope.OrderData.AdditionalRequests,
+            FileQuantity: $scope.FileQuantity,
+            Quantity: ($scope.quantities || []).join(','),
+            Size: ($scope.sizes || []).join(','),
+            TotalPrice: $scope.getTotal(),
+            FilePath: "",
+            Service: ($scope.services || []).join(',')// To be updated after file upload,
+        };
+
+        console.log("Final OrderDataAdd object:", OrderDataAdd);
+
+
+        console.log("Initial Order Data:", OrderDataAdd);
+
+        if ($scope.files && $scope.files.length > 0) {
+            if ($scope.isUploadingFiles) {
+                console.log("File upload already in progress...");
+                return; // Stop if already uploading
+            }
+
+            $scope.isUploadingFiles = true; // Lock file uploads
+            console.log("Uploading files...");
+
+            UploadFiles().then(function (uploadedFilePaths) {
+                $scope.isUploadingFiles = false; // Unlock file uploads
+                OrderDataAdd.FilePath = uploadedFilePaths.join(' , ');
+
+                console.log("Final Order Data with file paths:", OrderDataAdd);
+                return IPService.InsertOrder(OrderDataAdd);
+            }).then(function (response) {
+                console.log("Order submitted successfully:", response);
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Order added successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000,
+                });
+            }).catch(function (error) {
+                console.error("Failed to add order:", error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong while adding the order.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            }).finally(function () {
+                setTimeout(() => {
+                    $scope.$applyAsync(() => {
+                        $scope.isSubmitting = false; // Unlock submission after completion
+                    });
+                }, 500); // Small delay to prevent rapid re-clicks
+            });
+
+        } else {
+            console.log("No files to upload, proceeding with order submission...");
+
+            IPService.InsertOrder(OrderDataAdd).then(function (response) {
+                console.log("Order submitted successfully:", response);
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Order added successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000,
+                });
+            }).catch(function (error) {
+                console.error("Failed to add order:", error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong while adding the order.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            }).finally(function () {
+                setTimeout(() => {
+                    $scope.$applyAsync(() => {
+                        $scope.isSubmitting = false; // Unlock submission after completion
+                    });
+                }, 500);
+            });
+        }
+    };
+    $scope.prices = []; // Store individual prices
+
+    $scope.updatePrice = function (index) {
+        console.log("Selected Size ID:", $scope.sizes[index]);
+
+        var selectedSizeID = $scope.sizes[index];
+
+        // Find the corresponding size object
+        var selectedSize = $scope.filteredSizes[index].find(size => size.SizeID == selectedSizeID);
+
+        if (selectedSize) {
+            $scope.prices[index] = selectedSize.Price; // Update price for this file
+        } else {
+            $scope.prices[index] = 0; // Default to 0 if no size is selected
+        }
+    };
+
+    $scope.getTotal = function () {
+        return $scope.prices.reduce((sum, price, index) => {
+            const quantity = $scope.quantities[index] || 0; // Default to 0 if quantity is not available
+            return sum + (price * quantity); // Multiply price by quantity for each item
+        }, 0);
+    };
+
+
+    $scope.updateTotalPrice = function (index) {
+        $scope.totalPrices = []; // Ensure it's an array
+
+        if ($scope.prices[index] && $scope.quantities[index]) {
+            $scope.totalPrices[index] = $scope.prices[index] * $scope.quantities[index];
+        } else {
+            $scope.totalPrices[index] = 0; // Default to 0 if any value is missing
+        }
+    };
+
+    // Function to upload multiple files
+    function UploadFiles() {
+        var uploadPromises = [];
+
+        angular.forEach($scope.files, function (file) {
+            if (file) {
+                var uploadPromise = IPService.uploadFile3(file).then(function (fileName) {
+                    console.log("Uploaded file name:", fileName);
+                    return "/Content/images/Orders/" + fileName;
+                });
+                uploadPromises.push(uploadPromise);
+            }
+        });
+
+        return Promise.all(uploadPromises); // Wait for all uploads before proceeding
+    }
+
+
+
 
 
 

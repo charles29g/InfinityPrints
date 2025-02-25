@@ -259,6 +259,38 @@ app.service("IPService", function ($http, $q, Upload) {
 
 
 
+    this.uploadFile3 = function (file) {
+        var deferred = $q.defer();
+
+        var formData = new FormData();
+        formData.append('file', file);
+        console.log("File being sent:", file.name);
+
+        $http.post('Home/UploadFile3', formData, {
+            headers: {
+                'Content-Type': undefined
+            },
+            transformRequest: angular.identity
+        })
+            .then(function (response) {
+                if (response.data.success) {
+                    console.log("Upload success:", response);
+                    // Resolve the promise with the filename returned from the server
+                    deferred.resolve(response.data.fileName);
+                } else {
+                    console.error("Upload failed:", response);
+                    deferred.reject(response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Upload error:", error);
+                deferred.reject(error);
+            });
+
+        console.log("upload order return");
+        return deferred.promise;
+    };
+
 
 
 
@@ -383,23 +415,23 @@ app.service("IPService", function ($http, $q, Upload) {
 
 
 
-    this.updateService = function(service) {
+    this.updateService = function (service) {
         return $http.post('/Home/UpdateService', service);
     },
 
 
-    this.DeleteServices = function (dataToDelete) {
-        console.log(dataToDelete + " Service");
-        var Delete = $http({
-            method: "post",
-            url: "Home/DeleteServices",
-            data: {
-                dataToDelete
-            }
-        });
+        this.DeleteServices = function (dataToDelete) {
+            console.log(dataToDelete + " Service");
+            var Delete = $http({
+                method: "post",
+                url: "Home/DeleteServices",
+                data: {
+                    dataToDelete
+                }
+            });
 
-        return Delete;
-    };
+            return Delete;
+        };
 
 
     this.DeleteReviews = function (dataToDelete) {
@@ -427,6 +459,69 @@ app.service("IPService", function ($http, $q, Upload) {
 
         return Delete;
     };
+
+    this.InsertOrder = function (orderData) {
+
+        console.log(orderData, "SERVICE INFO")
+        return $http.post('Home/InsertOrder', orderData)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.error("InsertOrder error:", error);
+                return $q.reject(error);
+            });
+
+        return Insert;
+    };
+
+    this.addOrder = function (orderData) {
+        // Collect file paths (if any files are uploaded)
+        var filePaths = [];
+        angular.forEach(orderData.files, function (file) {
+            filePaths.push(file.filePath); // Assume 'file.filePath' contains the path
+        });
+
+        // Collect selected sizes into a comma-separated string
+        var sizes = orderData.sizes.join(",");
+
+        // Prepare the data for sending
+        var postData = {
+            filePaths: filePaths.join(","),
+            sizes: sizes,
+            // Add any other order-related data here (e.g., customer info, quantity, etc.)
+        };
+
+        // Make the POST request to the server to add the order
+        return $http.post('/Home/AddOrder', postData)
+            .then(function (response) {
+                if (response.data.success) {
+                    return { success: true, message: response.data.message };
+                } else {
+                    return { success: false, message: response.data.message };
+                }
+            })
+            .catch(function (error) {
+                return { success: false, message: "Error: " + error.message };
+            });
+    };
+
+    this.InsertSizes = function (SizesDataAdd) {
+
+        console.log(SizesDataAdd + "Size")
+        var Insert = $http({
+            method: "post",
+            url: "Home/InsertSizes",
+            data: {
+                SizesDataAdd
+            }
+
+
+        });
+
+        return Insert;
+    };
+
 
 
 })
