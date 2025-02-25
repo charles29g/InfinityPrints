@@ -23,20 +23,12 @@
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Reviews()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-star" style="font-size: 18px;"></i>
-                    </span>
-                    Reviews
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Service()">
+            <li style="margin-bottom: 5px;" ng-show="Owner()" class="active">
+                <a ng-click="Authorization()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
                     </span>
-                    Services
+                    Task Authorization
                 </a>
             </li>
             <li style="margin-bottom: 5px;">

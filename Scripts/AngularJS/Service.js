@@ -386,6 +386,19 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
+    this.DeleteUserEmployee = function (dataToDelete, action) {
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteUserEmployee",
+            data: {
+                dataToDelete, action
+            }
+        });
+
+        return Delete;
+
+    };
+
     this.UpdateServiceEmployee = function (dataToUpdate, action) {
         var Update = $http({
             method: "post",

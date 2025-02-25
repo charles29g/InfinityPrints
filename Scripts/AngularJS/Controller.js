@@ -416,19 +416,31 @@
 
 
     $scope.RoleID = sessionStorage.getItem("roleID");
+    console.log($scope.RoleID)
+
+
     $scope.Name = sessionStorage.getItem("UserName") || "Sign In";
 
 
     $scope.RoleEmp = function () {
+        var role = $scope.RoleID || ""; // Prevent null or undefined errors
+        var isAllowed = role === "Employee" || role === "Owner";
+
+        console.log("RoleEmp() called");
+        console.log("RoleID:", role);
+        console.log("RoleEmp() returns:", isAllowed);
+
+        return isAllowed;
+    };
+    console.log($scope.RoleEmp())
 
 
-        return $scope.RoleID === "Employee" || $scope.RoleID === "Owner";
-
-    }
     $scope.RoleEmpCustOnly = function () {
 
 
         return $scope.RoleID === "Employee" || $scope.RoleID === "Customer";
+
+
 
     }
     $scope.Customer = function () {
@@ -443,6 +455,11 @@
 
     }
 
+    $scope.Employee = function () {
+
+        return $scope.RoleID === "Employee";
+
+    }
 
 
     $scope.IfOwner = function (pDATA) {
@@ -1775,6 +1792,137 @@
         });
     };
 
+
+
+    $scope.DeleteServiceEmployeeDeny = function (eDATA, action) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This request will be denied",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, deny it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.DeleteServiceEmployee(eDATA, action);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Service deletion is denied.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error denying deleting service: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error denying deleting services: ", error);
+                    Swal.fire("Error!", "An error occurred while denying.", "error");
+                });
+            }
+        });
+    };
+
+    $scope.DeleteUserEmployee = function (eDATA, action) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This request will forwarded to the owner !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, send it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.DeleteUserEmployee(eDATA, action);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "User deletion successfully requested.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error requesting deleting user: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error deleting user: ", error);
+                    Swal.fire("Error!", "An error occurred while deleting.", "error");
+                });
+            }
+        });
+    };
+
+    $scope.DeleteUserEmployeeDeny = function (eDATA, action) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This request will be denied",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, deny it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.DeleteUserEmployee(eDATA, action);
+
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "User deletion is dennied.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error denying deleting user: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error denying deleting user: ", error);
+                    Swal.fire("Error!", "An error occurred while denying.", "error");
+                });
+            }
+        });
+    };
+
     $scope.UpdateServiceEmployee = function (eDATA, action) {
         Swal.fire({
             title: "Are you sure?",
@@ -1817,6 +1965,9 @@
             }
         });
     };
+
+
+
 
 
     $scope.FileQuantity = 1; // Initialize to 1
@@ -1919,11 +2070,52 @@
             }
         });
     };
+    $scope.DeleteReviewsEmployeeDeny = function (eDATA, action) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This request will be denied",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, deny it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(eDATA);
+                var postData = IPService.DeleteReviewEmployee(eDATA, action);
 
+                postData.then(function (response) {
+                    var result = response.data;
+
+                    if (result.success) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Reviews deletion is denied.",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Error denying deleting service: " + result.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }, function (error) {
+                    console.error("Error denying deleting reviews: ", error);
+                    Swal.fire("Error!", "An error occurred while denying.", "error");
+                });
+            }
+        });
+    };
 
 
     $scope.ServicesData = [];
-    $scope.selectedService = {};
+    $scope.selectedService1 = {};
     $scope.imageSrc = '';
 
     // Load services
@@ -1935,7 +2127,7 @@
 
     // Open update service form
     $scope.openUpdateService = function (service) {
-        $scope.selectedService = angular.copy(service);
+        $scope.selectedService1 = angular.copy(service);
         $scope.imageSrc = service.ImagePath;
         document.querySelector('.update-container').style.display = 'block';
     };
@@ -1964,22 +2156,7 @@
         }
     };
 
-    // Check if user is an employee
-    $scope.RoleEmp = function () {
-        // Implement role check logic here
-        return true; // Placeholder
-    };
 
-    // Delete service
-    $scope.DeleteServiceEmployee = function (service, confirm) {
-        if (confirm) {
-            Service.deleteService(service.ServiceID).then(function (response) {
-                if (response.data.success) {
-                    $scope.loadServices();
-                }
-            });
-        }
-    };
     $scope.OrderData = {
         AdditionalRequests: "",
         CompanyName: "",

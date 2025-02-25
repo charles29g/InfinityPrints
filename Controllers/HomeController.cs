@@ -1049,6 +1049,39 @@ namespace InfinityPrints.Controllers
                 }
             }
         }
+
+
+
+        public JsonResult DeleteUserEmployee(tbl_usersModel dataToDelete, string action)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var recordToDelete = db.tbl_users.FirstOrDefault(x => x.UserID == dataToDelete.UserID);
+                    if (recordToDelete != null)
+                    {
+
+                        recordToDelete.Request = action; ;
+                        db.SaveChanges();
+
+                        //LogAction("Deleted a user account", UserID);
+
+                        return Json(new { success = true, message = "You requested to delete this user" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "user not found" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
         public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete, string action)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())

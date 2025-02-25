@@ -148,7 +148,7 @@
     }
 
         .change-btn:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
         }
 </style>
 
@@ -164,7 +164,7 @@
                     Homepage
                 </a>
             </li>
-            <li ng-show="Customer()" style="margin-bottom: 5px;">
+            <li ng-show="!RoleEmp()" style="margin-bottom: 5px;">
                 <a ng-click="Homepage()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-home " style="font-size: 18px;"></i>
@@ -172,7 +172,7 @@
                     Go Back to Homepage
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" class="active">
+            <li style="margin-bottom: 5px;" class="active ">
                 <a ng-click="Account()">
 
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
@@ -181,28 +181,22 @@
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
-                <a ng-click="Reviews()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-star" style="font-size: 18px;"></i>
-                    </span>
-                    Reviews
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
-                <a ng-click="Service()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
-                    </span>
-                    Services
-                </a>
-            </li>
+
+
             <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Orders()" x>
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-box-open" style="font-size: 18px;"></i>
                     </span>
                     Orders
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Orders()" x>
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-box-open" style="font-size: 18px;"></i>
+                    </span>
+                    My Orders
                 </a>
             </li>
             <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
@@ -221,7 +215,7 @@
                     Payment
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+            <li style="margin-bottom: 5px;">
                 <a ng-click="Chat()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-comments" style="font-size: 18px;"></i>

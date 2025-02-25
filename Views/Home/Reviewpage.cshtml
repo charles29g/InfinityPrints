@@ -548,7 +548,7 @@
         </div>
     </nav>
 
-    <div class="col s12 m4" style="margin-top:5vh" ng-show="RoleEmp()">
+    <div class="col s12 m4" style="margin-top:5vh" ng-if="RoleEmp()">
         <div class="modern-card" onclick="openContainer()">
             <div class="modern-card-icon">
                 <span>+</span>
@@ -568,7 +568,7 @@
     <div class="row" id="feedbacks-section" ng-init="loadContents()">
         <div class="col s12 m4" ng-repeat="DATA in ContentsData">
             <div class="card">
-                <div class="action-buttons">
+                <div class="action-buttons" ng-if="RoleEmp()">
                     <button class="update-btn" ng-click="editContent(DATA)" onclick="openContainer2()">✎</button>
                     <button class="delete-btn" ng-click="DeleteReviewsEmployee(DATA,'True')">×</button>
                 </div>

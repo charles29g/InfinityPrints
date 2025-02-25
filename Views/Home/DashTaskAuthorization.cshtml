@@ -36,15 +36,8 @@
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
-                <a ng-click="Reviews()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-star" style="font-size: 18px;"></i>
-                    </span>
-                    Reviews
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;" ng-show="RoleEmp()" class="active">
+
+            <li style="margin-bottom: 5px;" ng-show="Owner()" class="active">
                 <a ng-click="Authorization()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
@@ -153,7 +146,7 @@
                             <td>{{pDATA.ServiceName}}</td>
                             <td>{{pDATA.Description}}</td>
                             <td><button ng-click="DeleteServices(pDATA)">Approve</button></td>
-                            <td><button ng-click="DeleteServiceEmployee(pDATA,'')">Deny</button></td>
+                            <td><button ng-click="DeleteServiceEmployeeDeny(pDATA,'')">Deny</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -161,7 +154,7 @@
         </div>
 
 
-  
+
         <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
             Review Deletion Requests
         </h1>
@@ -187,15 +180,15 @@
                             <td>{{pDATA.Desc}}</td>
 
                             <td><button ng-click="DeleteReviews(pDATA)">Approve</button></td>
-                            <td><button ng-click="DeleteReviewsEmployee(pDATA,'')">Deny</button></td>
+                            <td><button ng-click="DeleteReviewsEmployeeDeny(pDATA,'')">Deny</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-  
 
-    
+
+
         <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
             User Deletion Request
         </h1>
@@ -225,7 +218,7 @@
                             <td>{{pDATA.Email}}</td>
                             <td>{{pDATA.RoleID}}</td>
                             <td><button ng-click="DeleteAccounts(pDATA,'True')">Approve</button></td>
-                            <td><button ng-click="DeleteAccounts(pDATA,'')">Deny</button></td>
+                            <td><button ng-click="DeleteUserEmployeeDeny(pDATA,'')">Deny</button></td>
                         </tr>
                     </tbody>
                 </table>

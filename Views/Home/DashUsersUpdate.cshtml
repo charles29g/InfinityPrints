@@ -73,20 +73,12 @@
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Reviews()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-star" style="font-size: 18px;"></i>
-                    </span>
-                    Reviews
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Service()">
+            <li style="margin-bottom: 5px;" ng-show="Owner()" class="active">
+                <a ng-click="Authorization()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
                     </span>
-                    Services
+                    Task Authorization
                 </a>
             </li>
             <li style="margin-bottom: 5px;">
@@ -186,7 +178,7 @@
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>Delete</th>
-                            <th>Save</th>
+                            <th ng-if="Owner()">Save</th>
                             <th>
                                 <a style="color:white" ng-click="Users()">
                                     <i class="fas fa-arrow-left"></i>
@@ -204,14 +196,20 @@
                             <td>{{pDATA.PhoneNum}}</td>
                             <td>{{pDATA.UName}}</td>
                             <td>
-                                <select ng-show="IfOwner(pDATA)" ng-model="pDATA.RoleID" ng-options="role for role in ['Customer', 'Employee']" style=" padding: 8px; border-radius: 4px;">
+                                <select ng-model="pDATA.RoleID"
+                                        ng-options="role for role in ['Customer', 'Employee']"
+                                        ng-disabled="!Owner()"
+                                        style="padding: 8px; border-radius: 4px;">
                                 </select>
+
                             </td>
 
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                             <td>{{DateFormat(pDATA.UpdatedAt)}}</td>
-                            <td><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-save" ng-click="updateUser(pDATA)"><i class="fas fa-save"></i></a></td>
-                            <td><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-delete" ng-click="DeleteUserAd(pDATA,'True')"><i class="fas fa-trash"></i></a></td>
+                            <td ng-if="Owner()"><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-save" ng-click="updateUser(pDATA)"><i class="fas fa-save"></i></a></td>
+                            <td ng-if="Owner()"><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-delete" ng-click="DeleteUserAd(pDATA,'True')"><i class="fas fa-trash">Owner</i></a></td>
+                            <td ng-if="Employee()"><a ng-show="IfOwner(pDATA)" class=" btn-icon btn-delete" ng-click="DeleteUserEmployee(pDATA,'True')"><i class="fas fa-trash">Employee</i></a></td>
+
                             <td></td>
                         </tr>
                     </tbody>
