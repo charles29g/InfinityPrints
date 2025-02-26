@@ -2,6 +2,74 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
+<style>
+    .orderModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1002;
+        margin-top: 75px;
+    }
+
+    .container {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 90%;
+        position: relative;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        z-index: 1001; /* Ensure it's below the modal but above other content */
+    }
+
+    /* Fixed table width */
+    .table-wrapper {
+        width: 100%; /* Ensure the table wrapper takes full width */
+        overflow-x: auto; /* Add horizontal scroll if needed */
+    }
+
+    table.display {
+        width: 100%; /* Ensure the table takes full width */
+        table-layout: fixed; /* Fix the table layout */
+    }
+
+        /* Fixed column widths */
+        table.display th,
+        table.display td {
+            max-width: 150px; /* Set a maximum width for columns */
+            white-space: nowrap; /* Prevent text from wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Add ellipsis for truncated text */
+        }
+
+            /* Specific column adjustments */
+            table.display th:nth-child(4), /* File Path column */
+            table.display td:nth-child(4) {
+                max-width: 200px; /* Wider width for File Path */
+            }
+
+            table.display th:nth-child(7), /* Request column */
+            table.display td:nth-child(7) {
+                max-width: 200px; /* Wider width for Request */
+            }
+
+</style>
+
 <body>
     <div class="sidebar">
         <h1>InfinityPrints</h1>
@@ -16,7 +84,6 @@
             </li>
             <li style="margin-bottom: 5px;">
                 <a ng-click="Account()">
-
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-user-circle " style="font-size: 18px;"></i>
                     </span>
@@ -39,83 +106,62 @@
                     Orders
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Users()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-users" style="font-size: 18px;"></i>
-                    </span>
-                    Users
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Payment()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-credit-card" style="font-size: 18px;"></i>
-                    </span>
-                    Payment
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Chat()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-comments" style="font-size: 18px;"></i>
-                    </span>
-                    Chat
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="UserGuide()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-book-open" style="font-size: 18px;"></i>
-                    </span>
-                    User Guide
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Status()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-spinner " style="font-size: 18px;"></i>
-                    </span>
-                    Status
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Receipts()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-receipt" style="font-size: 18px;"></i>
-                    </span>
-                    Receipts
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Receipts()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-file-alt" " style="font-size: 18px;"></i>
-                    </span>
-                    Logs
-                </a>
-            </li>
         </ul>
-        <div class="sidebar-footer">
-            <div class="user-info">
-                <button class="logout-btn" ng-click="logoutfunc()">
-                    <p class="user-name"><i class="fas fa-user-circle"></i> {{ Name }}</p>
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-
-            </div>
-        </div>
     </div>
 
     <div class="main-content">
         <p style="text-align: right;">{{RoleID }} Dashboard</p>
-        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center;">
             Pending Orders
         </h1>
         <div class="row white-text m2" ng-init="loadOrders()">
-
             <div class="table-wrapper">
                 <table id="myTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>User ID</th>
+                            <th>File Path</th>
+                            <th>Size</th>
+                            <th>Total Price</th>
+                            <th>Request</th>
+                            <th>Created At</th>
+                            <th>StatusID</th>
+                            <th>Service</th>
+                            <th>View Order</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pDATA in OrdersData">
+                            <td>{{pDATA.OrderID}}</td>
+                            <td>{{pDATA.UserID}}</td>
+                            <td title="{{pDATA.FilePath}}">{{pDATA.FilePath}}</td> <!-- Add title attribute for tooltip -->
+                            <td>{{pDATA.Size}}</td>
+                            <td>{{pDATA.TotalPrice}}</td>
+                            <td title="{{pDATA.Request}}">{{pDATA.Request}}</td> <!-- Add title attribute for tooltip -->
+                            <td>{{DateFormat(pDATA.CreatedAt)}}</td>
+                            <td>{{pDATA.StatusID}}</td>
+                            <td>{{pDATA.Service || 'Unknown Service'}}</td>
+                            <td>
+                                <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
+                            </td>
+                            <td>
+                                <button ng-click="deleteOrder(pDATA.OrderID)" class="btn btn-primary">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- New Table for Completed Orders -->
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
+            Completed Orders
+        </h1>
+        <div class="row white-text m2">
+            <div class="table-wrapper">
+                <table id="myTable2" class="display">
                     <thead>
                         <tr>
                             <th>Order ID</th>
@@ -127,22 +173,24 @@
                             <th>Request</th>
                             <th>Created At</th>
                             <th>StatusID</th>
-                            <th>Delete</th>
-
+                            <th>Service</th>
+                            <th>View Order</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="pDATA in OrdersData">
+                        <tr ng-repeat="pDATA in OrdersData | filter: { StatusID: 2 }">
                             <td>{{pDATA.OrderID}}</td>
                             <td>{{pDATA.UserID}}</td>
-                            <td>{{pDATA.FileQuantity}}</td>
-                            <td>{{pDATA.FilePath}}</td>
+                            <td title="{{pDATA.FilePath}}">{{pDATA.FilePath}}</td> <!-- Add title attribute for tooltip -->
                             <td>{{pDATA.Size}}</td>
                             <td>{{pDATA.TotalPrice}}</td>
-                            <td>{{pDATA.Request}}</td>
+                            <td title="{{pDATA.Request}}">{{pDATA.Request}}</td> <!-- Add title attribute for tooltip -->
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                             <td>{{pDATA.StatusID}}</td>
-                            <td></td>
+                            <td>{{pDATA.Service || 'Unknown Service'}}</td>
+                            <td>
+                                <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -150,6 +198,32 @@
         </div>
     </div>
 
+    <!-- Backdrop and Modal -->
+    <div class="modal-backdrop" ng-show="selectedOrder">
+        <div id="viewOrderModal" class="orderModal">
+            <div class="container">
+                <h2>Order Details</h2>
+                <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                <p><strong>User ID:</strong> {{selectedOrder.UserID}}</p>
+                <p><strong>File Quantity:</strong> {{selectedOrder.FileQuantity}}</p>
 
+                <!-- Updated File Path Section with File Names Only -->
+                <p><strong>File Paths:</strong></p>
+                <ul>
+                    <li ng-repeat="filePath in (selectedOrder.FilePath ? selectedOrder.FilePath.split(' , ') : []) track by $index">
+                        <a href="{{filePath}}" download target="_blank">
+                            {{filePath.split('/').pop()}}
+                        </a>
+                    </li>
+                </ul>
 
+                <p><strong>Size:</strong> {{selectedOrder.Size}}</p>
+                <p><strong>Total Price:</strong> {{selectedOrder.TotalPrice}}</p>
+                <p><strong>Request:</strong> {{selectedOrder.Request}}</p>
+                <p><strong>Created At:</strong> {{DateFormat(selectedOrder.CreatedAt)}}</p>
+                <p><strong>Status:</strong> {{selectedOrder.StatusID}}</p>
+                <button class="btn btn-secondary" ng-click="closeOrderModal()">Close</button>
+            </div>
+        </div>
+    </div>
 </body>

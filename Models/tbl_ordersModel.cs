@@ -19,7 +19,6 @@ namespace InfinityPrints.Models
         public DateTime CreatedAt { get; set; }
         public int StatusID { get; set; }
         public string Service { get; set; }
-
         public string AdditionalRequests { get; set; }
         public string CompanyName { get; set; }
         public string PaymentTerm { get; set; }

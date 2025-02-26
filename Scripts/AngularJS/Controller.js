@@ -131,7 +131,7 @@
 
 
             console.log(ReturnedData.data);
-            console.log("HI");
+            console.log($scope.OrdersData); 
             $(document).ready(function () {
 
 
@@ -2325,8 +2325,12 @@
     }
 
 
-
-
-
+    $scope.viewOrder = function (order) {
+        console.log("Viewing order:", order);
+        $scope.selectedOrder = angular.copy(order); // Store the selected order data
+    };
+    $scope.closeOrderModal = function () {
+        $scope.selectedOrder = null; // Clear the selected order data to close the modal
+    };
 
 })

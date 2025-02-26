@@ -402,9 +402,11 @@ namespace InfinityPrints.Controllers
          order.FilePath,
          order.Size,
          order.TotalPrice,
-         order.Request,
+         order.AdditionalRequests,
          order.CreatedAt,
          order.StatusID,
+         order.Service,
+         order.Quantity
      })
      .ToList();
 
