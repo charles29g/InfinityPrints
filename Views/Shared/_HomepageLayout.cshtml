@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+
 
     <base href="/" />
 
@@ -114,7 +117,7 @@
             }
 
 
-                .tabs .tab a, span {
+                .tabs .tab a, .span {
                     color: black;
                     display: block;
                     width: 100%;
@@ -283,48 +286,48 @@
                 margin: 0;
             }
 
-        .mobile-menu ul li {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-            .mobile-menu ul li a {
-                text-decoration: none;
-                color: black;
-                font-size: 16px;
-                display: block;
-                transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-            }
-
-            .mobile-menu ul li.active {
-                background-color: #6f0d4a;
-                font-weight: bold;
-            }
-
-                .mobile-menu ul li.active a {
-                    color: white;
+                .mobile-menu ul li {
+                    padding: 12px;
+                    text-align: center;
+                    border-bottom: 1px solid #ddd;
                 }
 
-            .mobile-menu ul li:hover {
-                background-color: #6f0d4a;
+                    .mobile-menu ul li a {
+                        text-decoration: none;
+                        color: black;
+                        font-size: 16px;
+                        display: block;
+                        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+                    }
+
+                    .mobile-menu ul li.active {
+                        background-color: #6f0d4a;
+                        font-weight: bold;
+                    }
+
+                        .mobile-menu ul li.active a {
+                            color: white;
+                        }
+
+                    .mobile-menu ul li:hover {
+                        background-color: #6f0d4a;
+                    }
+
+                        .mobile-menu ul li:hover a {
+                            color: white;
+                        }
+
+            /*span {
+                        color: black !important;*/ /* Keeps text color unchanged */
+            /*text-align:center
+                    }*/
+
+            /* Vertical Layout */
+            .mobile-menu ul {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
             }
-
-                .mobile-menu ul li:hover a {
-                    color: white;
-                }
-
-            span {
-                color: black !important; /* Keeps text color unchanged */
-                text-align:center
-            }
-
-        /* Vertical Layout */
-        .mobile-menu ul {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
 
         /* Hide burger icon above 850px */
         @@media (min-width: 851px) {
@@ -439,12 +442,12 @@
             cursor: pointer;
         }
         /*
-        .input-icon-right2 {
-            padding: 10px;
-            right: 2%;
-            cursor: pointer;
+                .input-icon-right2 {
+                    padding: 10px;
+                    right: 2%;
+                    cursor: pointer;
 
-        }*/
+                }*/
 
         .input-icon-right2 {
             position: absolute;
@@ -612,11 +615,77 @@
             visibility: visible;
         }
 
-        #homeimg {
-            width: 100%;
-            padding-left: 3vh;
-            padding-right: 3vh;
+        /*        #homeimg {
+                    width: 100%;
+                    padding-left: 3vh;
+                    padding-right: 3vh;
+                }
+        */
+        .carousel-container {
+            position: relative;
+/*            width: 100%;*/
+            /*max-width: 800px;*/ /* Adjust as needed */
+            margin: 5px;
+            overflow: hidden;
+            border-radius:50px;
+            margin-right:50px;
+            margin-left:50px;
         }
+
+        .carousel-fade {
+            position: relative;
+            width: 100%;
+            height: 500px; /* Adjust as needed */
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 5s ease-in-out;
+        }
+
+            .carousel-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .carousel-item.active {
+                opacity: 1;
+            }
+
+        .btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            color: white !important;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .btn:focus, .btn:active {
+            background-color: black !important; /* Ensure it doesn't revert */
+            box-shadow: none !important; /* Remove unwanted shadow */
+            outline: none !important; /* Remove focus outline */
+        }
+        .btn:hover {
+            background-color: black !important;
+        }
+
+
 
         #greet {
             font-weight: bold;
@@ -678,12 +747,12 @@
         }
 
         .card {
-            border-radius: 15px; /* Smooth corners */
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Lighter shadow */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-            background: #fff; /* Clean white background */
-            border: 1px solid #e0e0e0; /* Subtle border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+            border: 1px solid #e0e0e0;
         }
 
             .card:hover {
@@ -1085,6 +1154,8 @@
     <script src="~/Scripts/Chart.min.js"></script>
     <script src="~/Scripts/angular-chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 
     @*<script>
             // Other existing scripts here, if any.
@@ -1127,17 +1198,17 @@
             const menuToggle = document.getElementById("menu-toggle");
             const mobileMenu = document.getElementById("mobile-menu");
 
-             //Toggle menu when clicking the hamburger icon
+            //Toggle menu when clicking the hamburger icon
             menuToggle.addEventListener("click", function () {
                 mobileMenu.classList.toggle("active");
             });
 
-             //Close menu when the cursor leaves the dropdown
+            //Close menu when the cursor leaves the dropdown
             mobileMenu.addEventListener("mouseleave", function () {
                 mobileMenu.classList.remove("active");
             });
 
-             //Optional: Close when clicking outside the menu
+            //Optional: Close when clicking outside the menu
             document.addEventListener("click", function (event) {
                 if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
                     mobileMenu.classList.remove("active");
