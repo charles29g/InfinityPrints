@@ -406,6 +406,7 @@ namespace InfinityPrints.Controllers
          order.CreatedAt,
          order.StatusID,
          order.Service,
+         order.PaymentTerm,
          order.Quantity
      })
      .ToList();
@@ -514,10 +515,10 @@ namespace InfinityPrints.Controllers
                             StatusID = 1,
                             Service = OrderDataAdd.Service,
                             CompanyName = OrderDataAdd.CompanyName,
-                            AdditionalRequests = OrderDataAdd.AdditionalRequests,
+                            AdditionalRequests = OrderDataAdd.AdditionalRequests, // Include AdditionalRequests
+                            Quantity = OrderDataAdd.Quantity, // Include Quantity
                             PaymentTerm = OrderDataAdd.PaymentTerm,
-                            Quantity = OrderDataAdd.Quantity,
-                            Request = OrderDataAdd.Request,
+                            Request = OrderDataAdd.Request
 
                         };
 
