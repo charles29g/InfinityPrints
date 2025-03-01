@@ -56,36 +56,33 @@
             <img id="homeimg" src="~/Content/images/infinityprintsimg.png" />
         </div>*@
 
-    <div class="carousel-container">
-        <div class="carousel-fade">
-            <div class="carousel-item active">
-                <img src="~/Content/images/infinityprintsimg.png" alt="Image 1">
+        <div class="carousel-container">
+            <div class="carousel-fade">
+                <div class="carousel-item active">
+                    <img src="~/Content/images/infinityprintsimg.png" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/images/TG5.png" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/images/BR3.png" alt="Image 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/images/MG4.png" alt="Image 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/images/BR4.png" alt="Image 5">
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/images/SN11.png" alt="Image 6">
+                </div>
             </div>
-            <div class="carousel-item">
-                <img src="~/Content/images/TG5.png" alt="Image 2">
-            </div>
-            <div class="carousel-item">
-                <img src="~/Content/images/BR3.png" alt="Image 3">
-            </div>
-            <div class="carousel-item">
-                <img src="~/Content/images/MG4.png" alt="Image 4">
-            </div>
-            <div class="carousel-item">
-                <img src="~/Content/images/BR4.png" alt="Image 5">
-            </div>
-            <div class="carousel-item">
-                <img src="~/Content/images/SN11.png" alt="Image 6">
-            </div>  
+            <button class="prev btn" onclick="moveSlide(-1)">&#10094; Prev</button>
+            <button class="next btn" onclick="moveSlide(1)">Next &#10095;</button>
         </div>
-        <button class="prev btn" onclick="moveSlide(-1)">&#10094; Prev</button>
-        <button class="next btn" onclick="moveSlide(1)">Next &#10095;</button>
-    </div>
 
-
-
-
-        <div class="row center">
-            <h3 id="servicesTxt"><strong>Services Offered</strong></h3>
+        <div class="row">
+            <h3 id="servicesTxt">Services Offered</h3>
         </div>
 
         <div class="row" id="services-section">
@@ -122,22 +119,24 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="view-more-section">
-            <a ng-click="Servicepage()" id="view-more" class="view-more-link">View more</a>
+
+            <div class="col s12">
+                <div class="view-more-section">
+                    <a ng-click="Servicepage()" id="view-more" class="view-more-link">View more</a>
+                </div>
+                @*<hr />*@
+            </div>
         </div>
 
-        <div class="chat-section">
+        @*<div class="chat-section">
             <button class="chat-button">
                 <img src="~/Content/images/chatimg.png" alt="Chat Icon" class="chat-icon" />
                 Chat with us
             </button>
-        </div>
-
-        <hr />
+        </div>*@
 
         <div class="row center">
-            <h3 id="feedbacksTxt"><strong>Feedbacks</strong></h3>
+            <h3 id="feedbacksTxt">Feedbacks</h3>
         </div>
 
         <div class="row" id="feedbacks-section">
@@ -183,112 +182,117 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="view-more-section">
-            <a ng-click="Reviewspage()" id="view-more" class="view-more-link">View more</a>
-        </div>
-
-        <hr />
-
-        <div class="row center">
-            <h3 id="aboutusTxt"><strong>About Us</strong></h3>
-        </div>
-
-        <div class="row center">
-            <div class="col s12" id="infinityprintstxt">
-                <a id="infinity2">Infinity</a>
-                <a id="prints2" style="color: #6f0d4a">Prints</a>
-            </div>
-        </div>
-
-        <div class="aboutUs-section">
-            <div class="row center">
-                <p>
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                </p>
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="row center">
             <div class="col s12">
-                <a id="historyTxt">History</a>
+                <div class="view-more-section">
+                    <a ng-click="Reviewspage()" id="view-more" class="view-more-link">View more</a>
+                </div>
+                @*<hr />
+                </div>*@
             </div>
         </div>
 
-        <div class="history-section">
+        <div class="businessInfo-container">
+            <div class="aboutUs-container">
+                <div class="row">
+                    <h3 id="aboutusTxt">About Us</h3>
+                </div>
+
+                <div class="row center">
+                    <div class="col s12" id="infinityprintstxt">
+                        <a id="infinity2">Infinity</a>
+                        <a id="prints2" style="color: #6f0d4a">Prints</a>
+                    </div>
+                </div>
+
+                <div class="aboutUs-section">
+                    <div class="row center">
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                        </p>
+                    </div>
+                </div>
+
+                <hr />
+            </div>
+
             <div class="row center">
-                <p>
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                </p>
+                <div class="col s12">
+                    <a id="historyTxt">History</a>
+                </div>
+            </div>
+
+            <div class="history-section">
+                <div class="row center">
+                    <p>
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    </p>
+                </div>
+            </div>
+
+            <div class="view-more-section">
+                <a href="~/Home/SignIn" id="view-more" class="view-more-link">View more</a>
             </div>
         </div>
 
-        <div class="view-more-section">
-            <a href="~/Home/SignIn" id="view-more" class="view-more-link">View more</a>
+
+        <div>
+            <footer>
+                <div class="footer-container row s12">
+                    <div class="footer-logo col s3">
+                        <img src="~/Content/images/homeimg.png" alt="Infinity Prints Logo">
+                    </div>
+                    <div class="col col-divider1 s0" style="height:200px"></div>
+                    <div class="footer-nav col s4 center">
+                        <div class="row footer-links">
+                            <div class="col">
+                                <a href="">Homepage</a>
+                            </div>
+                            <div class="col">
+                                <a href="">Services</a>
+                            </div>
+                            <div class="col">
+                                <a href="">Reviews</a>
+                            </div>
+                        </div>
+                        <div class="row footer-links">
+                            <div class="col">
+                                <a href="">Order</a>
+                            </div>
+                            <div class="col">
+                                <a href="">FAQs</a>
+                            </div>
+                            <div class="col">
+                                <a href="">About Us</a>
+                            </div>
+                        </div>
+
+
+
+                        <div class="footer-social">
+                            <a href="#"><img src="x-icon.png" alt="X"></a>
+                            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+                            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+                            <a href="#"><img src="viber-icon.png" alt="Viber"></a>
+                        </div>
+
+                        <div class="footer-tagline">
+                            <p>Infinity Prints: Putting Your Ideas Into Print</p>
+                        </div>
+                    </div>
+                    <div class="col col-divider s0" style="height:200px"></div>
+
+                    <div class="footer-contact col s3 center">
+                        <h4>Contact US</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+
+                </div>
+            </footer>
         </div>
-
-
-
-
-        <footer>
-            <div class="footer-container row s12">
-                <div class="footer-logo col s3">
-                    <img src="~/Content/images/homeimg.png" alt="Infinity Prints Logo">
-                </div>
-                <div class="col col-divider1 s0" style="height:200px"></div>
-                <div class="footer-nav col s4 center">
-                    <div class="row footer-links">
-                        <div class="col">
-                            <a href="">Homepage</a>
-                        </div>
-                        <div class="col">
-                            <a href="">Services</a>
-                        </div>
-                        <div class="col">
-                            <a href="">Reviews</a>
-                        </div>
-                    </div>
-                    <div class="row footer-links">
-                        <div class="col">
-                            <a href="">Homepage</a>
-                        </div>
-                        <div class="col">
-                            <a href="">Services</a>
-                        </div>
-                        <div class="col">
-                            <a href="">Reviews</a>
-                        </div>
-                    </div>
-
-
-
-                    <div class="footer-social">
-                        <a href="#"><img src="x-icon.png" alt="X"></a>
-                        <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-                        <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
-                        <a href="#"><img src="viber-icon.png" alt="Viber"></a>
-                    </div>
-
-                    <div class="footer-tagline">
-                        <p>Infinity Prints: Putting Your Ideas Into Print</p>
-                    </div>
-                </div>
-                <div class="col col-divider s0" style="height:200px"></div>
-
-                <div class="footer-contact col s3 center">
-                    <h4>Contact US</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-
-            </div>
-        </footer>
     </div>
 
 
@@ -315,4 +319,24 @@
 
     // Optional: Auto-play feature
     setInterval(() => moveSlide(1), 5000); // Change image every 4 seconds
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll("#services-section, #servicesTxt, #feedbacksTxt, #feedbacks-section, .businessInfo-container");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-in"); // Add fade-in when visible
+                } else {
+                    entry.target.classList.remove("fade-in"); // Remove when out of view
+                }
+            });
+        }, { threshold: 0.2 }); // Trigger when 20% of section is visible
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
 </script>

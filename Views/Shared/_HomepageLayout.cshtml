@@ -625,7 +625,7 @@
             position: relative;
             margin: 5px 50px;
             overflow: hidden;
-            border-radius: 30px;
+            border-radius: 20px;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
             background: linear-gradient(135deg, #f9f9f9, #ffffff);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -700,7 +700,7 @@
             font-size: 42px;
             color: black;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-in-out; /* Smooth fade-in effect */
+            animation: fadeIn 1s ease-in-out;
         }
 
         #name {
@@ -719,7 +719,6 @@
             color: black;
         }
 
-        /* Fade-in animation */
         @@keyframes fadeIn {
             from {
                 opacity: 0;
@@ -734,7 +733,7 @@
 
         #greet-subtext {
             font-size: 18px;
-            font-style:italic;
+            font-style: italic;
             color: #666;
             margin-top: 5px;
             animation: fadeIn 1.5s ease-in-out;
@@ -772,14 +771,28 @@
             margin-top: 5px;
         }
 
+
         #servicesTxt, #feedbacksTxt {
-            margin-top: 50px;
+            font-weight: bold;
+            margin-top: 130px;
+            transform: translateY(50px);
+            text-align: center;
+            color: black;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
         }
 
         #services-section, #feedbacks-section {
-            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
             padding-left: 20px;
             padding-right: 20px;
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0);
         }
 
         .card {
@@ -833,7 +846,7 @@
             .card-actions button, .card-actions a {
                 padding: 10px 15px;
                 border-radius: 5px;
-                background: #3498db; /* Vibrant primary color */
+                background: #3498db;
                 color: #fff;
                 border: none;
                 cursor: pointer;
@@ -842,7 +855,7 @@
             }
 
                 .card-actions button:hover, .card-actions a:hover {
-                    background: #2980b9; /* Slightly darker hover effect */
+                    background: #2980b9;
                 }
 
 
@@ -868,11 +881,10 @@
             text-align: center;
         }
 
-
         .view-more-section {
             text-align: center;
-            margin-top: 30px;
-            margin-bottom: 50px
+            margin-top: 50px;
+            margin-bottom: 100px
         }
 
 
@@ -904,7 +916,7 @@
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px; /* Space between image and text */
+            gap: 8px;
         }
 
             .chat-button:hover, .chat-button:focus {
@@ -916,16 +928,44 @@
             height: 30px;
         }
 
+        .businessInfo-container {
+            text-align: justify;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .aboutTxt-container {
+            margin-top: 100px
+        }
+
+        #aboutusTxt {
+            text-align: center;
+            margin-top: 100px;
+            font-weight: bold;
+            margin-bottom:15px
+
+            
+        }
+
         .aboutUs-section {
             padding-left: 50px;
             padding-right: 50px;
-            margin-bottom: 50px
+            margin-bottom: 50px;
         }
+
+            .aboutUs-section p {
+                text-align: justify;
+            }
 
         .history-section {
             padding-left: 50px;
             padding-right: 50px;
         }
+
+            .history-section p {
+                text-align: justify;
+            }
 
         #historyTxt {
             text-align: center;
