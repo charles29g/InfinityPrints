@@ -623,14 +623,18 @@
         */
         .carousel-container {
             position: relative;
-/*            width: 100%;*/
-            /*max-width: 800px;*/ /* Adjust as needed */
-            margin: 5px;
+            margin: 5px 50px;
             overflow: hidden;
-            border-radius:50px;
-            margin-right:50px;
-            margin-left:50px;
+            border-radius: 30px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f9f9f9, #ffffff);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
+
+            .carousel-container:hover {
+                transform: scale(1.03);
+                box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25), 0px 0px 15px rgba(130, 0, 255, 0.2);
+            }
 
         .carousel-fade {
             position: relative;
@@ -643,7 +647,7 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 5s ease-in-out;
+            transition: opacity 1s ease-in-out;
         }
 
             .carousel-item img {
@@ -655,6 +659,8 @@
             .carousel-item.active {
                 opacity: 1;
             }
+
+
 
         .btn {
             position: absolute;
@@ -668,6 +674,7 @@
             z-index: 10;
             transition: background-color 0.3s ease;
         }
+
         .prev {
             left: 10px;
         }
@@ -681,6 +688,7 @@
             box-shadow: none !important; /* Remove unwanted shadow */
             outline: none !important; /* Remove focus outline */
         }
+
         .btn:hover {
             background-color: black !important;
         }
@@ -689,22 +697,50 @@
 
         #greet {
             font-weight: bold;
-            font-size: 40px;
+            font-size: 42px;
             color: black;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out; /* Smooth fade-in effect */
+        }
+
+        #name {
+            color: #6f0d4a;
         }
 
         #infinity2 {
-            margin-left: 10px;
             font-weight: bold;
-            font-size: 40px;
+            font-size: 42px;
             color: #6f0d4a;
         }
 
         #prints2 {
             font-weight: bold;
-            font-size: 40px;
+            font-size: 42px;
             color: black;
         }
+
+        /* Fade-in animation */
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #greet-subtext {
+            font-size: 18px;
+            font-style:italic;
+            color: #666;
+            margin-top: 5px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+
 
         #infinityprintstxt {
             margin-bottom: 20px;
@@ -733,7 +769,7 @@
 
         #row-greet {
             margin-bottom: 0px;
-            margin-top: 50px;
+            margin-top: 5px;
         }
 
         #servicesTxt, #feedbacksTxt {

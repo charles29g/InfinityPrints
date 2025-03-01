@@ -43,12 +43,15 @@
     <div class="body">
         <div class="row center" id="row-greet">
             <div class="col s12">
-                <a id="greet">Welcome {{Name}} to</a>
-                <a id="infinity2">Infinity</a>
-                <a id="prints2">Prints</a>
+                <h1 id="greet">
+                    Welcome, <span id="name">{{Name}}</span> to
+                    <span id="infinity2">Infinity</span>
+                    <span id="prints2">Prints</span>
+                </h1>
+                <p id="greet-subtext">Your go-to place for premium prints and creative designs!</p>
+
             </div>
         </div>
-
         @*<div class="row">
             <img id="homeimg" src="~/Content/images/infinityprintsimg.png" />
         </div>*@
@@ -59,11 +62,20 @@
                 <img src="~/Content/images/infinityprintsimg.png" alt="Image 1">
             </div>
             <div class="carousel-item">
-                <img src="~/Content/images/infinityprintsimg.png" alt="Image 2">
+                <img src="~/Content/images/TG5.png" alt="Image 2">
             </div>
             <div class="carousel-item">
-                <img src="~/Content/images/infinityprintsimg.png" alt="Image 3">
+                <img src="~/Content/images/BR3.png" alt="Image 3">
             </div>
+            <div class="carousel-item">
+                <img src="~/Content/images/MG4.png" alt="Image 4">
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/images/BR4.png" alt="Image 5">
+            </div>
+            <div class="carousel-item">
+                <img src="~/Content/images/SN11.png" alt="Image 6">
+            </div>  
         </div>
         <button class="prev btn" onclick="moveSlide(-1)">&#10094; Prev</button>
         <button class="next btn" onclick="moveSlide(1)">Next &#10095;</button>
