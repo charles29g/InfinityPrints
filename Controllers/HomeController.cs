@@ -1308,7 +1308,42 @@ namespace InfinityPrints.Controllers
             }
         }
 
+        public JsonResult InsertServices(tbl_servicesModel ServiceDataAdd)
+        {
+            System.Diagnostics.Debug.WriteLine(ServiceDataAdd + "Home");
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
 
+
+                    var dbnew = new tbl_servicesModel()
+                    {
+                        Material = ServiceDataAdd.Material,
+
+                        ServiceName = ServiceDataAdd.ServiceName,
+
+                        Description = ServiceDataAdd.Description,
+
+                        ImagePath = ServiceDataAdd.ImagePath,
+
+
+                        CreatedAt = DateTime.Now,
+
+
+                    };
+
+                    db.tbl_services.Add(dbnew);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Sizes Added successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
         public JsonResult InsertContent(tbl_contentModel ContentDataAdd
 )

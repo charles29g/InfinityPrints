@@ -3,6 +3,7 @@ app.service("IPService", function ($http, $q, Upload) {
     console.log("Service")
 
     this.LoadServices = function () {
+        console.log("service services")
         return $http.get("Home/LoadServices");
     }
 

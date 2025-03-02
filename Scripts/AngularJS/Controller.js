@@ -4,6 +4,7 @@
 
     console.log("Controller")
     $scope.loadServices = function () {
+        console.log("Controller services")
         var getData = IPService.LoadServices();
         getData.then(function (ReturnedData) {
             $scope.ServicesData = ReturnedData.data;
@@ -131,7 +132,7 @@
 
 
             console.log(ReturnedData.data);
-            console.log($scope.OrdersData); 
+            console.log($scope.OrdersData);
             $(document).ready(function () {
 
 
