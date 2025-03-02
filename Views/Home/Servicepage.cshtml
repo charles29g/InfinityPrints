@@ -508,11 +508,11 @@
                                     </div>
                                 </div>
                                 <div class="col s12 file-upload">
-                                    <label for="file-upload" class="custom-file-upload">
+                                    <label for="serviceupload" class="custom-file-upload">
                                         <i class="material-icons upload-icon">file_upload</i>
                                         Upload Service Image
                                     </label>
-                                    <input type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file)" accept="image/*" />
+                                    <input type="file" style="display:none;" id="serviceupload" ngf-select ng-model="file" name="file" ngf-change="UploadFile(file); previewImage(file)" accept="image/*" />
 
 
                                 </div>
