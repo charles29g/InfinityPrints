@@ -1235,27 +1235,64 @@
         </script>*@
     <script>
 
+        //document.addEventListener("DOMContentLoaded", function () {
+        //    const menuToggle = document.getElementById("menu-toggle");
+        //    const mobileMenu = document.getElementById("mobile-menu");
+
+        //    //Toggle menu when clicking the hamburger icon
+        //    menuToggle.addEventListener("click", function () {
+        //        mobileMenu.classList.toggle("active");
+        //    });
+
+        //    //Close menu when the cursor leaves the dropdown
+        //    mobileMenu.addEventListener("mouseleave", function () {
+        //        mobileMenu.classList.remove("active");
+        //    });
+
+        //    //Optional: Close when clicking outside the menu
+        //    document.addEventListener("click", function (event) {
+        //        if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+        //            mobileMenu.classList.remove("active");
+        //        }
+        //    });
+        //});
         document.addEventListener("DOMContentLoaded", function () {
-            const menuToggle = document.getElementById("menu-toggle");
-            const mobileMenu = document.getElementById("mobile-menu");
+            function setupMenuToggle() {
+                const menuToggle = document.getElementById("menu-toggle");
+                const mobileMenu = document.getElementById("mobile-menu");
 
-            //Toggle menu when clicking the hamburger icon
-            menuToggle.addEventListener("click", function () {
-                mobileMenu.classList.toggle("active");
-            });
-
-            //Close menu when the cursor leaves the dropdown
-            mobileMenu.addEventListener("mouseleave", function () {
-                mobileMenu.classList.remove("active");
-            });
-
-            //Optional: Close when clicking outside the menu
-            document.addEventListener("click", function (event) {
-                if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                    mobileMenu.classList.remove("active");
+                if (!menuToggle || !mobileMenu) {
+                    console.warn("Menu toggle or mobile menu not found. It may only appear on small screens.");
+                    return;
                 }
-            });
+
+                // Ensure event listeners are added only once
+                if (!menuToggle.hasAttribute("data-listener")) {
+                    menuToggle.setAttribute("data-listener", "true");
+
+                    menuToggle.addEventListener("click", function () {
+                        mobileMenu.classList.toggle("active");
+                    });
+
+                    mobileMenu.addEventListener("mouseleave", function () {
+                        mobileMenu.classList.remove("active");
+                    });
+
+                    document.addEventListener("click", function (event) {
+                        if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                            mobileMenu.classList.remove("active");
+                        }
+                    });
+                }
+            }
+
+            // Run on page load
+            setupMenuToggle();
+
+            // Run on window resize (in case the element appears dynamically)
+            window.addEventListener("resize", setupMenuToggle);
         });
+
 
 
 
