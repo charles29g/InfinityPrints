@@ -417,7 +417,6 @@
 
 
     $scope.RoleID = sessionStorage.getItem("roleID");
-    console.log($scope.RoleID)
 
 
     $scope.Name = sessionStorage.getItem("UserName") || "Sign In";
@@ -427,9 +426,6 @@
         var role = $scope.RoleID || ""; // Prevent null or undefined errors
         var isAllowed = role === "Employee" || role === "Owner";
 
-        console.log("RoleEmp() called");
-        console.log("RoleID:", role);
-        console.log("RoleEmp() returns:", isAllowed);
 
         return isAllowed;
     };
@@ -2026,7 +2022,7 @@
 
         // Use Object.values() directly in filter without modifying SizesData
         $scope.filteredSizes[index] = Object.values($scope.sizesData).filter(function (sizesData) {
-            console.log(sizesData.ServiceID, selectedServiceID, "ServiceID");
+            console.log(sizesData.ServiceID, ID, "ServiceID");
             return sizesData.ServiceID === selectedServiceID; // Match service ID
         });
 
@@ -2122,32 +2118,107 @@
 
 
     $scope.ServicesData = [];
-    $scope.selectedService1 = {};
+    $scope.selectedServicePage = {};
     $scope.imageSrc = '';
 
-    // Load services
-    //$scope.loadServices = function () {
-    //    IPService.getServices().then(function (response) {
-    //        $scope.ServicesData = response.data;
-    //    });
-    //};
+    $scope.loadServices = function () {
+        IPService.LoadServices().then(function (response) {
+            $scope.ServicesData = response.data;
+        });
+    };
 
     // Open update service form
-    $scope.openUpdateService = function (service) {
-        $scope.selectedService1 = angular.copy(service);
-        $scope.imageSrc = service.ImagePath;
+    $scope.openUpdateService = function (DATA) {
+        openUpdateService();
+        console.log("Original service:", DATA);
+        $scope.selectedServicePage = angular.copy(DATA);
+        console.log("Copied service:", $scope.selectedServicePage);
+        $scope.imageSrc = $scope.selectedServicePage.ImagePath;
         document.querySelector('.update-container').style.display = 'block';
     };
 
-    // Update service
-    $scope.updateService = function (service) {
-        Service.updateService(service).then(function (response) {
-            if (response.data.success) {
-                $scope.loadServices();
-                closeUpdateService();
-            }
+
+    //// Update service
+    //$scope.updateService = function (DATA) {
+    //    ServicesData.updateService(DATA).then(function (response) {
+    //        if (response.data.success) {
+    //            $scope.loadServices();
+    //            closeUpdateService();
+    //        }
+    //    });
+    //};
+
+
+    $scope.updateService = function () {
+        if (!$scope.selectedServicePage || !$scope.selectedServicePage.ServiceID) {
+            console.error("Error: No service selected for update.");
+            return;
+        }
+
+        var updatedServiceData = {
+            ServiceID: $scope.selectedServicePage.ServiceID,
+            ServiceName: $scope.selectedServicePage.ServiceName,
+            Description: $scope.selectedServicePage.Description,
+            Material: $scope.selectedServicePage.Material,
+            ImagePath: $scope.selectedServicePage.ImagePath, // Default to existing image
+        };
+
+        function UploadFile(file) {
+            return new Promise(function (resolve, reject) {
+                if (file) {
+                    console.log("File selected for upload:", file.name);
+
+                    // Upload file and update ImagePath
+                    IPService.uploadFile(file).then(function (fileName) {
+                        updatedServiceData.ImagePath = "/Content/images/Services/" + fileName;
+                        resolve();
+                    }).catch(function (error) {
+                        console.error("Upload failed:", error);
+                        reject(error);
+                    });
+                } else {
+                    resolve(); // No file uploaded, proceed with the existing image
+                }
+            });
+        }
+
+        // Handle file upload (if any) and update service
+        UploadFile($scope.file).then(function () {
+            IPService.updateService(updatedServiceData).then(function (response) {
+                if (response.data.success) {
+                    console.log("Service updated successfully:", response.data);
+                    swal.fire({
+                        title: "Success!",
+                        text: "Service updated successfully!",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                        timer: 2000,
+                    });
+                    $scope.loadServices();
+                    closeUpdateService();
+                } else {
+                    console.error("Update failed:", response.data.message);
+                    swal.fire({
+                        title: "Error!",
+                        text: "Failed to update the service.",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                }
+            }).catch(function (error) {
+                console.error("Service update error:", error);
+                swal.fire({
+                    title: "Error!",
+                    text: "Something went wrong while updating the service.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            });
+        }).catch(function (error) {
+            console.error("File upload failed:", error);
         });
     };
+
 
     // Upload file for update
     $scope.updateUploadFile = function (file) {
@@ -2156,7 +2227,7 @@
             reader.onload = function (e) {
                 $scope.$apply(function () {
                     $scope.imageSrc = e.target.result;
-                    $scope.selectedService.ImagePath = e.target.result;
+                    $scope.selectedServicePage.ImagePath = e.target.result;
                 });
             };
             reader.readAsDataURL(file);

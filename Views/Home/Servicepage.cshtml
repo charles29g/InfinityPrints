@@ -455,7 +455,7 @@
             <div class="col s12 m4" ng-repeat="DATA in ServicesData | filter:{ServiceName: filter}">
                 <div class="card">
                     <div class="action-buttons">
-                        <button class="update-btn" onClick="openUpdateService()">✎</button>
+                        <button class="update-btn" ng-click="openUpdateService(DATA)">✎</button>
                         <button ng-if="Employee()" class="delete-btn" ng-click="DeleteServiceEmployee(DATA,'True')">×</button>
                         <button ng-if="Owner()" class="delete-btn" ng-click="DeleteReviews(DATA)">×</button>
 
@@ -547,7 +547,7 @@
                 </div>
             </div>
         </div>
-
+        <!--  UPDATE SEERVICES -->
         <div class="update-container" style="display:none; margin-top:5vh;">
             <div class="container">
                 <button class="close-button" onClick="closeUpdateService()">×</button>
@@ -559,7 +559,7 @@
                             <div class="row">
                                 <div class="col s12 image-preview">
                                     <div class="preview-container">
-                                        <img ng-src="{{selectedService1.ImagePath}}" alt="Image Preview" class="preview-img" ng-show="selectedService1.ImagePath" />
+                                        <img ng-src="{{selectedServicePage.ImagePath}}" alt="Image Preview" class="preview-img" ng-show="selectedServicePage.ImagePath" />
                                     </div>
                                 </div>
                                 <div class="col s12 file-upload">
@@ -571,21 +571,21 @@
                                 </div>
                                 <div class="col s12 input-icons">
                                     <input id="ServiceName" class="input-field" type="text"
-                                           ng-model="selectedService1.ServiceName" placeholder="Service Name" required />
+                                           ng-model="selectedServicePage.ServiceName" placeholder="Service Name" required />
                                 </div>
                                 <div class="col s12 input-icons">
                                     <input id="ServiceMat" class="input-field" type="text"
-                                           ng-model="selectedService1.Material" placeholder="Service Material" required />
+                                           ng-model="selectedServicePage.Material" placeholder="Service Material" required />
                                 </div>
                                 <div class="col s12 input-icons">
                                     <input id="ServiceDesc" class="input-field" type="text"
-                                           ng-model="selectedService1.Description" placeholder="Service Description" required />
+                                           ng-model="selectedServicePage.Description" placeholder="Service Description" required />
                                 </div>
                                 <!--<button class="close-button" onClick="openAddSize()">Add Sizes</button>-->
                             </div>
                         </form>
                         <div class="button">
-                            <button class="button1" ng-click="updateService(selectedService)">Update</button>
+                            <button class="button1" ng-click="updateService(DATA)">Update</button>
                         </div>
                     </div>
                 </div>

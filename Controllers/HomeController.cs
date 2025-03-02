@@ -1021,19 +1021,17 @@ namespace InfinityPrints.Controllers
                     existingService.Description = service.Description;
                     existingService.Material = service.Material;
                     existingService.ImagePath = service.ImagePath;
+
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
                 }
-                return Json(new { success = true });
+                return Json(new { success = false, message = "Service not found." });
             }
         }
 
-        public class Service
-        {
-            public int ServiceID { get; set; }
-            public string ServiceName { get; set; }
-            public string Description { get; set; }
-            public string Material { get; set; }
-            public string ImagePath { get; set; }
-        }
+
+
 
         public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action)
         {
