@@ -276,10 +276,16 @@
             background-color: #555;
         }
 
-    .search-btn {
-        padding-left: 30vh;
-        padding-right: 30vh;
+/*    .search-container {
+        width: 50%;
+        justify-self: center;
     }
+
+    
+    .search-input {
+        padding-left: 30px;
+        padding-right: 30px;
+    }*/
 
 
     .action-buttons {
@@ -317,11 +323,70 @@
         aspect-ratio: 16 / 9; /* Balanced aspect ratio */
     }
 
-    #services-section, #feedbacks-section {
+
+    /* Fade-in effect */
+    .search-wrapper {
+        text-align: center;
         margin-top: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     }
+
+        /* When the page loads, make it fade in */
+        .search-wrapper.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    .search-title {
+        font-weight: bold;
+        color: black;
+        margin-top:100px;
+    }
+
+    .search-container {
+        position: relative;
+        padding-left: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60%;
+        max-width: 500px;
+        margin: 10px auto;
+        border: 2px solid #ccc;
+        border-radius: 30px;
+        background: white;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        padding-top: 5px;
+    }
+
+
+    .search-input {
+        padding-left: 20px !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        font-size: 18px !important;
+        width: 90% !important;
+        background: transparent;
+        color: black;
+    }
+
+        .search-input::placeholder {
+            color: gray;
+            font-size: 1rem;
+        }
+    .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: black;
+        font-size: 25px;
+    }
+
+
 </style>
 <body>
 
@@ -378,11 +443,14 @@
         <!-- Add service button na nasa lower right -->
         <a href='/Home/ServiceForm' class="add-service-btn">+ Add Service</a>
 
-
-        <div class="row center">
-            <h3 id="servicesTxt"><strong>Services Offered</strong></h3>
+        <div class="search-wrapper">
+            <h3 class="search-title">Services Offered</h3>
+            <div class="search-container">
+                <i class="material-icons search-icon">search</i>
+                <input type="search" ng-model="filter" class="search-input" placeholder="Search Keyword" />
+            </div>
         </div>
-        <div class="search-btn center"><input type="search" ng-model="filter" class="search-btn" placeholder="Search Bar" /></div>
+
 
         <div class="row" id="feedbacks-section" ng-init="loadServices()">
             <div class="col s12 m4" ng-repeat="DATA in ServicesData | filter:{ServiceName: filter}">
@@ -528,64 +596,64 @@
         @*<div class="size-container" style="display:none;" ng-init="loadServices()">
 
 
-                <div class="container">
-                    <button class="close-button" onclick="closeAddSize()">×</button>
+            <div class="container">
+                <button class="close-button" onclick="closeAddSize()">×</button>
 
-                    <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
+                <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
 
-                        <a class="left" id="txtuser">Add</a>
-                        <a class="left" style="margin-left:5px" id="user">Sizes</a>
+                    <a class="left" id="txtuser">Add</a>
+                    <a class="left" style="margin-left:5px" id="user">Sizes</a>
 
-                        <div class="row">
+                    <div class="row">
 
-                            <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
+                        <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
 
-                                <div class="row">
+                            <div class="row">
 
-                                    <label for="FileQuantity">Service:</label>
-                                    <label for="Service">Service</label>
-                                    <select id="Service" required ng-model="services[$index]"
-                                            ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
-                                        <option value="" disabled>Please select One</option>
-                                    </select>
+                                <label for="FileQuantity">Service:</label>
+                                <label for="Service">Service</label>
+                                <select id="Service" required ng-model="services[$index]"
+                                        ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
+                                    <option value="" disabled>Please select One</option>
+                                </select>
 
-                                    <label for="FileQuantity">Size Quantity:</label>
-                                    <select id="FileQuantity" ng-model="FileQuantity" ng-change="updateContainers()">
-                                        <option value="" disabled>Please select One</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
+                                <label for="FileQuantity">Size Quantity:</label>
+                                <select id="FileQuantity" ng-model="FileQuantity" ng-change="updateContainers()">
+                                    <option value="" disabled>Please select One</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
 
-                                    <div ng-repeat="n in getNumber(FileQuantity) track by $index">
-                                        <div class="upload-container">
+                                <div ng-repeat="n in getNumber(FileQuantity) track by $index">
+                                    <div class="upload-container">
 
-                                            <div class="row">
-                                                <div class="col s6">
-                                                    <label for="Size">Size</label>
-                                                    <input id="SizeName" class="input-field " type="text" placeholder="Size Name" required ng-model="SizeName" />
-                                                </div>
+                                        <div class="row">
+                                            <div class="col s6">
+                                                <label for="Size">Size</label>
+                                                <input id="SizeName" class="input-field " type="text" placeholder="Size Name" required ng-model="SizeName" />
                                             </div>
+                                        </div>
 
-                                            <div class="row">
-                                                <div class="col s6">
-                                                    <label for="Price">Price</label>
-                                                    <input id="Price" class="input-field " type="text" placeholder="Price" required ng-model="Price" />
-                                                </div>
+                                        <div class="row">
+                                            <div class="col s6">
+                                                <label for="Price">Price</label>
+                                                <input id="Price" class="input-field " type="text" placeholder="Price" required ng-model="Price" />
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                            </form>
-                            <div class="button">
-                                <button class="button1" ng-click="AddSizes()">Submit</button>
+
                             </div>
+                        </form>
+                        <div class="button">
+                            <button class="button1" ng-click="AddSizes()">Submit</button>
                         </div>
                     </div>
                 </div>
-            </div>*@
+            </div>
+        </div>*@
 
     </div>
 
@@ -622,5 +690,16 @@
         container.style.display = 'block';
         closeUpdateService();
     }
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchWrapper = document.querySelector(".search-wrapper");
+
+        if (searchWrapper) {
+            searchWrapper.classList.add("fade-in");
+        }
+    });
+
 
 </script>

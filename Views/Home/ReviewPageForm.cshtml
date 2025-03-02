@@ -102,22 +102,32 @@
 
 <button class="back-btn" onclick="window.location.href='/Home/Reviewpage'">Back to Reviews</button>
 
-<h1>Add a New Review</h1>
-<form ng-submit="submitMovieFunc()" enctype="multipart/form-data" method="POST">
-    <div class="form-group">
-        <label for="movieTitle">Review Title</label>
-        <input type="text" id="movieTitle" ng-model="movieTitle" class="form-control" required />
-    </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col s12">
+            <h1>Add a New Review</h1>
+            <div class="row">
+                <div class="col s12">
+                    <form ng-submit="submitMovieFunc()" enctype="multipart/form-data" method="POST">
+                        <div class="form-group">
+                            <label for="movieTitle">Review Title</label>
+                            <input type="text" id="movieTitle" ng-model="movieTitle" class="form-control" required />
+                        </div>
 
-    <div class="form-group">
-        <label for="movieDesc">Review</label>
-        <textarea id="movieDesc" ng-model="movieDesc" class="form-control" required></textarea>
-    </div>
+                        <div class="form-group">
+                            <label for="movieDesc">Review</label>
+                            <textarea id="movieDesc" ng-model="movieDesc" class="form-control" required></textarea>
+                        </div>
 
-    <div class="form-group">
-        <label for="moviePoster">Review Image</label>
-        <input type="text" ng-model="moviePoster" placeholder="Enter image URL" />
-    </div>
+                        <div class="form-group">
+                            <label for="moviePoster">Review Image</label>
+                            <input type="text" ng-model="moviePoster" placeholder="Enter image URL" />
+                        </div>
 
-    <button type="submit" class="btn btn-primary" ng-click="submitMovie()">Submit Review</button>
-</form>
+                        <button type="submit" class="btn btn-primary" ng-click="submitMovie()">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
