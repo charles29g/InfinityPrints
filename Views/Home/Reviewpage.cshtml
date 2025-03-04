@@ -101,25 +101,7 @@
     }
 
 
-    .add-review-btn {
-        background-color: white;
-        color: black;
-        font-size: 1.5em;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 100;
-        outline: auto;
-    }
-
-        .add-review-btn:hover {
-            background-color: #555;
-        }
-
+    
     .action-buttons {
         position: absolute;
         top: 10px;
@@ -358,6 +340,39 @@
         font-weight: 600;
         color: #000; /* Black text color */
     }
+
+    .add-review-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #6f0d4a, #9b135f);
+        color: white;
+        border-radius: 30px;
+        font-size: 16px;
+        padding: 12px 24px;
+        text-decoration: none;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        z-index: 100;
+        outline: auto;
+    }
+
+        .add-review-btn i {
+            font-size: 20px;
+        }
+
+        .add-review-btn:hover {
+            background: linear-gradient(135deg, #9b135f, #6f0d4a); 
+            transform: scale(1.1); 
+            box-shadow: 6px 8px 12px rgba(0, 0, 0, 0.4);
+        }
+
+
 </style>
 
 <body>
@@ -410,7 +425,9 @@
             </div>
         </div>
 
-        <a onclick="window.location.href='/Home/ReviewPageForm'" class="add-review-btn">+ Add Review</a>
+        <a onclick="window.location.href='/Home/ReviewPageForm'" class="add-review-btn">
+            <i class="material-icons">rate_review</i> Add Review
+        </a>
 
         <div class="row center">
             <h3 id="feedbacksTxt"><strong>Feedbacks</strong></h3>
@@ -582,7 +599,15 @@
 
 
 
-    
+    window.addEventListener("scroll", function () {
+        let button = document.querySelector(".add-review-btn");
+        if (window.scrollY > 100) {
+            button.classList.add("show");
+        } else {
+            button.classList.remove("show");
+        }
+    });
+
 
 
 
