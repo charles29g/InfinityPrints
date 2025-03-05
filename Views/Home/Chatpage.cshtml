@@ -67,7 +67,7 @@
         padding-top:0px !important;
     }
 
-    .chat-container{
+/*    .chat-container{
         border:1px solid black;
         width:100%;
         height:500px;
@@ -84,7 +84,128 @@
         border-right: none;
         border-left: none;
         background-color: #6f0d4a
+    }*/
+
+    .chat-container {
+        border: 1px solid black;
+        width: 90%; /* Prevents it from being too wide */
+        max-width: 600px; /* Keeps it mobile-friendly */
+        height: 500px;
+        border-radius: 20px; /* Adjusted to be smoother */
+        margin: 0 auto 100px auto; /* Centers it */
+        display: flex;
+        flex-direction: column;
+        background-color: #f5f5f5;
+        overflow: hidden;
     }
+
+    .top-bar {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        color: white;
+        font-weight: bold;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        background-color: #6f0d4a;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .message {
+        max-width: 75%;
+        padding: 12px 15px;
+        border-radius: 15px;
+        font-size: 14px;
+        position: relative;
+        word-wrap: break-word;
+    }
+
+        .message.received {
+            background-color: #e0e0e0;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .message.sent {
+            background-color: #6f0d4a;
+            color: white;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+    /* Timestamp */
+    .timestamp {
+        display: block;
+        font-size: 10px;
+        text-align: right;
+        opacity: 0.6;
+        margin-top: 5px;
+    }
+
+    .chat-input {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: white;
+        border-top: 1px solid black;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background: #6f0d4a;
+            border: none;
+            color: white;
+            padding: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    /* Fix Scrollbar */
+    .chat-messages::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: #6f0d4a;
+        border-radius: 10px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+        background: #f5f5f5;
+    }
+
+    .nav{
+        padding:40px;
+        display:flex;
+        justify-content:center;
+    }
+
 </style>
 
 <button class="back-btn" onclick="window.location.href='/Home/Homepage'">
@@ -92,13 +213,12 @@
 </button>
 
 
-<nav class="nav-extended">
-    <div class="nav-wrapper">
+<nav class="nav">
         <div>
             <a id="infinity">Infinity</a>
             <a id="prints">Prints</a>
         </div>
-        <div class="nav-content">
+        @*<div class="nav-content">
             <ul class="tabs">
                 <li class="tab"><a ng-click="Homepage()" class="active">Home</a></li>
                 <li class="tab"><a ng-click="Servicepage()">Services</a></li>
@@ -112,11 +232,11 @@
             <div class="right-menu">
                 <div class="menu-toggle" id="menu-toggle">&#9776;</div>
             </div>
-        </div>
-    </div>
+        </div>*@
+    @*</div>*@
 
     <!-- Hidden Dropdown Menu -->
-    <div class="mobile-menu" id="mobile-menu">
+    @*<div class="mobile-menu" id="mobile-menu">
         <span>{{Name}}</span>
         <ul>
             <li class="active"><a ng-click="Homepage()">Home</a></li>
@@ -126,7 +246,7 @@
             <li><a ng-click="FAQpage()">FAQs</a></li>
             <li><a ng-click="AboutusPage()">About Us</a></li>
         </ul>
-    </div>
+    </div>*@
 </nav>
 
 <div class="row">
@@ -167,23 +287,34 @@
 
             <!-- Right Section -->
             <div class="col s12 m6">
-                    <img id="image1"  src="~/Content/images/BR4.png" />
+                <img id="image1" src="~/Content/images/BR4.png" />
             </div>
         </div>
     </div>
 
     <div class="chat-container">
-        <div class="row">
-            <div class="top-bar">
-                <button></button>
-
-
-            </div>
-
-
-
+        <div class="top-bar">
+            <span class="chat-title">Agent</span>
+            @*<button class="options-btn">⋮</button>*@
         </div>
 
+        <div class="chat-messages">
+            <div class="message received">
+                <p>Hello! How are you?</p>
+                <span class="timestamp">10:30 AM</span>
+            </div>
+            <div class="message sent">
+                <p>I'm good! How about you?</p>
+                <span class="timestamp">10:32 AM</span>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <button class="emoji-btn">😊</button>
+            <input type="text" placeholder="Type a message..." />
+            <button class="send-btn">➤</button>
+        </div>
     </div>
+
 
 </div>

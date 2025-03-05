@@ -33,6 +33,38 @@
     .btn:hover {
         background-color: black !important;
     }
+
+
+    .add-review-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #6f0d4a, #9b135f);
+        color: white;
+        border-radius: 30px;
+        font-size: 16px;
+        padding: 12px 24px;
+        text-decoration: none;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        z-index: 100;
+        outline: auto;
+    }
+
+        .add-review-btn i {
+            font-size: 20px;
+        }
+
+        .add-review-btn:hover {
+            background: linear-gradient(135deg, #9b135f, #6f0d4a);
+            transform: scale(1.1);
+            box-shadow: 6px 8px 12px rgba(0, 0, 0, 0.4);
+        }
 </style>
 
 <body>
@@ -73,6 +105,10 @@
         </div>
     </nav>
 
+    <a onclick="window.location.href='/Home/Chatpage    '" class="add-review-btn">
+        <i class="material-icons">chat</i> Chat here...
+    </a>
+
     <div class="body">
         <div class="row center" id="row-greet">
             <div class="col s12">
@@ -86,8 +122,8 @@
             </div>
         </div>
         @*<div class="row">
-            <img id="homeimg" src="~/Content/images/infinityprintsimg.png" />
-        </div>*@
+                <img id="homeimg" src="~/Content/images/infinityprintsimg.png" />
+            </div>*@
 
         <div class="carousel-container">
             <div class="carousel-fade">
@@ -162,11 +198,11 @@
         </div>
 
         @*<div class="chat-section">
-            <button class="chat-button">
-                <img src="~/Content/images/chatimg.png" alt="Chat Icon" class="chat-icon" />
-                Chat with us
-            </button>
-        </div>*@
+                <button class="chat-button">
+                    <img src="~/Content/images/chatimg.png" alt="Chat Icon" class="chat-icon" />
+                    Chat with us
+                </button>
+            </div>*@
 
         <div class="row center">
             <h3 id="feedbacksTxt">Feedbacks</h3>
@@ -220,7 +256,7 @@
                     <a ng-click="Reviewspage()" id="view-more" class="view-more-link">View more</a>
                 </div>
                 @*<hr />
-                </div>*@
+                    </div>*@
             </div>
         </div>
 
