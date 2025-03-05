@@ -152,6 +152,11 @@ namespace InfinityPrints.Controllers
 
             return View();
         }
+         public ActionResult Chatpage()
+        {
+
+            return View();
+        }
 
         public ActionResult ReviewPageForm()
         {

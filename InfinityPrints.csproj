@@ -1133,6 +1133,7 @@
     <Content Include="Views\Home\OrderPage.cshtml" />
     <Content Include="Views\Home\FAQpage.cshtml" />
     <Content Include="Views\Home\AboutusPage.cshtml" />
+    <Content Include="Views\Home\Chatpage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
