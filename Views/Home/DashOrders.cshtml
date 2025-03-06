@@ -67,6 +67,118 @@
             table.display td:nth-child(7) {
                 max-width: 200px; /* Wider width for Request */
             }
+
+
+    .btn-success {
+        background-color: #28a745; /* Green color */
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-success:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    .btn-cancel {
+        background-color: #FF0000; 
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-cancel:hover {
+            background-color: #880808; /* Darker green on hover */
+        }
+
+    .paymentModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 600px;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1002;
+    }
+
+    .modal-content {
+        display: flex;
+        gap: 20px;
+    }
+
+    .image-section {
+        flex: 1;
+    }
+
+    .form-section {
+        flex: 2;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-cancel {
+        background-color: #FF0000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-cancel:hover {
+            background-color: #880808;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
 </style>
 
 <body>
@@ -83,6 +195,7 @@
             </li>
             <li style="margin-bottom: 5px;">
                 <a ng-click="Account()">
+
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-user-circle " style="font-size: 18px;"></i>
                     </span>
@@ -100,9 +213,66 @@
             <li style="margin-bottom: 5px;" class="active">
                 <a ng-click="Orders()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-box-open active" style="font-size: 18px;"></i>
+                        <i class="fas fa-box-open" style="font-size: 18px;"></i>
                     </span>
                     Orders
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Users()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-users" style="font-size: 18px;"></i>
+                    </span>
+                    Users
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Payment()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-credit-card" style="font-size: 18px;"></i>
+                    </span>
+                    Payment
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Chat()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-comments" style="font-size: 18px;"></i>
+                    </span>
+                    Chat
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="UserGuide()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                    </span>
+                    User Guide
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Status()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-spinner active" style="font-size: 18px;"></i>
+                    </span>
+                    Status
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Receipts()">
+                    <!-- Call the Receipts function -->
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-receipt" style="font-size: 18px;"></i>
+                    </span>
+                    Receipts
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Receipts()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-file-alt" " style="font-size: 18px;"></i>
+                    </span>
+                    Logs
                 </a>
             </li>
         </ul>
@@ -110,167 +280,336 @@
 
     <div class="main-content">
         <p style="text-align: right;">{{RoleID }} Dashboard</p>
-        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center;">
-            Pending Orders
-        </h1>
-        <div class="row white-text m2" ng-init="loadOrders()">
-            <div class="table-wrapper">
-                <table id="myTable" class="display">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>User ID</th>
-                            <th>File Path</th>
-                            <th>Size</th>
-                            <th>Total Price</th>
-                            <th>Request</th>
-                            <th>Created At</th>
-                            <th>StatusID</th>
-                            <th>Service</th>
-                            <th>Payment Type</th>
-                            <th>View Order</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="pDATA in OrdersData">
-                            <td>{{pDATA.OrderID}}</td>
-                            <td>{{pDATA.UserID}}</td>
-                            <td title="{{pDATA.FilePath}}">{{pDATA.FilePath}}</td> <!-- Add title attribute for tooltip -->
-                            <td>{{pDATA.Size}}</td>
-                            <td>{{pDATA.TotalPrice}}</td>
-                            <td title="{{pDATA.Request}}">{{pDATA.Request}}</td> <!-- Add title attribute for tooltip -->
-                            <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td>{{pDATA.StatusID}}</td>
-                            <td>{{pDATA.Service || 'Unknown Service'}}</td>
-                            <td>{{pDATA.PaymentTerm}}</td>
-                            <td>
-                                <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
-                            </td>
-                            <td>
-                                <button ng-click="deleteOrder(pDATA.OrderID)" class="btn btn-primary">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div ng-if="RoleEmp()">
+            <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center;">
+                Pending Orders
+            </h1>
+            <div class="row white-text m2" ng-init="loadOrders()">
+                <div class="table-wrapper">
+                    <table id="myTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>User ID</th>
+                                <th>Service</th>
+                                <th>Size</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                                <th>Created At</th>
+                                <th>Payment Type</th>
+                                <th>View Order</th>
+                                <th>Accept</th> <!-- New Status Column -->
+                                <th>Decline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filter orders to only show those with StatusID = 1 -->
+                            <tr ng-repeat="pDATA in OrdersData | filter: { StatusID: 1 }">
+                                <td>{{pDATA.OrderID}}</td>
+                                <td>{{pDATA.UserID}}</td>
+                                <td>{{pDATA.Service || 'Unknown Service'}}</td>
+                                <td>{{pDATA.Size}}</td>
+                                <td>{{pDATA.Quantity}}</td>
+                                <td>{{pDATA.TotalPrice}}</td>
+                                <td>{{DateFormat(pDATA.CreatedAt)}}</td>
+                                <td>{{pDATA.PaymentTerm}}</td>
+                                <td>
+                                    <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
+                                </td>
+                                <td>
+                                    <!-- Accept and Decline Buttons -->
+                                    <button class="btn btn-success" ng-click="acceptOrder(pDATA.OrderID)">Accept</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-cancel" ng-click="declineOrder(pDATA.OrderID)">Decline</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div ng-if="RoleEmp()">
+            <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
+                Manage Orders
+            </h1>
+            <div class="row white-text m2">
+                <div class="table-wrapper">
+                    <table id="manageOrdersTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer ID</th>
+                                <th>Service</th>
+                                <th>Size</th>
+                                <th>Quantity</th>
+                                <th>Total Amount</th>
+                                <th>Created At</th>
+                                <th>Status</th>
+                                <th>Payment Type</th>
+                                <th>Payment Status</th>
+                                <th>View Order</th>
+                                <th>Delete</th> <!-- Delete Button Column -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Show all orders except those with StatusID = 1 (pending) -->
+                            <tr ng-repeat="order in OrdersData | filter: filterByStatus">
+                                <td>{{order.OrderID}}</td>
+                                <td>{{order.UserID}}</td>
+                                <td>{{order.Service || 'Unknown Service'}}</td>
+                                <td>{{order.Size}}</td>
+                                <td>{{order.Quantity}}</td>
+                                <td>{{order.TotalPrice}}</td>
+                                <td>{{DateFormat(order.CreatedAt)}}</td>
+                                <td>
+                                    <!-- Button to open the status modal -->
+                                    <button class="btn btn-info" ng-click="openStatusModal(order)">
+                                        {{getStatusName(order.StatusID)}}
+                                    </button>
+                                </td>
+                                <td>{{order.PaymentTerm}}</td>
+                                <td>{{order.PaymentStatus || 'Unpaid'}}</td>
+                                <td>
+                                    <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
+                                </td>
+                                <td>
+                                    <!-- Delete Button (styled like Accept button but red) -->
+                                    <button class="btn btn-cancel" ng-click="declineOrder(pDATA.OrderID)">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <!-- New Table for Completed Orders -->
-        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
-            Completed Orders
-        </h1>
-        <div class="row white-text m2">
-            <div class="table-wrapper">
-                <table id="myTable2" class="display">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>User ID</th>
-                            <th>File Path</th>
-                            <th>Size</th>
-                            <th>Total Price</th>
-                            <th>Request</th>
-                            <th>Created At</th>
-                            <th>StatusID</th>
-                            <th>Service</th>
-                            <th>Payment Type</th>
-                            <th>View Order</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="pDATA in OrdersData | filter: { StatusID: 2 }">
-                            <td>{{pDATA.OrderID}}</td>
-                            <td>{{pDATA.UserID}}</td>
-                            <td title="{{pDATA.FilePath}}">{{pDATA.FilePath}}</td> <!-- Add title attribute for tooltip -->
-                            <td>{{pDATA.Size}}</td>
-                            <td>{{pDATA.TotalPrice}}</td>
-                            <td title="{{pDATA.Request}}">{{pDATA.Request}}</td> <!-- Add title attribute for tooltip -->
-                            <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td>{{pDATA.StatusID}}</td>
-                            <td>{{pDATA.Service || 'Unknown Service'}}</td>
-                            <td>{{pDATA.PaymentTerm}}</td>
-                            <td>
-                                <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div ng-if="RoleEmp()">
+            <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
+                Completed Orders
+            </h1>
+            <div class="row white-text m2">
+                <div class="table-wrapper">
+                    <table id="myTable2" class="display">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>User ID</th>
+                                <th>Service</th>
+                                <th>Size</th>
+                                <th>Total Price</th>
+                                <th>Created At</th>
+                                <th>Payment Type</th>
+                                <th>View Order</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="pDATA in OrdersData | filter: { StatusID: 4 }">
+                                <td>{{pDATA.OrderID}}</td>
+                                <td>{{pDATA.UserID}}</td>
+                                <td>{{pDATA.Service || 'Unknown Service'}}</td>
+                                <td>{{pDATA.Size}}</td>
+                                <td>{{pDATA.TotalPrice}}</td>
+                                <td>{{DateFormat(pDATA.CreatedAt)}}</td>
+                                <td>{{pDATA.PaymentTerm}}</td>
+                                <td>
+                                    <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        <!-- New Table for Logged-in User's Orders -->
-        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
-            My Orders
-        </h1>
-        <div class="row white-text m2">
-            <div class="table-wrapper">
-                <table id="myTable3" class="display">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>User ID</th>
-                            <th>File Path</th>
-                            <th>Size</th>
-                            <th>Total Price</th>
-                            <th>Request</th>
-                            <th>Created At</th>
-                            <th>StatusID</th>
-                            <th>Service</th>
-                            <th>Payment Type</th>
-                            <th>View Order</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Filter OrdersData to only show orders for the logged-in user -->
-                        <tr ng-repeat="pDATA in OrdersData | filter: { UserID: UserID }">
-                            <td>{{pDATA.OrderID}}</td>
-                            <td>{{pDATA.UserID}}</td>
-                            <td title="{{pDATA.FilePath}}">{{pDATA.FilePath}}</td> <!-- Add title attribute for tooltip -->
-                            <td>{{pDATA.Size}}</td>
-                            <td>{{pDATA.TotalPrice}}</td>
-                            <td title="{{pDATA.Request}}">{{pDATA.Request}}</td> <!-- Add title attribute for tooltip -->
-                            <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td>{{pDATA.StatusID}}</td>
-                            <td>{{pDATA.Service || 'Unknown Service'}}</td>
-                            <td>{{pDATA.PaymentTerm}}</td>
-                            <td>
-                                <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
-        </div>
-    </div>
 
-    <!-- Backdrop and Modal -->
-    <div class="modal-backdrop" ng-show="selectedOrder">
-        <div id="viewOrderModal" class="orderModal">
-            <div class="container">
-                <h2>Order Details</h2>
-                <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
-                <p><strong>User ID:</strong> {{selectedOrder.UserID}}</p>
-                <p><strong>File Quantity:</strong> {{selectedOrder.FileQuantity}}</p>
-
-                <!-- Updated File Path Section with File Names Only -->
-                <p><strong>File Paths:</strong></p>
-                <ul>
-                    <li ng-repeat="filePath in (selectedOrder.FilePath ? selectedOrder.FilePath.split(' , ') : []) track by $index">
-                        <a href="{{filePath}}" download target="_blank">
-                            {{filePath.split('/').pop()}}
-                        </a>
-                    </li>
-                </ul>
-
-                <p><strong>Size:</strong> {{selectedOrder.Size}}</p>
-                <p><strong>Total Price:</strong> {{selectedOrder.TotalPrice}}</p>
-                <p><strong>Request:</strong> {{selectedOrder.Request}}</p>
-                <p><strong>Created At:</strong> {{DateFormat(selectedOrder.CreatedAt)}}</p>
-                <p><strong>Status:</strong> {{selectedOrder.StatusID}}</p>
-                <p><strong>Payment Type:</strong> {{pDATA.PaymentTerm}}</p>
-                <button class="btn btn-secondary" ng-click="closeOrderModal()">Close</button>
+            <!-- New Table for Logged-in User's Orders -->
+            <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
+                My Orders
+            </h1>
+            <div class="row white-text m2">
+                <div class="table-wrapper">
+                    <table id="myOrdersTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Service</th>
+                                <th>Size</th>
+                                <th>Quantity</th>
+                                <th>Total Amount</th>
+                                <th>Created At</th>
+                                <th>Status</th>
+                                <th>Payment Type</th>
+                                <th>Payment Status</th>
+                                <th>Payment</th> <!-- Payment Column -->
+                                <th>Cancel</th> <!-- Cancel Column -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Show orders for the logged-in user -->
+                            <tr ng-repeat="order in OrdersData | filter: { UserID: UserID }">
+                                <td>{{order.OrderID}}</td>
+                                <td>{{order.Service || 'Unknown Service'}}</td>
+                                <td>{{order.Size}}</td>
+                                <td>{{order.Quantity}}</td>
+                                <td>{{order.TotalPrice}}</td>
+                                <td>{{DateFormat(order.CreatedAt)}}</td>
+                                <td>{{getStatusName(order.StatusID)}}</td>
+                                <td>{{order.PaymentTerm || 'Not specified'}}</td>
+                                <td>{{order.PaymentStatus || 'Unpaid'}}</td>
+                                <td>
+                                    <!-- Make Payment Button (only shown if status is Accepted) -->
+                                    <button class="btn btn-primary" ng-click="makePayment(order)" ng-if="order.StatusID === 2">
+                                        <i class="fas fa-credit-card"></i> Make Payment
+                                    </button>
+                                </td>
+                                <td>
+                                    <!-- Cancel Button (only shown if status is Pending or Accepted) -->
+                                    <button class="btn btn-warning" ng-click="openCancelConfirmationModal(order)" ng-if="order.StatusID === 1 || order.StatusID === 2">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </div>
+
+            <!-- Backdrop and Modal -->
+            <div class="modal-backdrop" ng-show="selectedOrder">
+                <div id="viewOrderModal" class="orderModal">
+                    <div class="container">
+                        <h2>Order Details</h2>
+                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                        <p><strong>User ID:</strong> {{selectedOrder.UserID}}</p>
+
+                        <!-- File Path Section -->
+                        <p><strong>File Paths:</strong></p>
+                        <ul>
+                            <li ng-repeat="filePath in (selectedOrder.FilePath ? selectedOrder.FilePath.split(' , ') : []) track by $index">
+                                <a href="{{filePath}}" download target="_blank">
+                                    {{filePath.split('/').pop()}}
+                                </a>
+                            </li>
+                        </ul>
+
+                        <p><strong>Size:</strong> {{selectedOrder.Size}}</p>
+                        <p><strong>Total Price:</strong> {{selectedOrder.TotalPrice}}</p>
+                        <p><strong>Additional Requests:</strong> {{selectedOrder.AdditionalRequests || 'None'}}</p> <!-- Display AdditionalRequests -->
+                        <p><strong>Payment Type:</strong> {{selectedOrder.PaymentTerm || 'Not specified'}}</p> <!-- Display PaymentType -->
+                        <p><strong>Created At:</strong> {{DateFormat(selectedOrder.CreatedAt)}}</p>
+                        <p><strong>Status:</strong> {{getStatusName(selectedOrder.StatusID)}}</p>
+                        <button class="btn btn-secondary" ng-click="closeOrderModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-backdrop" ng-show="showPaymentModal">
+                <div class="orderModal">
+                    <div class="container">
+                        <div class="modal-content">
+                            <!-- Image on the Left -->
+                            <div class="image-section">
+                                <img src="~/Content/images/payment-image.jpg" alt="Payment Image" style="width: 100%; max-width: 200px;" />
+                            </div>
+
+                            <!-- Form on the Right -->
+                            <div class="form-section">
+                                <h2>Make Payment</h2>
+                                <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                                <p><strong>Total Amount:</strong> {{selectedOrder.TotalPrice}}</p>
+
+                                <!-- Upload Payment Proof -->
+                                <div class="col s12 file-upload">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <i class="material-icons upload-icon">file_upload</i>
+                                        Upload Payment Proof
+                                    </label>
+                                    <input type="file" ngf-select ng-model="file" name="file" accept="image/*" />
+                                </div>
+
+                                <!-- Reference Number -->
+                                <div class="col s12 input-icons">
+                                    <input id="ReferenceNumber" class="input-field" type="text" placeholder="Enter reference number" required ng-model="ReferenceNo" />
+                                </div>
+
+                                <!-- Buttons -->
+                                <button class="btn btn-success" ng-click="AddPayment()">Submit Payment</button>
+                                <button class="btn btn-secondary" ng-click="closePaymentModal()">Cancel</button>
+
+                                <!-- Feedback Messages -->
+                                <div ng-if="paymentSuccess" class="alert alert-success">
+                                    Payment submitted successfully!
+                                </div>
+                                <div ng-if="paymentError" class="alert alert-danger">
+                                    {{paymentError}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-backdrop" ng-show="showDeclineModal">
+                <div class="orderModal">
+                    <div class="container">
+                        <h2>Decline Order</h2>
+                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                        <div class="form-group">
+                            <label for="declineReason">Reason for Decline</label>
+                            <textarea id="declineReason" ng-model="declineReason" class="form-control" rows="4" placeholder="Enter reason for declining the order"></textarea>
+                        </div>
+                        <button class="btn btn-success" ng-click="submitDecline()">Submit</button>
+                        <button class="btn btn-secondary" ng-click="closeDeclineModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Status Modal -->
+            <div class="modal-backdrop" ng-show="showStatusModal">
+                <div class="orderModal">
+                    <div class="container">
+                        <h2>Order Status</h2>
+                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                        <p><strong>Current Status:</strong> {{getStatusName(selectedOrder.StatusID)}}</p>
+
+                        <!-- Display additional status details or allow updates -->
+                        <div class="form-group">
+                            <label for="newStatus">Update Status</label>
+                            <select id="newStatus" ng-model="newStatus" class="form-control">
+                                <option value="1">Pending</option>
+                                <option value="2">Accepted</option>
+                                <option value="3">In Progress</option>
+                                <option value="4">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Buttons -->
+                        <button class="btn btn-success" ng-click="updateStatus()">Update</button>
+                        <button class="btn btn-secondary" ng-click="closeStatusModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-backdrop" ng-show="showCancelConfirmationModal">
+                <div class="orderModal">
+                    <div class="container">
+                        <h2>Confirm Cancellation</h2>
+                        <p>Are you sure you want to cancel this order?</p>
+                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                        <p><strong>Service:</strong> {{selectedOrder.Service || 'Unknown Service'}}</p>
+                        <p><strong>Size:</strong> {{selectedOrder.Size || 'Unknown Size'}}</p>
+                        <p><strong>Total Amount:</strong> {{selectedOrder.TotalPrice}}</p>
+
+                        <!-- Buttons -->
+                        <button class="btn btn-danger" ng-click="confirmCancel()">Yes, Cancel Order</button>
+                        <button class="btn btn-secondary" ng-click="closeCancelConfirmationModal()">No, Go Back</button>
+                    </div>
+                </div>
+            </div>
+
+
+
 </body>
