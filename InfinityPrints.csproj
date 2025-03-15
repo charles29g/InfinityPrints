@@ -264,7 +264,14 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\datatables.css" />
     <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\images\BR4.png" />
+    <Content Include="Content\images\BR3.png" />
     <Content Include="Content\images\infinityprintsimg.png" />
+    <Content Include="Content\images\MG4.png" />
+    <Content Include="Content\images\SN1.png" />
+    <Content Include="Content\images\SN11.png" />
+    <Content Include="Content\images\TARP3.png" />
+    <Content Include="Content\images\TG5.png" />
     <Content Include="Content\materialize.css" />
     <Content Include="Content\materialize.min.css" />
     <Content Include="favicon.ico" />
@@ -1126,6 +1133,7 @@
     <Content Include="Views\Home\OrderPage.cshtml" />
     <Content Include="Views\Home\FAQpage.cshtml" />
     <Content Include="Views\Home\AboutusPage.cshtml" />
+    <Content Include="Views\Home\Chatpage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

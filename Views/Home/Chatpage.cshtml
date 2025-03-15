@@ -1,0 +1,320 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomepageLayout.cshtml";
+}
+
+<style>
+
+    .back-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: linear-gradient(135deg, #6f0d4a, #9b135f);
+        color: white;
+        border-radius: 30px;
+        font-size: 16px;
+        padding: 12px 24px;
+        text-decoration: none;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+        .back-btn i {
+            font-size: 20px;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #9b135f, #6f0d4a);
+            transform: scale(1.1);
+            box-shadow: 6px 8px 12px rgba(0, 0, 0, 0.4);
+        }
+
+    #homeimg {
+        width: 100%;
+        height: 500px
+    }
+
+    h3{
+        text-align:center;
+        margin-top:100px
+    }
+
+    .container {
+        margin-top: 50px;
+        margin-bottom:50px;
+    }
+
+    h5 {
+        color: #8B5E3C; 
+        font-weight: 600;
+/*        margin-top:60px*/
+    }
+
+    a {
+        color: #a00062;
+    }
+
+    #image1{
+        width:100%;
+        height:300px;
+    }
+
+    ul{
+        padding-top:0px !important;
+    }
+
+/*    .chat-container{
+        border:1px solid black;
+        width:100%;
+        height:500px;
+        border-radius:50px;
+        margin-bottom:100px
+    }
+
+    .top-bar {
+        height: 50px;
+        border: 1px solid black;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        background-color: #6f0d4a
+    }*/
+
+    .chat-container {
+        border: 1px solid black;
+        width: 90%; /* Prevents it from being too wide */
+        max-width: 600px; /* Keeps it mobile-friendly */
+        height: 500px;
+        border-radius: 20px; /* Adjusted to be smoother */
+        margin: 0 auto 100px auto; /* Centers it */
+        display: flex;
+        flex-direction: column;
+        background-color: #f5f5f5;
+        overflow: hidden;
+    }
+
+    .top-bar {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        color: white;
+        font-weight: bold;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        background-color: #6f0d4a;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .message {
+        max-width: 75%;
+        padding: 12px 15px;
+        border-radius: 15px;
+        font-size: 14px;
+        position: relative;
+        word-wrap: break-word;
+    }
+
+        .message.received {
+            background-color: #e0e0e0;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .message.sent {
+            background-color: #6f0d4a;
+            color: white;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+    /* Timestamp */
+    .timestamp {
+        display: block;
+        font-size: 10px;
+        text-align: right;
+        opacity: 0.6;
+        margin-top: 5px;
+    }
+
+    .chat-input {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: white;
+        border-top: 1px solid black;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background: #6f0d4a;
+            border: none;
+            color: white;
+            padding: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    /* Fix Scrollbar */
+    .chat-messages::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: #6f0d4a;
+        border-radius: 10px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+        background: #f5f5f5;
+    }
+
+    .nav{
+        padding:40px;
+        display:flex;
+        justify-content:center;
+    }
+
+</style>
+
+<button class="back-btn" onclick="window.location.href='/Home/Homepage'">
+    <i class="material-icons">arrow_back</i> Go Back
+</button>
+
+
+<nav class="nav">
+        <div>
+            <a id="infinity">Infinity</a>
+            <a id="prints">Prints</a>
+        </div>
+        @*<div class="nav-content">
+            <ul class="tabs">
+                <li class="tab"><a ng-click="Homepage()" class="active">Home</a></li>
+                <li class="tab"><a ng-click="Servicepage()">Services</a></li>
+                <li class="tab"><a ng-click="Reviewpage()">Reviews</a></li>
+                <li class="tab"><a ng-click="OrderPage()">Order</a></li>
+                <li class="tab"><a ng-click="FAQpage()">FAQs</a></li>
+                <li class="tab"><a ng-click="AboutusPage()">About Us</a></li>
+                <li class="tab"><a ng-click="SignIn()">{{Name}}</a></li>
+
+            </ul>
+            <div class="right-menu">
+                <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+            </div>
+        </div>*@
+    @*</div>*@
+
+    <!-- Hidden Dropdown Menu -->
+    @*<div class="mobile-menu" id="mobile-menu">
+        <span>{{Name}}</span>
+        <ul>
+            <li class="active"><a ng-click="Homepage()">Home</a></li>
+            <li><a ng-click="Servicepage()">Services</a></li>
+            <li><a ng-click="Reviewpage()">Reviews</a></li>
+            <li><a ng-click="OrderPage()">Order</a></li>
+            <li><a ng-click="FAQpage()">FAQs</a></li>
+            <li><a ng-click="AboutusPage()">About Us</a></li>
+        </ul>
+    </div>*@
+</nav>
+
+<div class="row">
+    <img id="homeimg" src="~/Content/images/infinityprintsimg.png" />
+</div>
+
+<div class="body">
+    <div class="row">
+        <h3>CONTACT US</h3>
+    </div>
+    <hr />
+
+
+    <div class="container">
+        <div class="row">
+            <!-- Left Section -->
+            <div class="col s12 m6">
+                <h5>Infinity Prints Malabon</h5>
+                <p>
+                    <strong>Address:</strong><br />
+                    323 General Luna Street, Baritan , Malabon, Philippines<br /><br />
+                    <strong>Service Area:</strong>
+                    <ul>
+                        <li>Quezon City, Philippines</li>
+                        <li>Navotas, Philippines</li>
+                        <li>Caloocan, Philippines</li>
+                        <li>Malabon, Philippines</li>
+                        <li>Valenzuela, Philippines</li>
+                        <li>Manila, Philippines</li>
+                    </ul>
+                </p>
+                <p><a href="">Location Guide</a></p>
+                <p>
+                    <strong>Mobile:</strong><br>
+                    <a href="tel:0917 582 0708">0917 582 0708</a>
+                </p>
+            </div>
+
+            <!-- Right Section -->
+            <div class="col s12 m6">
+                <img id="image1" src="~/Content/images/BR4.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div class="top-bar">
+            <span class="chat-title">Agent</span>
+            @*<button class="options-btn">⋮</button>*@
+        </div>
+
+        <div class="chat-messages">
+            <div class="message received">
+                <p>Hello! How are you?</p>
+                <span class="timestamp">10:30 AM</span>
+            </div>
+            <div class="message sent">
+                <p>I'm good! How about you?</p>
+                <span class="timestamp">10:32 AM</span>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <button class="emoji-btn">😊</button>
+            <input type="text" placeholder="Type a message..." />
+            <button class="send-btn">➤</button>
+        </div>
+    </div>
+
+
+</div>

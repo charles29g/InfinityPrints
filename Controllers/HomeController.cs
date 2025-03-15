@@ -152,6 +152,11 @@ namespace InfinityPrints.Controllers
 
             return View();
         }
+         public ActionResult Chatpage()
+        {
+
+            return View();
+        }
 
         public ActionResult ReviewPageForm()
         {
@@ -1021,19 +1026,17 @@ namespace InfinityPrints.Controllers
                     existingService.Description = service.Description;
                     existingService.Material = service.Material;
                     existingService.ImagePath = service.ImagePath;
+
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
                 }
-                return Json(new { success = true });
+                return Json(new { success = false, message = "Service not found." });
             }
         }
 
-        public class Service
-        {
-            public int ServiceID { get; set; }
-            public string ServiceName { get; set; }
-            public string Description { get; set; }
-            public string Material { get; set; }
-            public string ImagePath { get; set; }
-        }
+
+
 
         public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action)
         {
@@ -1409,6 +1412,19 @@ namespace InfinityPrints.Controllers
 
                             CreatedAt = DateTime.Now,
 
+                    };
+
+                    db.tbl_services.Add(dbnew);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Sizes Added successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
 
                         };
 

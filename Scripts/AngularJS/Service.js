@@ -3,6 +3,7 @@ app.service("IPService", function ($http, $q, Upload) {
     console.log("Service")
 
     this.LoadServices = function () {
+        console.log("service services")
         return $http.get("Home/LoadServices");
     }
 
@@ -474,25 +475,33 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
-
-
     this.updateService = function (service) {
-        return $http.post('/Home/UpdateService', service);
-    },
+        var service = $http({
+            method: "post",
+            url: "Home/UpdateService",
+            data: service,
+
+        });
+
+        return service;
+
+    };
 
 
-        this.DeleteServices = function (dataToDelete) {
-            console.log(dataToDelete + " Service");
-            var Delete = $http({
-                method: "post",
-                url: "Home/DeleteServices",
-                data: {
-                    dataToDelete
-                }
-            });
 
-            return Delete;
-        };
+
+    this.DeleteServices = function (dataToDelete) {
+        console.log(dataToDelete + " Service");
+        var Delete = $http({
+            method: "post",
+            url: "Home/DeleteServices",
+            data: {
+                dataToDelete
+            }
+        });
+
+        return Delete;
+    };
 
 
     this.DeleteReviews = function (dataToDelete) {
