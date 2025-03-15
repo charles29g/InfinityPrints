@@ -35,7 +35,7 @@
     }
 
 
-    .add-review-btn {
+    .chat-btn {
         position: fixed;
         bottom: 20px;
         right: 20px;
@@ -56,11 +56,11 @@
         outline: auto;
     }
 
-        .add-review-btn i {
+        .chat-btn i {
             font-size: 20px;
         }
 
-        .add-review-btn:hover {
+        .chat-btn:hover {
             background: linear-gradient(135deg, #9b135f, #6f0d4a);
             transform: scale(1.1);
             box-shadow: 6px 8px 12px rgba(0, 0, 0, 0.4);
@@ -105,7 +105,7 @@
         </div>
     </nav>
 
-    <a onclick="window.location.href='/Home/Chatpage    '" class="add-review-btn">
+    <a onclick="window.location.href='/Home/Chatpage'" class="chat-btn">
         <i class="material-icons">chat</i> Chat here...
     </a>
 
@@ -307,62 +307,142 @@
             </div>
         </div>
 
-
-        <div>
-            <footer>
-                <div class="footer-container row s12">
-                    <div class="footer-logo col s3">
-                        <img src="~/Content/images/homeimg.png" alt="Infinity Prints Logo">
-                    </div>
-                    <div class="col col-divider1 s0" style="height:200px"></div>
-                    <div class="footer-nav col s4 center">
-                        <div class="row footer-links">
-                            <div class="col">
-                                <a href="">Homepage</a>
-                            </div>
-                            <div class="col">
-                                <a href="">Services</a>
-                            </div>
-                            <div class="col">
-                                <a href="">Reviews</a>
-                            </div>
-                        </div>
-                        <div class="row footer-links">
-                            <div class="col">
-                                <a href="">Order</a>
-                            </div>
-                            <div class="col">
-                                <a href="">FAQs</a>
-                            </div>
-                            <div class="col">
-                                <a href="">About Us</a>
-                            </div>
-                        </div>
-
-
-
-                        <div class="footer-social">
-                            <a href="#"><img src="x-icon.png" alt="X"></a>
-                            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-                            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
-                            <a href="#"><img src="viber-icon.png" alt="Viber"></a>
-                        </div>
-
-                        <div class="footer-tagline">
-                            <p>Infinity Prints: Putting Your Ideas Into Print</p>
-                        </div>
-                    </div>
-                    <div class="col col-divider s0" style="height:200px"></div>
-
-                    <div class="footer-contact col s3 center">
-                        <h4>Contact US</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-
-                </div>
-            </footer>
-        </div>
     </div>
+
+
+
+    @*<div>
+        <footer>
+            <div class="footer-container row s12">
+                <div class="footer-logo col s3">
+                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
+                </div>
+                <div class="col col-divider1 s0" style="height:200px"></div>
+                <div class="footer-nav col s4 center">
+                    <div class="row footer-links">
+                        <div class="col">
+                            <a href="">Homepage</a>
+                        </div>
+                        <div class="col">
+                            <a href="">Services</a>
+                        </div>
+                        <div class="col">
+                            <a href="">Reviews</a>
+                        </div>
+                    </div>
+                    <div class="row footer-links">
+                        <div class="col">
+                            <a href="">Order</a>
+                        </div>
+                        <div class="col">
+                            <a href="">FAQs</a>
+                        </div>
+                        <div class="col">
+                            <a href="">About Us</a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="footer-social">
+                        <a href="#"><img src="x-icon.png" alt="X"></a>
+                        <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+                        <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+                        <a href="#"><img src="viber-icon.png" alt="Viber"></a>
+                    </div>
+
+                    <div class="footer-tagline">
+                        <p>Infinity Prints: Putting Your Ideas Into Print</p>
+                    </div>
+                </div>
+                <div class="col col-divider s0" style="height:200px"></div>
+
+                <div class="footer-contact col s3 center">
+                    <h4>Contact US</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+
+            </div>
+        </footer>
+    </div>*@
+
+    <div>
+        <footer>
+            <div class="footer-container1 row s12">
+                <div class="footer-logo">
+                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
+                </div>
+            </div>
+            <div class="footer-container2">
+                <div class="footer-nav">
+                    <div class="row s12">
+                        <div class="col s12">
+                            <div class="row footer-links">
+                                <div class="col s2">
+                                    <a href="">Homepage</a>
+                                </div>
+                                <div class="col s2">
+                                    <a href="">Services</a>
+                                </div>
+                                <div class="col s2">
+                                    <a href="">Reviews</a>
+                                </div>
+                                <div class="col s2">
+                                    <a href="">Order</a>
+                                </div>
+                                <div class="col s2">
+                                    <a href="">FAQs</a>
+                                </div>
+                                <div class="col s2">
+                                    <a href="">About Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="footer-container3 row">
+                    <div class="col s12">
+                        <div class="row">
+                            <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
+                        </div>
+                        <div class="footer-social row">
+                            @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
+                            <a href="#"><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
+                            @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
+                            @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
+                        </div>
+
+                        <div class="row">
+                            <span id="footer-contacttxt"> CONTACT US </span>
+                        </div>
+                        <div class="footer-contact row">
+                            <span>
+                                <img src="~/Content/images/phone-icon.png" alt="Facebook">
+                                0917 582 0708
+                            </span> 
+                                
+                            <span>
+                                <img src="~/Content/images/email-icon.jpg" alt="Email Address">
+                                asalazar.infinityprints@gmail.com
+                            </span>
+                        </div>
+
+                        </div>
+                    </div>
+
+                <div class="footer-container4 row">
+                    <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+                </div>
+
+
+            
+
+
+        </footer>
+    </div>
+
 
 
 </body>
