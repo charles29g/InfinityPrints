@@ -1394,56 +1394,9 @@ namespace InfinityPrints.Controllers
             }
         }
 
-            public JsonResult InsertPayment(tbl_paymentsModel PaymentDataAdd)
-            {
-                System.Diagnostics.Debug.WriteLine(PaymentDataAdd + "Home");
-                using (InfinityPrintsContext db = new InfinityPrintsContext())
-                {
-                    try
-                    {
 
 
-                        var dbnew = new tbl_paymentsModel()
-                        {
-                            ReferenceNo = PaymentDataAdd.ReferenceNo,
-
-                            IMG_PayPath = PaymentDataAdd.IMG_PayPath,
-
-
-                            CreatedAt = DateTime.Now,
-
-                    };
-
-                    db.tbl_services.Add(dbnew);
-                    db.SaveChanges();
-
-                    return Json(new { success = true, message = "Sizes Added successfully" }, JsonRequestBehavior.AllowGet);
-                }
-                catch (Exception ex)
-                {
-                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
-                }
-            }
-        }
-
-                        };
-
-                        db.tbl_payments.Add(dbnew);
-                        db.SaveChanges();
-
-                        return Json(new { success = true, message = "Sizes Added successfully" }, JsonRequestBehavior.AllowGet);
-                    }
-                    catch (Exception ex)
-                    {
-                        return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
-                    }
-                }
-            }
-
-
-
-            public JsonResult InsertContent(tbl_contentModel ContentDataAdd
-)
+            public JsonResult InsertContent(tbl_contentModel ContentDataAdd)
         {
             System.Diagnostics.Debug.WriteLine(ContentDataAdd
  + "Home");

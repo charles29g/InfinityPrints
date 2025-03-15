@@ -42,17 +42,10 @@
     $scope.loadContents = function () {
         var getData = IPService.LoadContents();
         getData.then(function (ReturnedData) {
+            console.log("Data returned from LoadContents:", ReturnedData.data); // Debugging
             $scope.ContentsData = ReturnedData.data;
-
-
-
-            console.log(ReturnedData.data);
-            console.log("HI");
-            $(document).ready(function () {
-
-
-                $('#myTable2').DataTable();
-            });
+        }).catch(function (error) {
+            console.error("Error loading contents:", error); // Debugging
         });
     };
 
