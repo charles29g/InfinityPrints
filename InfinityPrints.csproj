@@ -1138,6 +1138,7 @@
     <Content Include="Views\Home\FAQpage.cshtml" />
     <Content Include="Views\Home\AboutusPage.cshtml" />
     <Content Include="Views\Home\Chatpage.cshtml" />
+    <Content Include="Views\Home\DashChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

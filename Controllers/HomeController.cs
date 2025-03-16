@@ -169,6 +169,12 @@ namespace InfinityPrints.Controllers
 
             return View();
         }
+        public ActionResult DashChat()
+        {
+
+            return View();
+        }
+
         public ActionResult DashTaskAuthorization()
         {
 
