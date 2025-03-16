@@ -2,6 +2,59 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
+<style>
+    .btn-success {
+        background-color: #28a745; /* Green color */
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-success:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    .btn-cancel {
+        background-color: #FF0000;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-cancel:hover {
+            background-color: #880808; /* Darker green on hover */
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-cancel {
+        background-color: #FF0000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-cancel:hover {
+            background-color: #880808;
+        }
+</style>
 
 <body>
     <div class="sidebar">
@@ -111,45 +164,165 @@
 
     <div class="main-content">
         <p style="text-align: right;">{{RoleID }} Dashboard</p>
-        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
-            Status
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center;">
+            Delete Order Request
         </h1>
-        <div class="row white-text m2" ng-init="loadStatus()">
-
+        <div class="row white-text m2" ng-init="loadOrders()">
             <div class="table-wrapper">
                 <table id="myTable" class="display">
                     <thead>
                         <tr>
-                            <th>Status ID</th>
-                            <th>Status Name</th>
-
+                            <th>Order ID</th>
+                            <th>User ID</th>
+                            <th>Service</th>
+                            <th>Size</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
                             <th>Created At</th>
-                            <th>Updated At</th>
-                            <th>Delete</th>
-                            <th>
-                                <button class="waves-effect waves-light btn" style="background-color: transparent; border: none;" onclick="openModal()">
-                                    <i class="fas fa-plus" style="color: white;"></i>
-                                </button>
-                            </th>
-
-
+                            <th>Payment Type</th>
+                            <th>View Order</th>
+                            <th>Accept</th> <!-- New Status Column -->
+                            <th>Decline</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="pDATA in StatusData">
-                            <td>{{pDATA.StatID}}</td>
-                            <td>{{pDATA.StatName}}</td>
-
-
+                        <!-- Filter orders to only show those with StatusID = 1 -->
+                        <tr ng-repeat="pDATA in OrdersData | filter: { StatusID: 6 }">
+                            <td>{{pDATA.OrderID}}</td>
+                            <td>{{pDATA.UserID}}</td>
+                            <td>{{pDATA.Service || 'Unknown Service'}}</td>
+                            <td>{{pDATA.Size}}</td>
+                            <td>{{pDATA.Quantity}}</td>
+                            <td>{{pDATA.TotalPrice}}</td>
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td>{{DateFormat(pDATA.UpdatedAt)}}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{pDATA.PaymentTerm}}</td>
+                            <td>
+                                <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-success" ng-click="acceptRequest(pDATA.OrderID)">
+                                    Accept
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-cancel" ng-click="declineRequest(pDATA.OrderID)">
+                                    Decline
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
+        
+
+
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
+            Service Deletion Request
+        </h1>
+        <div class="row white-text m2" ng-init="loadServices()">
+
+            <div class="table-wrapper">
+                <table id="myTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>Service ID</th>
+                            <th>Service Name</th>
+                            <th>Description</th>
+                            <th>EmpName</th>
+                            <th>Delete</th>
+                            <th>Deny</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pDATA in ServicesData | filter:{Request : 'True'}">
+                            <td>{{pDATA.ServiceID}}</td>
+                            <td>{{pDATA.ServiceName}}</td>
+                            <td>{{pDATA.Description}}</td>
+                            <td>{{pDATA.EmpName}}</td>
+                            <td><button ng-click="DeleteServices(pDATA)">Approve</button></td>
+                            <td><button ng-click="DeleteServiceEmployeeDeny(pDATA,'')">Deny</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
+            Review Deletion Requests
+        </h1>
+        <div class="row white-text m2" ng-init="loadContents()">
+
+            <div class="table-wrapper">
+                <table id="myTable2" class="display">
+                    <thead>
+                        <tr>
+                            <th>Content ID</th>
+                            <th>Content Name</th>
+                            <th>Description </th>
+                            <th>EmpName</th>
+                            <th>Delete</th>
+                            <th>Deny</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pDATA in ContentsData | filter:{Request:'True'}">
+                            <td>{{pDATA.ContID}}</td>
+                            <td>{{pDATA.ContName}}</td>
+                            <td>{{pDATA.Desc}}</td>
+                            <td>{{pDATA.EmpName}}</td>
+                            <td><button ng-click="DeleteReviews(pDATA)">Approve</button></td>
+                            <td><button ng-click="DeleteReviewsEmployeeDeny(pDATA,'')">Deny</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a;  text-align: center;">
+            User Deletion Request
+        </h1>
+        <div class="row white-text m2" ng-init="loadUsers()">
+
+            <div class="table-wrapper">
+                <table id="myTable3" class="display">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Delete</th>
+                            <th>Deny</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pDATA in UsersData | filter:{Request : 'True'}">
+                            <td>{{pDATA.UserID}}</td>
+                            <td>{{pDATA.FName}}</td>
+                            <td>{{pDATA.LName}}</td>
+                            <td>{{pDATA.UName}}</td>
+                            <td>{{pDATA.Email}}</td>
+                            <td>{{pDATA.RoleID}}</td>
+                            <td><button ng-click="DeleteAccounts(pDATA,'True')">Approve</button></td>
+                            <td><button ng-click="DeleteUserEmployeeDeny(pDATA,'')">Deny</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 
     <!-- Modal -->

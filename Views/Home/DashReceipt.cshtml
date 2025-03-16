@@ -14,7 +14,7 @@
                     Homepage
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" class="active">
+            <li style="margin-bottom: 5px;">
                 <a ng-click="Account()">
 
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
@@ -79,7 +79,7 @@
                     Status
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" class="active">
                 <a ng-click="Receipts()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-receipt" style="font-size: 18px;"></i>
@@ -124,12 +124,11 @@
                             <th>Payment Term</th>
                             <th>Balance</th>
                             <th>Created At</th>
-                            <th>Delete</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="pDATA in ReceiptsData">
+                        <tr ng-repeat="pDATA in ReceiptsData | filter: { UserID: UserID }">
                             <td>{{pDATA.ReceiptID}}</td>
                             <td>{{pDATA.UserID}}</td>
                             <td>{{pDATA.OrderID}}</td>
@@ -137,7 +136,6 @@
                             <td>{{pDATA.Balance}}</td>
 
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
