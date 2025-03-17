@@ -2113,7 +2113,7 @@
         // Use Object.values() directly in filter without modifying SizesData
         $scope.filteredSizes[index] = Object.values($scope.sizesData).filter(function (sizesData) {
             console.log(sizesData.ServiceID, ID, "ServiceID");
-            return sizesData.ServiceID === selectedServiceID; // Match service ID
+            return sizesData.ServiceID === selectedServiceID;
         });
 
         console.log("Filtered Sizes:", $scope.filteredSizes[index]);
