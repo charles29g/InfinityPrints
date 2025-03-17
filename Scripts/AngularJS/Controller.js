@@ -2259,7 +2259,7 @@
         console.log("Original review:", DATA);
         $scope.selectedReviewPage = angular.copy(DATA);
         console.log("Copied review:", $scope.selectedReviewPage);
-        $scope.imageSrc = $scope.selectedReviewPage.IMG_Path;
+        $scope.imageSrc2 = $scope.selectedReviewPage.IMG_Path;
     };
 
     //// Update service
