@@ -1352,6 +1352,33 @@
             reader.readAsDataURL(file); // Directly read the file as data URL
         }
     }
+    $scope.imageSrc2 = "";
+
+    $scope.previewImage2 = function (file) {
+
+
+
+
+        if (file) {
+
+            console.log("previewImage called with file:", file);
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                console.log("FileReader result:", e.target.result);
+
+                // Ensure Angular's digest cycle is triggered to update the view
+                $scope.$apply(function () {
+                    $scope.imageSrc2 = e.target.result; // Update the image source
+                });
+            };
+            reader.onerror = function (error) {
+                console.error("FileReader error:", error);
+            };
+            reader.readAsDataURL(file); // Directly read the file as data URL
+        }
+    }
 
 
     $scope.AddContent = function () {
@@ -2227,6 +2254,13 @@
         document.querySelector('.update-container').style.display = 'block';
     };
 
+    $scope.openUpdateReview = function (DATA) {
+        openContainer2();
+        console.log("Original review:", DATA);
+        $scope.selectedReviewPage = angular.copy(DATA);
+        console.log("Copied review:", $scope.selectedReviewPage);
+        $scope.imageSrc = $scope.selectedReviewPage.IMG_Path;
+    };
 
     //// Update service
     //$scope.updateService = function (DATA) {
@@ -2332,6 +2366,79 @@
         Service: [],
 
     };
+
+
+    $scope.updateReview = function () {
+        if (!$scope.selectedReviewPage || !$scope.selectedReviewPage.ContID) {
+            console.error("Error: No review selected for update.");
+            return;
+        }
+
+        var updatedReviewData = {
+            ContID: $scope.selectedReviewPage.ContID,
+            ContName: $scope.selectedReviewPage.ContName,
+            Desc: $scope.selectedReviewPage.Desc,
+
+
+            IMG_Path: $scope.selectedServicePage.IMG_Path, // Default to existing image
+        };
+
+        function UploadFile(file) {
+            return new Promise(function (resolve, reject) {
+                if (file) {
+                    console.log("File selected for upload:", file.name);
+
+                    // Upload file and update ImagePath
+                    IPService.uploadFile2(file).then(function (fileName) {
+                        updatedReviewData.IMG_Path = "/Content/images/Reviews/" + fileName;
+                        resolve();
+                    }).catch(function (error) {
+                        console.error("Upload failed:", error);
+                        reject(error);
+                    });
+                } else {
+                    resolve(); // No file uploaded, proceed with the existing image
+                }
+            });
+        }
+
+        // Handle file upload (if any) and update service
+        UploadFile($scope.file).then(function () {
+            IPService.updateReview(updatedReviewData).then(function (response) {
+                if (response.data.success) {
+                    console.log("Review updated successfully:", response.data);
+                    swal.fire({
+                        title: "Success!",
+                        text: "Review updated successfully!",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                        timer: 2000,
+                    });
+                    $scope.loadContents();
+                    closeContainer2();
+                } else {
+                    console.error("Update failed:", response.data.message);
+                    swal.fire({
+                        title: "Error!",
+                        text: "Failed to update the review.",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                }
+            }).catch(function (error) {
+                console.error("Service update error:", error);
+                swal.fire({
+                    title: "Error!",
+                    text: "Something went wrong while updating the review.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+            });
+        }).catch(function (error) {
+            console.error("File upload failed:", error);
+        });
+    };
+
     $scope.AddOrder = function () {
         if ($scope.isSubmitting) {
             console.log("Order submission already in progress...");
