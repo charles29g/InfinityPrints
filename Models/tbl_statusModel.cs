@@ -13,8 +13,9 @@ namespace InfinityPrints.Models
         public string StatName { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
-
-
+        public string EmpName { get; set; }
+        public string Reason { get; set; }
+        public int OrderID { get; set; }
+        public int UserID { get; set; }
     }
 }

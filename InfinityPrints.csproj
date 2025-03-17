@@ -266,8 +266,12 @@
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\images\BR4.png" />
     <Content Include="Content\images\BR3.png" />
+    <Content Include="Content\images\email-icon.jpg" />
+    <Content Include="Content\images\fblogo.png" />
+    <Content Include="Content\images\footlogo.png" />
     <Content Include="Content\images\infinityprintsimg.png" />
     <Content Include="Content\images\MG4.png" />
+    <Content Include="Content\images\phone-icon.png" />
     <Content Include="Content\images\SN1.png" />
     <Content Include="Content\images\SN11.png" />
     <Content Include="Content\images\TARP3.png" />
@@ -1133,6 +1137,8 @@
     <Content Include="Views\Home\OrderPage.cshtml" />
     <Content Include="Views\Home\FAQpage.cshtml" />
     <Content Include="Views\Home\AboutusPage.cshtml" />
+    <Content Include="Views\Home\Chatpage.cshtml" />
+    <Content Include="Views\Home\DashChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

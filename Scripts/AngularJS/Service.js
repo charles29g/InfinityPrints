@@ -53,6 +53,22 @@ app.service("IPService", function ($http, $q, Upload) {
         return Insert;
     };
 
+    this.InsertPayment = function (PaymentDataAdd) {
+
+        console.log(PaymentDataAdd + "Payment")
+        var Insert = $http({
+            method: "post",
+            url: "Home/InsertPayment",
+            data: {
+                PaymentDataAdd
+            }
+
+
+        });
+
+        return Insert;
+    };
+
     this.InsertSizes = function (SizesDataAdd) {
 
         console.log(SizesDataAdd + "Size")
@@ -360,6 +376,38 @@ app.service("IPService", function ($http, $q, Upload) {
         return deferred.promise;
     };
 
+    this.uploadFile5 = function (file) {
+        var deferred = $q.defer();
+
+        var formData = new FormData();
+        formData.append('file', file);
+        console.log("File being sent:", file.name);
+
+        $http.post('Home/Upload5', formData, {
+            headers: {
+                'Content-Type': undefined
+            },
+            transformRequest: angular.identity
+        })
+            .then(function (response) {
+                if (response.data.success) {
+                    console.log("Upload success:", response);
+                    // Resolve the promise with the filename returned from the server
+                    deferred.resolve(response.data.fileName);
+                } else {
+                    console.error("Upload failed:", response);
+                    deferred.reject(response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Upload error:", error);
+                deferred.reject(error);
+            });
+
+        console.log("upload service return");
+        return deferred.promise;
+    };
+
 
     this.DeleteUser = function (dataToDelete) {
         var Delete = $http({
@@ -553,6 +601,92 @@ app.service("IPService", function ($http, $q, Upload) {
 
         return Insert;
     };
+
+
+
+    this.submitPayment = function (formData) {
+        console.log("Submit Payment Service Called");
+        return $http.post('/Home/SubmitPayment', formData, {
+            headers: {
+                'Content-Type': undefined // Allow file upload
+            },
+            transformRequest: angular.identity // Preserve FormData
+        });
+    };
+
+    this.updateOrderStatus = function (orderID, statusID) {
+        return $http.post('Home/UpdateOrderStatus', {
+            orderID: orderID,
+            statusID: statusID
+        });
+    };
+
+
+    this.deleteOrder = function (orderID) {
+        return $http.post('Home/DeleteOrder', {
+            orderID: orderID
+        });
+    };
+
+
+    this.acceptRequest = function (orderID) {
+        return $http.post('Home/AcceptRequest', {
+            orderID: orderID
+        });
+    };
+
+    this.declineRequest = function (orderID) {
+        return $http.post('Home/DeclineRequest', {
+            orderID: orderID
+        });
+    };
+
+
+    this.makePayment = function (orderID) {
+        return $http.post('Home/MakePayment', {
+            orderID: orderID
+        });
+    };
+
+
+    this.cancelOrder = function (orderID) {
+        console.log("Cancel Order Service Called");
+        return $http.post('/Home/CancelOrder', {
+            orderID: orderID
+        });
+    };
+
+
+    this.updateOrderStatus = function (orderID, statusID) {
+        return $http.post('Home/UpdateOrderStatus', {
+            orderID: orderID,
+            statusID: statusID
+        });
+    };
+
+
+    this.declineOrder = function (orderID, reason) {
+        console.log("Decline Order Service Called"); // Check if this logs
+        console.log("OrderID:", orderID); // Check if this logs the correct OrderID
+        console.log("Reason:", reason); // Check if this logs the correct Reason
+
+        return $http.post('/Home/DeclineOrder', {
+            orderID: orderID, // Send the OrderID
+            reason: reason    // Send the decline reason
+        });
+    };
+
+    this.updateOrderStatus = function (orderID, statusID) {
+        console.log("Update Order Status Service Called");
+        console.log("OrderID:", orderID);
+        console.log("StatusID:", statusID);
+
+        return $http.post('/Home/UpdateOrderStatus', {
+            orderID: orderID,
+            statusID: statusID
+        });
+    };
+
 
 
 

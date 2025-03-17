@@ -152,6 +152,11 @@ namespace InfinityPrints.Controllers
 
             return View();
         }
+         public ActionResult Chatpage()
+        {
+
+            return View();
+        }
 
         public ActionResult ReviewPageForm()
         {
@@ -164,6 +169,12 @@ namespace InfinityPrints.Controllers
 
             return View();
         }
+        public ActionResult DashChat()
+        {
+
+            return View();
+        }
+
         public ActionResult DashTaskAuthorization()
         {
 
@@ -1250,7 +1261,51 @@ namespace InfinityPrints.Controllers
             return Json(new { success = false, message = "No file received" });
         }
 
+        public JsonResult Upload5()
+        {
+            System.Diagnostics.Debug.WriteLine("Upload action hit");
 
+            // Map the physical path to a virtual path
+            string uploadPath = Server.MapPath("~/Content/images/Payment/");
+
+            // Ensure the directory exists
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+                System.Diagnostics.Debug.WriteLine("Directory created");
+            }
+
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    string originalFileName = Path.GetFileName(file.FileName);
+                    string fileName = Path.Combine(uploadPath, originalFileName);
+
+                    // Check if the file already exists and create a unique filename
+                    int fileCounter = 1;
+                    while (System.IO.File.Exists(fileName))
+                    {
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(originalFileName);
+                        string extension = Path.GetExtension(originalFileName);
+                        fileName = Path.Combine(uploadPath, $"{fileNameWithoutExtension}({fileCounter}){extension}");
+                        fileCounter++;
+                    }
+
+                    // Save the file
+                    file.SaveAs(fileName);
+
+                    System.Diagnostics.Debug.WriteLine($"File uploaded successfully: {fileName}");
+
+                    // Return the file name as part of the response
+                    return Json(new { success = true, message = "File uploaded successfully", fileName = Path.GetFileName(fileName) });
+                }
+            }
+
+            return Json(new { success = false, message = "No file received" });
+        }
 
 
         [HttpPost]
@@ -1327,6 +1382,8 @@ namespace InfinityPrints.Controllers
             }
         }
 
+
+
         public JsonResult InsertServices(tbl_servicesModel ServiceDataAdd)
         {
             System.Diagnostics.Debug.WriteLine(ServiceDataAdd + "Home");
@@ -1364,8 +1421,9 @@ namespace InfinityPrints.Controllers
             }
         }
 
-        public JsonResult InsertContent(tbl_contentModel ContentDataAdd
-)
+
+
+            public JsonResult InsertContent(tbl_contentModel ContentDataAdd)
         {
             System.Diagnostics.Debug.WriteLine(ContentDataAdd
  + "Home");
@@ -1385,10 +1443,6 @@ namespace InfinityPrints.Controllers
                         IMG_Path = ContentDataAdd.IMG_Path,
 
                         CreatedAt = DateTime.Now,
-
-
-
-
 
                     };
 
@@ -1550,17 +1604,295 @@ namespace InfinityPrints.Controllers
             }
         }
 
+        public JsonResult UpdateOrderStatus(int orderID, int statusID)
+        {
+            try
+            {
+                using (InfinityPrintsContext db = new InfinityPrintsContext())
+                {
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order != null)
+                    {
+                        order.StatusID = statusID; // Update the status
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Order status updated successfully." });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Order not found." });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging
+                System.Diagnostics.Debug.WriteLine("Error in UpdateOrderStatus: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
 
 
 
+        public JsonResult DeleteOrder(int orderID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order != null)
+                    {
+                        order.StatusID = 6;
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Order deleted successfully." });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Order not found." });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = $"An error occurred: {ex.Message}" });
+                }
+            }
+        }
+
+        public JsonResult CancelOrder(int orderID)
+        {
+            try
+            {
+                using (InfinityPrintsContext db = new InfinityPrintsContext())
+                {
+                    // Find the order to delete
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order != null)
+                    {
+                        // Remove the order from the database
+                        db.tbl_orders.Remove(order);
+                        db.SaveChanges();
+
+                        return Json(new { success = true, message = "Order cancelled successfully." });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Order not found." });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        public JsonResult AcceptRequest(int orderID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order != null)
+                    {
+                        // Update the order status to "Accepted" (e.g., StatusID = 2)
+                        order.StatusID = 2;
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Request accepted successfully." });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Order not found." });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = $"An error occurred: {ex.Message}" });
+                }
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeclineRequest(int orderID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order != null)
+                    {
+                        order.StatusID = 1;
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Request declined successfully." });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Order not found." });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = $"An error occurred: {ex.Message}" });
+                }
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult SubmitPayment()
+        {
+            try
+            {
+                // Extract orderID and referenceNumber from the request
+                var orderID = Request.Form["orderID"];
+                var referenceNumber = Request.Form["referenceNumber"];
+                var file = Request.Files["file"];
+
+                // Save the file
+                string uploadPath = Server.MapPath("~/Content/images/Payment/");
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                string fileName = Path.GetFileName(file.FileName);
+                string filePath = Path.Combine(uploadPath, fileName);
+                file.SaveAs(filePath);
+
+                // Update the payment status in the database
+                using (InfinityPrintsContext db = new InfinityPrintsContext())
+                {
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == int.Parse(orderID));
+                    if (order != null)
+                    {
+                        order.PaymentStatus = "Confirming Payment";
+                        db.SaveChanges();
+                    }
+
+                    // Save the payment details to the database
+                    var payment = new tbl_paymentsModel
+                    {
+                        OrderID = int.Parse(orderID),
+                        ReferenceNo = referenceNumber,
+                        IMG_PayPath = filePath,
+                        CreatedAt = DateTime.Now
+                    };
+
+                    db.tbl_payments.Add(payment);
+                    db.SaveChanges();
+                }
+
+                return Json(new { success = true, message = "Payment submitted successfully." });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging
+                System.Diagnostics.Debug.WriteLine("Error in SubmitPayment: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult DeclineOrder(int orderID, string reason)
+        {
+            try
+            {
+                // Log the received data
+                System.Diagnostics.Debug.WriteLine("Received Decline Data:");
+                System.Diagnostics.Debug.WriteLine($"OrderID: {orderID}");
+                System.Diagnostics.Debug.WriteLine($"Reason: {reason}");
+
+                using (InfinityPrintsContext db = new InfinityPrintsContext())
+                {
+                    // Find the order to update
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order != null)
+                    {
+                        // Update the Request value to "true" and store the decline reason
+                        order.Request = "true";
+                        order.Reason = reason; // Update the Reason column
+                        db.SaveChanges();
+
+                        return Json(new { success = true, message = "Order declined successfully." });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Order not found." });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        public JsonResult ConfirmPayment(int PaymentID, int OrderID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    // Update payment status to "Paid"
+                    var payment = db.tbl_payments.Find(PaymentID);
+                    if (payment != null)
+                    {
+                        payment.PaymentStatus = "Paid";
+                        db.SaveChanges();
+                    }
+
+                    // Update order status (if needed)
+                    var order = db.tbl_orders.Find(OrderID);
+                    if (order != null)
+                    {
+                        order.StatusID = 2; // Example: Set status to "Paid"
+                        db.SaveChanges();
+                    }
+
+                    return Json(new { success = true, message = "Payment confirmed successfully." });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
+            }
+        }
+
+        // Decline Payment
+        [HttpPost]
+        public JsonResult DeclinePayment(int PaymentID, int OrderID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    // Update payment status to "Unpaid"
+                    var payment = db.tbl_payments.Find(PaymentID);
+                    if (payment != null)
+                    {
+                        payment.PaymentStatus = "Unpaid";
+                        db.SaveChanges();
+                    }
+
+                    // Update order status (if needed)
+                    var order = db.tbl_orders.Find(OrderID);
+                    if (order != null)
+                    {
+                        order.StatusID = 2; // Example: Set status to "Pending"
+                        db.SaveChanges();
+                    }
+
+                    return Json(new { success = true, message = "Payment declined successfully." });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
+            }
+        }
 
 
     }
 }
-
-
-
-
-
-
-

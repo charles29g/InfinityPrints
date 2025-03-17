@@ -23,9 +23,8 @@ namespace InfinityPrints.Models
         public string CompanyName { get; set; }
         public string PaymentTerm { get; set; }
         public string Quantity { get; set; }
-
-
-
+        public string PaymentStatus { get; set; }
+        public string Reason { get; set; }
 
     }
 }

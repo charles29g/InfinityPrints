@@ -42,17 +42,10 @@
     $scope.loadContents = function () {
         var getData = IPService.LoadContents();
         getData.then(function (ReturnedData) {
+            console.log("Data returned from LoadContents:", ReturnedData.data); // Debugging
             $scope.ContentsData = ReturnedData.data;
-
-
-
-            console.log(ReturnedData.data);
-            console.log("HI");
-            $(document).ready(function () {
-
-
-                $('#myTable2').DataTable();
-            });
+        }).catch(function (error) {
+            console.error("Error loading contents:", error); // Debugging
         });
     };
 
@@ -550,7 +543,7 @@
 
 
     $scope.Payment = function () {
-        window.location.href = "Home/DashPayment";
+        window.location.href = "Home/DashPayments";
     };
 
     $scope.Chat = function () {
@@ -568,7 +561,7 @@
     };
 
     $scope.Receipts = function () {
-        window.location.href = "Home/DashReceipts";
+        window.location.href = "Home/DashReceipt";
     };
 
     $scope.DashAdmin = function () {
@@ -1142,6 +1135,103 @@
             });
         } else {
             var postData = IPService.InsertServices(ServiceDataAdd);
+
+            postData.then(function (ReturnedData) {
+                var response = ReturnedData.data;
+                console.log(response);
+                swal.fire({
+                    title: 'Success!',
+                    text: 'Tour added successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 2000,
+                });
+            }).catch(function (error) {
+                console.error("Failed to add tour:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong while adding the tour.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        }
+    };
+
+    $scope.AddPayment = function () {
+
+        var PaymentDataAdd = {
+            ReferenceNo: $scope.ReferenceNo,
+
+            IMG_PayPath: "default/image/path",
+        };
+
+        function UploadFile5(file) {
+
+
+            return new Promise(function (resolve, reject) {
+                if (file) {
+                    console.log("File selected for upload:", file.name);
+                    console.log("File size:", file.size);
+                    console.log("File type:", file.type);
+
+                    // Call the service to upload the file and get the filename back
+                    IPService.uploadFile5(file).then(function (fileName) {
+                        console.log("Upload success. File name:", fileName);
+
+                        // Update the ServiceDataAdd with the received filename
+                        PaymentDataAdd.IMG_PayPath = "/Content/images/Payment/" + fileName;
+
+                        // Resolve with the updated data
+                        resolve(fileName);
+                    }).catch(function (error) {
+                        console.error("Upload failed:", error);
+                        reject(error);
+                    });
+                } else {
+                    reject("No file selected");
+                }
+            });
+        }
+
+
+        console.log("Tour Data to be added:", PaymentDataAdd);
+
+        if ($scope.file) {
+            UploadFile5($scope.file).then(function (uploadResponse) {
+
+                var postData = IPService.InsertPayment(PaymentDataAdd);
+
+                postData.then(function (ReturnedData) {
+                    var response = ReturnedData.data;
+                    console.log(response);
+                    swal.fire({
+                        title: 'Success!',
+                        text: 'Service added successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        timer: 2000,
+                    });
+                }).catch(function (error) {
+                    console.error("Failed to add tour:", error);
+                    swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong while adding the service.',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                });
+            }).catch(function (error) {
+                console.error("File upload failed:", error);
+                swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to upload the file.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
+        } else {
+            var postData = IPService.InsertPayment(PaymentDataAdd);
 
             postData.then(function (ReturnedData) {
                 var response = ReturnedData.data;
@@ -2508,8 +2598,514 @@
         console.log("Viewing order:", order);
         $scope.selectedOrder = angular.copy(order); // Store the selected order data
     };
+
     $scope.closeOrderModal = function () {
         $scope.selectedOrder = null; // Clear the selected order data to close the modal
     };
+
+    $scope.makePayment = function (order) {
+        console.log("Initiating payment for Order ID:", order.OrderID);
+
+        Swal.fire({
+            title: 'Proceed to Payment?',
+            text: 'You are about to make a payment for Order ID: ' + order.OrderID,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Call the service to update payment status
+                IPService.makePayment(order.OrderID).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire('Payment Successful!', 'The payment has been processed.', 'success').then(() => {
+                            $scope.loadOrders(); // Refresh the orders table
+                        });
+                    } else {
+                        Swal.fire('Error!', 'Failed to process the payment.', 'error');
+                    }
+                }).catch(function (error) {
+                    Swal.fire('Error!', 'An error occurred while processing the payment.', 'error');
+                });
+            }
+        });
+    };
+
+
+
+
+    $scope.showPaymentModal = false; // Controls modal visibility
+    $scope.paymentData = {
+        amount: null,
+        file: null,
+        referenceNumber: null
+    };
+
+    // Open Payment Modal
+    $scope.makePayment = function (order) {
+        $scope.selectedOrder = order; // Store the selected order
+        $scope.showPaymentModal = true; // Show the modal
+    };
+
+    // Close Payment Modal
+    $scope.closePaymentModal = function () {
+        $scope.showPaymentModal = false; // Hide the modal
+        $scope.paymentData = { amount: null, file: null, referenceNumber: null }; // Reset form
+    };
+
+    // Submit Payment
+    $scope.paymentData = {
+        file: null,
+        referenceNumber: ''
+    };
+
+    $scope.setFile = function (element) {
+        $scope.paymentData.file = element.files[0]; // Store the selected file
+        $scope.$apply(); // Update the scope
+    };
+
+    $scope.submitPayment = function () {
+        console.log("Submit Payment Called");
+
+        // Prepare the data to send to the backend
+        var formData = new FormData();
+        formData.append('orderID', $scope.selectedOrder.OrderID);
+        formData.append('referenceNumber', $scope.paymentData.referenceNumber);
+        formData.append('file', $scope.paymentData.file);
+
+        // Log FormData contents
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+
+        // Call the service to submit the payment
+        IPService.submitPayment(formData)
+            .then(function (response) {
+                console.log("Submit Payment Response:", response);
+                if (response.data.success) {
+                    alert('Payment submitted successfully.');
+
+                    // Update the payment status of the order in the OrdersData array
+                    var order = $scope.OrdersData.find(function (o) {
+                        return o.OrderID === $scope.selectedOrder.OrderID;
+                    });
+                    if (order) {
+                        order.PaymentStatus = "Confirming Payment";
+                    }
+
+                    $scope.closePaymentModal();
+                    $scope.loadOrders(); // Refresh the orders table
+                } else {
+                    alert('Failed to submit payment: ' + response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Submit Payment Error:", error);
+                alert('An error occurred: ' + error.data.message);
+            });
+    };
+
+
+    $scope.acceptOrder = function (orderID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to accept this order.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745', // Green color for accept button
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, accept it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Call the service to update the order status to "Accepted" (StatusID = 2)
+                IPService.updateOrderStatus(orderID, 2).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire('Accepted!', 'The order has been accepted.', 'success').then(() => {
+                            $scope.loadOrders(); // Refresh the orders table
+                        });
+                    } else {
+                        Swal.fire('Error!', 'Failed to accept the order.', 'error');
+                    }
+                }).catch(function (error) {
+                    Swal.fire('Error!', 'An error occurred while accepting the order.', 'error');
+                });
+            }
+        });
+    };
+
+    $scope.declineOrder = function (orderID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to decline this order.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, decline it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("Decline Order Called for Order ID:", orderID);
+
+                // Call the service to update the order status to 6
+                IPService.updateOrderStatus(orderID, 6)
+                    .then(function (response) {
+                        console.log("Decline Order Response:", response);
+                        if (response.data.success) {
+                            Swal.fire('Declined!', 'The order has been declined.', 'success').then(() => {
+                                // Refresh the orders table
+                                $scope.loadOrders();
+                            });
+                        } else {
+                            Swal.fire('Error!', 'Failed to decline order: ' + response.data.message, 'error');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error("Decline Order Error:", error);
+                        Swal.fire('Error!', 'An error occurred: ' + error.data.message, 'error');
+                    });
+            }
+        });
+    };
+
+    $scope.deleteOrder = function (orderID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this order.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33', // Red color for delete button
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Call the service to delete the order
+                IPService.deleteOrder(orderID).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire('Deleted!', 'The order has been deleted.', 'success').then(() => {
+                            $scope.loadOrders(); // Refresh the orders table
+                        });
+                    } else {
+                        Swal.fire('Error!', 'Failed to delete the order.', 'error');
+                    }
+                }).catch(function (error) {
+                    Swal.fire('Error!', 'An error occurred while deleting the order.', 'error');
+                });
+            }
+        });
+    };
+
+    $scope.getStatusName = function (statusID) {
+        // Map StatusID to Status Name
+        switch (statusID) {
+            case 1:
+                return 'Pending';
+            case 2:
+                return 'Accepted';
+            case 3:
+                return 'In Progress';
+            case 4:
+                return 'Completed';
+            case 5:
+                return 'Declined';
+            case 6:
+                return 'Delete';
+            default:
+                return 'Unknown';
+        }
+    };
+
+
+    $scope.cancelOrder = function (orderID) {
+        console.log("Cancel Order Called");
+        // Call the service to cancel the order
+        IPService.cancelOrder(orderID)
+            .then(function (response) {
+                console.log("Cancel Order Response:", response);
+                if (response.data.success) {
+                    alert('Order cancelled successfully.');
+
+                    // Remove the deleted order from the OrdersData array
+                    $scope.OrdersData = $scope.OrdersData.filter(function (order) {
+                        return order.OrderID !== orderID;
+                    });
+
+                    // No need to refresh the table since we updated OrdersData directly
+                } else {
+                    alert('Failed to cancel order: ' + response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Cancel Order Error:", error);
+                alert('An error occurred: ' + error.data.message);
+            });
+    };
+
+
+    $scope.acceptRequest = function (orderID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to accept this request.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745', // Green color for accept button
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, accept it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Call the service to accept the request
+                IPService.acceptRequest(orderID).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire('Accepted!', 'The request has been accepted.', 'success').then(() => {
+                            $scope.loadStatus(); // Refresh the status table
+                        });
+                    } else {
+                        Swal.fire('Error!', 'Failed to accept the request.', 'error');
+                    }
+                }).catch(function (error) {
+                    Swal.fire('Error!', 'An error occurred while accepting the request.', 'error');
+                });
+            }
+        });
+    };
+
+    $scope.declineRequest = function (orderID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to decline this request.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33', // Red color for decline button
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, decline it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Call the service to decline the request
+                IPService.declineRequest(orderID).then(function (response) {
+                    if (response.data.success) {
+                        Swal.fire('Declined!', 'The request has been declined.', 'success').then(() => {
+                            $scope.loadStatus(); // Refresh the status table
+                        });
+                    } else {
+                        Swal.fire('Error!', 'Failed to decline the request.', 'error');
+                    }
+                }).catch(function (error) {
+                    Swal.fire('Error!', 'An error occurred while declining the request.', 'error');
+                });
+            }
+        });
+    };
+
+
+
+    $scope.openPaymentModal = function (order) {
+        console.log("Open Payment Modal Called");
+        $scope.selectedOrder = order; // Store the selected order
+        $scope.paymentData = {
+            file: null,
+            referenceNumber: ''
+        }; // Reset payment data
+        $scope.showPaymentModal = true; // Show the payment modal
+    };
+
+    $scope.closePaymentModal = function () {
+        $scope.showPaymentModal = false; // Hide the payment modal
+    };
+
+    $scope.setFile = function (element) {
+        $scope.paymentData.file = element.files[0]; // Store the selected file
+        $scope.$apply(); // Update the scope
+    };
+
+    $scope.submitPayment = function () {
+        console.log("Submit Payment Called");
+
+        // Log the payment data
+        console.log("Reference Number:", $scope.paymentData.referenceNumber);
+        console.log("Payment Proof File:", $scope.paymentData.file);
+
+        // Validate the input
+        if (!$scope.paymentData.referenceNumber || !$scope.paymentData.file) {
+            alert('Please fill in all fields and upload a payment proof.');
+            return;
+        }
+
+        // Prepare the data to send to the backend
+        var formData = new FormData();
+        formData.append('orderID', $scope.selectedOrder.OrderID);
+        formData.append('referenceNumber', $scope.paymentData.referenceNumber);
+        formData.append('file', $scope.paymentData.file);
+
+        // Log FormData contents
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+
+        // Call the service to submit the payment
+        IPService.submitPayment(formData)
+            .then(function (response) {
+                console.log("Submit Payment Response:", response);
+                if (response.data.success) {
+                    alert('Payment submitted successfully.');
+
+                    // Update the payment status of the order in the OrdersData array
+                    var order = $scope.OrdersData.find(function (o) {
+                        return o.OrderID === $scope.selectedOrder.OrderID;
+                    });
+                    if (order) {
+                        order.PaymentStatus = "Confirming Payment";
+                    }
+
+                    $scope.closePaymentModal();
+                    $scope.loadOrders(); // Refresh the orders table
+                } else {
+                    alert('Failed to submit payment: ' + response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Submit Payment Error:", error);
+                alert('An error occurred: ' + error.data.message);
+            });
+    };
+
+
+    $scope.setFile = function (element) {
+        $scope.paymentData.file = element.files[0]; // Store the selected file
+        $scope.$apply(); // Update the scope
+    };
+
+    $scope.openDeclineModal = function (order) {
+        $scope.selectedOrder = order; // Store the selected order
+        $scope.showDeclineModal = true; // Show the modal
+        $scope.declineReason = ''; // Reset the reason input
+    };
+    $scope.closeDeclineModal = function () {
+        $scope.showDeclineModal = false; // Hide the modal
+    };
+
+    $scope.submitDecline = function (orderID) {
+        console.log("Submit Decline button clicked"); // Check if this logs
+        console.log("Decline Reason:", $scope.declineReason); // Check if this logs the correct value
+
+        if (!$scope.declineReason) {
+            alert('Please enter a reason for declining the order.');
+            return;
+        }
+
+        // Call the service to decline the order
+        IPService.declineOrder($scope.selectedOrder.OrderID, $scope.declineReason)
+            .then(function (response) {
+                console.log("Decline Order Response:", response); // Check the response
+                if (response.data.success) {
+                    alert('Order declined successfully.');
+                    $scope.closeDeclineModal();
+                    $scope.loadOrders(); // Refresh the orders table
+                } else {
+                    alert('Failed to decline the order: ' + response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Decline Order Error:", error); // Check the error
+                alert('An error occurred: ' + error.data.message);
+            });
+    };
+
+    $scope.openStatusModal = function (order) {
+        console.log("Open Status Modal Called");
+        $scope.selectedOrder = order; // Store the selected order
+        $scope.newStatus = order.StatusID; // Set the current status as the default value
+        $scope.showStatusModal = true; // Show the modal
+    };
+
+    $scope.closeStatusModal = function () {
+        $scope.showStatusModal = false; // Hide the modal
+    };
+
+    $scope.updateStatus = function () {
+        console.log("Update Status Called");
+        console.log("New Status:", $scope.newStatus);
+
+        // Call the service to update the status
+        IPService.updateOrderStatus($scope.selectedOrder.OrderID, $scope.newStatus)
+            .then(function (response) {
+                console.log("Update Status Response:", response);
+                if (response.data.success) {
+                    alert('Status updated successfully.');
+                    $scope.closeStatusModal();
+                    $scope.loadOrders(); // Refresh the orders table
+                } else {
+                    alert('Failed to update status: ' + response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Update Status Error:", error);
+                alert('An error occurred: ' + error.data.message);
+            });
+    };
+
+
+    $scope.filterByStatus = function (order) {
+        // Include only orders with StatusID 2 or 3
+        return order.StatusID === 2 || order.StatusID === 3;
+    };
+
+
+    $scope.openCancelConfirmationModal = function (order) {
+        console.log("Open Cancel Confirmation Modal Called");
+        $scope.selectedOrder = order; // Store the selected order
+        $scope.showCancelConfirmationModal = true; // Show the confirmation modal
+    };
+
+    $scope.closeCancelConfirmationModal = function () {
+        $scope.showCancelConfirmationModal = false; // Hide the confirmation modal
+    };
+
+    $scope.confirmCancel = function () {
+        console.log("Confirm Cancel Called");
+        $scope.closeCancelConfirmationModal(); // Close the modal
+        $scope.cancelOrder($scope.selectedOrder.OrderID); // Call the cancelOrder function
+    };
+
+
+    $scope.confirmPayment = function (paymentID, orderID) {
+        $http.post('Home/ConfirmPayment', { PaymentID: paymentID, OrderID: orderID }) // Replace with your backend endpoint
+            .then(function (response) {
+                if (response.data.success) {
+                    alert("Payment confirmed successfully!");
+                    $scope.loadPayments(); // Refresh the payments table
+                } else {
+                    alert("Failed to confirm payment: " + response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error confirming payment:", error);
+                alert("An error occurred while confirming the payment.");
+            });
+    };
+
+    // Decline Payment
+    $scope.declinePayment = function (paymentID, orderID) {
+        $http.post('Home/DeclinePayment', { PaymentID: paymentID, OrderID: orderID }) // Replace with your backend endpoint
+            .then(function (response) {
+                if (response.data.success) {
+                    alert("Payment declined successfully!");
+                    $scope.loadPayments(); // Refresh the payments table
+                } else {
+                    alert("Failed to decline payment: " + response.data.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error declining payment:", error);
+                alert("An error occurred while declining the payment.");
+            });
+    };
+
+
 
 })
