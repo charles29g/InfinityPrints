@@ -1029,6 +1029,27 @@ namespace InfinityPrints.Controllers
                 return Json(new { success = false, message = "Service not found." });
             }
         }
+        public JsonResult UpdateReview(tbl_contentModel review)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                var existingReview = db.tbl_content.FirstOrDefault(s => s.ContID == review.ContID);
+                if (existingReview != null)
+                {
+                    existingReview.ContName = review.ContName;
+                    existingReview.Desc = review.Desc;
+
+                    if (!string.IsNullOrWhiteSpace(review.IMG_Path))
+                    {
+                        existingReview.IMG_Path = review.IMG_Path;
+                    }
+
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false, message = "Review not found." });
+            }
+        }
 
 
 

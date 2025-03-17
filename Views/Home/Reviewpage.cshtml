@@ -420,7 +420,7 @@
             <div class="col s12 m4" ng-repeat="DATA in ContentsData">
                 <div class="card">
                     <div class="action-buttons" ng-if="RoleEmp()">
-                        <button class="update-btn" ng-click="editContent(DATA)" onclick="openContainer2()">✎</button>
+                        <button class="update-btn" ng-click="openUpdateReview(DATA)">✎</button>
                         <button class="delete-btn" ng-click="DeleteReviewsEmployee(DATA,'True')">×</button>
                     </div>
                     <div class="card-feedback-image">
@@ -435,6 +435,10 @@
                 </div>
 
             </div>
+
+
+            <!-- Update Review -->
+
             <div class="centered-container2" style="display:none;">
                 <div class="container">
                     <button class="close-button" onclick="closeContainer2()">×</button>
@@ -447,28 +451,28 @@
                                     <div class="col s12 image-preview" ng-show="true">
                                         <div class="preview-container">
                                             <!-- Placeholder -->
-                                            <div class="placeholder-text" ng-show="!imageSrc">
+                                            <div class="placeholder-text" ng-show="!imageSrc2">
                                                 Upload Image
                                             </div>
                                             <!-- Image Preview -->
-                                            <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
+                                            <img ng-src="{{imageSrc2}}" alt="Image Preview" class="preview-img" ng-show="imageSrc2" />
                                         </div>
                                     </div>
                                     <div class="col s12 file-upload">
-                                        <label for="file-upload" class="custom-file-upload">
+                                        <label for="reviewupdate" class="custom-file-upload">
                                             <i class="material-icons upload-icon">file_upload</i>
                                             Upload Review Image
                                         </label>
-                                        <input id="file-upload" type="file" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file)" accept="image/*" />
+                                        <input type="file" style="display:none;" id="reviewupdate" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file); previewImage2(file)" accept="image/*" />
                                     </div>
 
 
                                     <div class="col s12 input-icons">
-                                        <input id="ContName" class="input-field " type="text" required ng-model="selectedContent.ContName" />
+                                        <input id="ContName" class="input-field " type="text" required ng-model="selectedReviewPage.ContName" />
                                     </div>
 
                                     <div class="col s12 input-icons">
-                                        <input id="Desc" class="input-field " type="text" required ng-model="selectedContent.Desc" />
+                                        <input id="Desc" class="input-field " type="text" required ng-model="selectedReviewPage.Desc" />
                                     </div>
 
 
@@ -478,7 +482,7 @@
                                 </div>
                             </form>
                             <div class="button">
-                                <button class="button1" ng-click="AddContent()">Submit</button>
+                                <button class="button1" ng-click="updateReview()">Update</button>
                             </div>
                         </div>
                     </div>
@@ -489,7 +493,7 @@
 
 
 
-
+        <!-- New Review -->
         <div class="centered-container" style="display:none;">
 
 
@@ -582,7 +586,7 @@
 
 
 
-    
+
 
 
 

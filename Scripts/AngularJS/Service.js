@@ -439,7 +439,17 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
+    this.updateReview = function (review) {
+        var review = $http({
+            method: "post",
+            url: "Home/UpdateReview",
+            data: review,
 
+        });
+
+        return review;
+
+    };
 
 
     this.DeleteServices = function (dataToDelete) {
