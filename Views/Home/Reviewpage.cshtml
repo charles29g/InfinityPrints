@@ -371,6 +371,28 @@
             transform: scale(1.1);
             box-shadow: 6px 8px 12px rgba(0, 0, 0, 0.4);
         }
+
+    #servicesTxt, #feedbacksTxt {
+        font-weight: bold;
+        margin-top: 130px;
+        text-align: center;
+        color: black;
+        opacity: 0;
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    #services-section, #feedbacks-section {
+        animation: fadeIn 1s ease-in-out;
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        padding-left: 20px;
+        padding-right: 20px;
+        opacity: 0;
+    }
+
+    .fade-in {
+        opacity: 1 !important;
+    }
 </style>
 
 <body>
@@ -610,6 +632,24 @@
     });
 
 
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll("#feedbacksTxt, #feedbacks-section");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-in"); // Add fade-in when visible
+                } else {
+                    entry.target.classList.remove("fade-in"); // Remove when out of view
+                }
+            });
+        }, { threshold: 0.2 }); // Trigger when 20% of section is visible
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
 
 
 
