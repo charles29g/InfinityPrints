@@ -16,7 +16,6 @@ using System.IO;
 using System.Web.Services.Description;
 using System.Web.UI.WebControls;
 using System.Data.Entity;
-using System.Xml.Linq;
 namespace InfinityPrints.Controllers
 {
     public class HomeController : Controller
@@ -562,8 +561,6 @@ namespace InfinityPrints.Controllers
                         db.tbl_orders.Add(dbnew);
                         db.SaveChanges();
 
-                        
-
                         return Json(new { success = true, message = "Order Added successfully" }, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -579,7 +576,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult InsertPayment(tbl_paymentsModel PaymentDataAdd, string Name, int UserID)
+        public JsonResult InsertPayment(tbl_paymentsModel PaymentDataAdd)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -882,7 +879,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult UpdateSelf(tbl_usersModel UserDataUpdate, string Name, int UserID)
+        public JsonResult UpdateSelf(tbl_usersModel UserDataUpdate)
         {
             System.Diagnostics.Debug.WriteLine(UserDataUpdate + "Home");
             using (InfinityPrintsContext db = new InfinityPrintsContext())
@@ -904,7 +901,7 @@ namespace InfinityPrints.Controllers
                     existingUserInfo.UpdatedAt = DateTime.Now;
 
                     db.SaveChanges();
-                    //LogAction("Updated their own information", UserID, Name);
+                    // LogAction("Updated their own information", UserID);
 
                     return Json(new { success = true, message = "Your account details are updated successfully" }, JsonRequestBehavior.AllowGet);
                 }
@@ -916,7 +913,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult UpdateUser(tbl_usersModel UserDataUpdate, string Name, int UserID)
+        public JsonResult UpdateUser(tbl_usersModel UserDataUpdate)
         {
             System.Diagnostics.Debug.WriteLine(UserDataUpdate + "Home");
             using (InfinityPrintsContext db = new InfinityPrintsContext())
@@ -934,7 +931,7 @@ namespace InfinityPrints.Controllers
                     existingUserInfo.UpdatedAt = DateTime.Now;
 
                     db.SaveChanges();
-                    //LogAction("Updated their own information", UserID, Name);
+                    // LogAction("Updated their own information", UserID);
 
                     return Json(new { success = true, message = "Successfully Promoted" }, JsonRequestBehavior.AllowGet);
                 }
@@ -1038,7 +1035,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteUser(tbl_usersModel dataToDelete, string Name, int UserID)
+        public JsonResult DeleteUser(tbl_usersModel dataToDelete)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1049,7 +1046,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_users.Remove(recordToDelete);
                         db.SaveChanges();
-                        LogAction("Deleted a user account", UserID, Name);
+                        //LogAction("Deleted a user account", UserID);
 
                         return Json(new { success = true, message = "You Have deleted your account" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1065,7 +1062,7 @@ namespace InfinityPrints.Controllers
             }
         }
 
-        public JsonResult UpdateServiceEmployee(tbl_servicesModel dataToUpdate, string action, string Name, int UserID)
+        public JsonResult UpdateServiceEmployee(tbl_servicesModel dataToUpdate, string action)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1077,7 +1074,7 @@ namespace InfinityPrints.Controllers
 
 
 
-                        LogAction("Updated a service", UserID, Name);
+                        //LogAction("Updated a user account", UserID);
 
                         return Json(new { success = true, message = "You requested to update this service" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1139,7 +1136,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action, string Name, int UserID)
+        public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1152,7 +1149,7 @@ namespace InfinityPrints.Controllers
                         recordToDelete.Request = action; ;
                         db.SaveChanges();
 
-                        LogAction("Deleted a service", UserID, Name);
+                        //LogAction("Deleted a user account", UserID);
 
                         return Json(new { success = true, message = "You requested to delete this service" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1170,7 +1167,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteUserEmployee(tbl_usersModel dataToDelete, string action, string Name, int UserID)
+        public JsonResult DeleteUserEmployee(tbl_usersModel dataToDelete, string action)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1183,7 +1180,7 @@ namespace InfinityPrints.Controllers
                         recordToDelete.Request = action; ;
                         db.SaveChanges();
 
-                        LogAction("Deleted a user account", UserID, Name);
+                        //LogAction("Deleted a user account", UserID);
 
                         return Json(new { success = true, message = "You requested to delete this user" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1200,7 +1197,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete, string action, string Name, int UserID)
+        public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete, string action)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1213,7 +1210,7 @@ namespace InfinityPrints.Controllers
                         recordToDelete.Request = action;
                         db.SaveChanges();
 
-                        LogAction("Deleted a review", UserID, Name);
+                        //LogAction("Deleted a user account", UserID);
 
                         return Json(new { success = true, message = "You requested to delete this service" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1554,7 +1551,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteUserAd(tbl_usersModel dataToDelete, string Name, int UserID)
+        public JsonResult DeleteUserAd(tbl_usersModel dataToDelete)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1565,7 +1562,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_users.Remove(recordToDelete);
                         db.SaveChanges();
-                        LogAction("Deleted a user account", UserID, Name);
+                        // LogAction("Deleted a user account", UserID);
 
                         return Json(new { success = true, message = "User deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1584,7 +1581,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteServices(tbl_servicesModel dataToDelete, string Name, int UserID)
+        public JsonResult DeleteServices(tbl_servicesModel dataToDelete)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1595,7 +1592,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_services.Remove(recordToDelete);
                         db.SaveChanges();
-                        LogAction("Deleted a service", UserID, Name);
+                        //LogAction("Deleted a tour package", UserID);
 
                         return Json(new { success = true, message = "Service deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1611,7 +1608,7 @@ namespace InfinityPrints.Controllers
             }
         }
 
-        public JsonResult DeleteReviews(tbl_contentModel dataToDelete, string Name, int UserID)
+        public JsonResult DeleteReviews(tbl_contentModel dataToDelete)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1622,7 +1619,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_content.Remove(recordToDelete);
                         db.SaveChanges();
-                        LogAction("Deleted a review", UserID, Name);
+                        //LogAction("Deleted a tour package", UserID);
 
                         return Json(new { success = true, message = "Review deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1639,7 +1636,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult DeleteAccounts(tbl_usersModel dataToDelete, string Name, int UserID)
+        public JsonResult DeleteAccounts(tbl_usersModel dataToDelete)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1650,7 +1647,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_users.Remove(recordToDelete);
                         db.SaveChanges();
-                        LogAction("Deleted an account", UserID, Name);
+                        //LogAction("Deleted a tour package", UserID);
 
                         return Json(new { success = true, message = "Account deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1734,7 +1731,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult UpdateOrderStatus(int orderID, int statusID, string Name, int UserID)
+        public JsonResult UpdateOrderStatus(int orderID, int statusID)
         {
             try
             {
@@ -1745,8 +1742,6 @@ namespace InfinityPrints.Controllers
                     {
                         order.StatusID = statusID; // Update the status
                         db.SaveChanges();
-                        LogAction("Updated an Order Status", UserID, Name);
-
                         return Json(new { success = true, message = "Order status updated successfully." });
                     }
                     else
@@ -1765,7 +1760,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteOrder(int orderID, string Name, int UserID)
+        public JsonResult DeleteOrder(int orderID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1776,8 +1771,6 @@ namespace InfinityPrints.Controllers
                     {
                         order.StatusID = 6;
                         db.SaveChanges();
-                        LogAction("Deleted an Order", UserID, Name);
-
                         return Json(new { success = true, message = "Order deleted successfully." });
                     }
                     else
@@ -1949,7 +1942,7 @@ namespace InfinityPrints.Controllers
 
 
         [HttpPost]
-        public JsonResult DeclineOrder(int orderID, string reason, string Name, int UserID)
+        public JsonResult DeclineOrder(int orderID, string reason)
         {
             try
             {
@@ -1969,8 +1962,6 @@ namespace InfinityPrints.Controllers
                         order.Reason = reason; // Update the Reason column
                         db.SaveChanges();
 
-                        LogAction("Declined an Order", UserID, Name);
-
                         return Json(new { success = true, message = "Order declined successfully." });
                     }
                     else
@@ -1986,7 +1977,7 @@ namespace InfinityPrints.Controllers
         }
 
         [HttpPost]
-        public JsonResult ConfirmPayment(int paymentID, int orderID, string Name, int UserID)
+        public JsonResult ConfirmPayment(int paymentID, int orderID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -2036,7 +2027,6 @@ namespace InfinityPrints.Controllers
 
                     // Save changes to the order
                     db.SaveChanges();
-                    LogAction("Confirmed Payment", UserID, Name);
 
                     // Create a receipt
                     var receipt = new tbl_receiptsModel
@@ -2068,7 +2058,7 @@ namespace InfinityPrints.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeclinePayment(int paymentID, int orderID, string Name, int UserID)
+        public JsonResult DeclinePayment(int paymentID, int orderID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -2110,8 +2100,6 @@ namespace InfinityPrints.Controllers
 
                     // Save changes to the database
                     db.SaveChanges();
-
-                    LogAction("Declined Payment", UserID, Name);
 
                     return Json(new { success = true, message = "Payment declined successfully." });
                 }

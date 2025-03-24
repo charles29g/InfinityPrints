@@ -1,6 +1,70 @@
 ﻿@{
     Layout = "~/Views/Shared/_HomepageLayout.cshtml";
 }
+<style>
+
+    .body {
+        width: 100%;
+        overflow: auto; /* Enables scrolling */
+        -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
+        scrollbar-width: none; /* Hides scrollbar in Firefox */
+    }
+
+        /* Hides scrollbar in Chrome, Safari, and Edge */
+        .body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .body img {
+            width: 100%;
+            height: auto;
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 150px;
+        overflow: hidden; /* Prevents scrolling */
+    }
+
+
+    .title {
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .cards {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .card {
+        background: #6f0d4a; /* Custom background color */
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+        flex: 1;
+        text-align: justify; /* Justify text */
+    }
+
+
+    .full-width {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+</style>
 
 <body>
     <nav class="nav-extended">
@@ -41,5 +105,106 @@
     </nav>
 
     <div class="body">
+        <div class="container">
+            <h2 class="title">Infinity Prints</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Mission</h3>
+                    <p>At Infinity Prints, our mission is to deliver high-quality and cost-effective printing solutions that help businesses and individuals bring their visions to life. We are committed to innovation, customer satisfaction, and environmental responsibility while ensuring timely and professional service.</p>
+                </div>
+                <div class="card">
+                    <h3>Vision</h3>
+                    <p>To be the leading printing service provider in the industry, recognized for our exceptional quality, cutting-edge technology, and dedication to exceeding customer expectations. We aim to continuously grow and expand while maintaining a commitment to excellence and sustainability.</p>
+                </div>
+            </div>
+
+            <div class="card full-width">
+                <h3>Why Choose Infinity Prints?</h3>
+                <ul>
+                    <li><strong>High-Quality Prints</strong> – We use the latest printing technology to ensure superior quality and vibrant colors.</li>
+                    <li><strong>Wide Range of Services</strong> – From tarpaulins, signages, billboards, posters, and banners to corporate branding materials, we offer comprehensive printing solutions.</li>
+                    <li><strong>Trusted by Big Companies</strong> – We have built strong relationships with major corporations, delivering high-volume, professional-grade prints.</li>
+                    <li><strong>Fast Turnaround Time</strong> – We understand deadlines and strive to complete projects efficiently without compromising quality.</li>
+                    <li><strong>Custom Solutions</strong> – Our team works closely with clients to tailor solutions that meet their unique needs and branding requirements.</li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+
+    <div>
+        <footer>
+            <div class="footer-container1 row s12">
+                <div class="footer-logo">
+                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
+                </div>
+            </div>
+            <div class="footer-container2">
+                <div class="footer-nav">
+                    <div class="row s12">
+                        <div class="col s12">
+                            <div class="row footer-links">
+                                <div class="col s2">
+                                    <a ng-click="Homepage()">Homepage</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Servicepage()">Services</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Reviewpage()">Reviews</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="OrderPage()">Order</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="FAQpage()">FAQs</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="AboutusPage()">About Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-container3 row">
+                <div class="col s12">
+                    <div class="row">
+                        <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
+                    </div>
+                    <div class="footer-social row">
+                        @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
+                        <a href="https://www.facebook.com/profile.php?id=100064146603627"><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
+                        @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
+                        @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
+                    </div>
+
+                    <div class="row">
+                        <span id="footer-contacttxt"> CONTACT US </span>
+                    </div>
+                    <div class="footer-contact row">
+                        <span>
+                            <img src="~/Content/images/phone-icon.png" alt="Facebook">
+                            0917 582 0708
+                        </span>
+
+                        <span>
+                            <img src="~/Content/images/email-icon.jpg" alt="Email Address">
+                            asalazar.infinityprints@gmail.com
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="footer-container4 row">
+                <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+            </div>
+        </footer>
+    </div>
+
 </body>
+
+
