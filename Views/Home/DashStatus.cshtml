@@ -200,7 +200,7 @@
                             <td>{{pDATA.Service || 'Unknown Service'}}</td>
                             <td>{{pDATA.Size}}</td>
                             <td>{{pDATA.Quantity}}</td>
-                            <td>{{pDATA.TotalPrice}}</td>
+                            <td>{{pDATA.TotalPrice | currency:'₱' }}</td>
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                             <td>{{pDATA.PaymentTerm}}</td>
                             <td>

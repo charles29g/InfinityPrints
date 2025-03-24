@@ -269,7 +269,7 @@
 
     .centered-container2 {
         position: fixed !important;
-        top: 50% !important;
+        top: 55% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
         width: 100% !important;
@@ -456,41 +456,54 @@
 
 
             <!-- Update Review -->
+            <!-- New Review -->
+            <div class="centered-container" style="display:none;">
 
-            <div class="centered-container2" style="display:none;">
+
                 <div class="container">
-                    <button class="close-button" onclick="closeContainer2()">×</button>
-                    <div class="col s12 " style="padding-left:40px; padding-right:40px">
-                        <a class="left" id="txtuser">Update</a>
+                    <button class="close-button" onclick="closeContainer()">×</button>
+
+                    <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
+
+                        <a class="left" id="txtuser">New</a>
                         <a class="left" style="margin-left:5px" id="user">Review</a>
+
                         <div class="row">
+
                             <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
+
                                 <div class="row">
                                     <div class="col s12 image-preview" ng-show="true">
                                         <div class="preview-container">
                                             <!-- Placeholder -->
-                                            <div class="placeholder-text" ng-show="!imageSrc2">
+                                            <div class="placeholder-text" ng-show="!imageSrc">
                                                 Upload Image
                                             </div>
                                             <!-- Image Preview -->
-                                            <img ng-src="{{imageSrc2}}" alt="Image Preview" class="preview-img" ng-show="imageSrc2" />
+                                            <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
+
+
                                         </div>
                                     </div>
                                     <div class="col s12 file-upload">
-                                        <label for="reviewupdate" class="custom-file-upload">
+                                        <label for="file-upload4" class="custom-file-upload">
                                             <i class="material-icons upload-icon">file_upload</i>
                                             Upload Review Image
                                         </label>
-                                        <input type="file" style="display:none;" id="reviewupdate" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file); previewImage2(file)" accept="image/*" />
+                                        <input type="file" id="file-upload4" style="display:none;" ngf-select ng-model="file" name="file" ngf-change="previewImage(file); UploadFile2(file)" accept="image/*" />
+
+
+                                    </div>
+                                    <div class="col s12 input-icons">
+
+                                        <input id="ContName" class="input-field " type="text" placeholder="Review Title" required ng-model="ContName" />
+
                                     </div>
 
-
                                     <div class="col s12 input-icons">
-                                        <input id="ContName" class="input-field " type="text" required ng-model="selectedReviewPage.ContName" />
-                                    </div>
 
-                                    <div class="col s12 input-icons">
-                                        <input id="Desc" class="input-field " type="text" required ng-model="selectedReviewPage.Desc" />
+                                        <input id="Desc" class="input-field " type="text" placeholder="Review Description" required ng-model="Desc" />
+
                                     </div>
 
 
@@ -500,65 +513,126 @@
                                 </div>
                             </form>
                             <div class="button">
-                                <button class="button1" ng-click="updateReview()">Update</button>
+                                <button class="button1" ng-click="AddContent()">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
         </div>
 
 
+        <div>
+            <footer>
+                <div class="footer-container1 row s12">
+                    <div class="footer-logo">
+                        <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
+                    </div>
+                </div>
+                <div class="footer-container2">
+                    <div class="footer-nav">
+                        <div class="row s12">
+                            <div class="col s12">
+                                <div class="row footer-links">
+                                    <div class="col s2">
+                                        <a ng-click="Homepage()">Homepage</a>
+                                    </div>
+                                    <div class="col s2">
+                                        <a ng-click="Servicepage()">Services</a>
+                                    </div>
+                                    <div class="col s2">
+                                        <a ng-click="Reviewpage()">Reviews</a>
+                                    </div>
+                                    <div class="col s2">
+                                        <a ng-click="OrderPage()">Order</a>
+                                    </div>
+                                    <div class="col s2">
+                                        <a ng-click="FAQpage()">FAQs</a>
+                                    </div>
+                                    <div class="col s2">
+                                        <a ng-click="AboutusPage()">About Us</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-container3 row">
+                    <div class="col s12">
+                        <div class="row">
+                            <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
+                        </div>
+                        <div class="footer-social row">
+                            @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
+                            <a href="href=" https: //www.facebook.com/profile.php?id =100064146603627""><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
+                            @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
+                            @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
+                        </div>
+
+                        <div class="row">
+                            <span id="footer-contacttxt"> CONTACT US </span>
+                        </div>
+                        <div class="footer-contact row">
+                            <span>
+                                <img src="~/Content/images/phone-icon.png" alt="Facebook">
+                                0917 582 0708
+                            </span>
+
+                            <span>
+                                <img src="~/Content/images/email-icon.jpg" alt="Email Address">
+                                asalazar.infinityprints@gmail.com
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="footer-container4 row">
+                    <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+                </div>
+            </footer>
+        </div>
 
 
-        <!-- New Review -->
-        <div class="centered-container" style="display:none;">
-
-
+        <div class="centered-container2" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
             <div class="container">
-                <button class="close-button" onclick="closeContainer()">×</button>
-
-                <div class="col s12 m6" style="padding-left:40px; padding-right:40px">
-
-                    <a class="left" id="txtuser">New</a>
+                <button class="close-button" onclick="closeContainer2()">×</button>
+                <div class="col s12 " style="padding-left:40px; padding-right:40px">
+                    <a class="left" id="txtuser">Update</a>
                     <a class="left" style="margin-left:5px" id="user">Review</a>
-
                     <div class="row">
-
                         <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
-
                             <div class="row">
                                 <div class="col s12 image-preview" ng-show="true">
                                     <div class="preview-container">
                                         <!-- Placeholder -->
-                                        <div class="placeholder-text" ng-show="!imageSrc">
+                                        <div class="placeholder-text" ng-show="!imageSrc2">
                                             Upload Image
                                         </div>
                                         <!-- Image Preview -->
-                                        <img ng-src="{{imageSrc}}" alt="Image Preview" class="preview-img" ng-show="imageSrc" />
-
-
+                                        <img ng-src="{{imageSrc2}}" alt="Image Preview" class="preview-img" ng-show="imageSrc2" />
                                     </div>
                                 </div>
                                 <div class="col s12 file-upload">
-                                    <label for="file-upload4" class="custom-file-upload">
+                                    <label for="reviewupdate" class="custom-file-upload">
                                         <i class="material-icons upload-icon">file_upload</i>
                                         Upload Review Image
                                     </label>
-                                    <input type="file" id="file-upload4" style="display:none;" ngf-select ng-model="file" name="file" ngf-change="previewImage(file); UploadFile2(file)" accept="image/*" />
-
-
+                                    <input type="file" style="display:none;" id="reviewupdate" ngf-select ng-model="file" name="file" ngf-change="UploadFile2(file); previewImage2(file)" accept="image/*" />
                                 </div>
+
+
                                 <div class="col s12 input-icons">
-
-                                    <input id="ContName" class="input-field " type="text" placeholder="Review Title" required ng-model="ContName" />
-
+                                    <input id="ContName" class="input-field " type="text" required ng-model="selectedReviewPage.ContName" />
                                 </div>
 
                                 <div class="col s12 input-icons">
-
-                                    <input id="Desc" class="input-field " type="text" placeholder="Review Description" required ng-model="Desc" />
-
+                                    <input id="Desc" class="input-field " type="text" required ng-model="selectedReviewPage.Desc" />
                                 </div>
 
 
@@ -568,93 +642,13 @@
                             </div>
                         </form>
                         <div class="button">
-                            <button class="button1" ng-click="AddContent()">Submit</button>
+                            <button class="button1" ng-click="updateReview()">Update</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
-
-
-    <div>
-        <footer>
-            <div class="footer-container1 row s12">
-                <div class="footer-logo">
-                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
-                </div>
-            </div>
-            <div class="footer-container2">
-                <div class="footer-nav">
-                    <div class="row s12">
-                        <div class="col s12">
-                            <div class="row footer-links">
-                                <div class="col s2">
-                                    <a ng-click="Homepage()">Homepage</a>
-                                </div>
-                                <div class="col s2">
-                                    <a ng-click="Servicepage()">Services</a>
-                                </div>
-                                <div class="col s2">
-                                    <a ng-click="Reviewpage()">Reviews</a>
-                                </div>
-                                <div class="col s2">
-                                    <a ng-click="OrderPage()">Order</a>
-                                </div>
-                                <div class="col s2">
-                                    <a ng-click="FAQpage()">FAQs</a>
-                                </div>
-                                <div class="col s2">
-                                    <a ng-click="AboutusPage()">About Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-container3 row">
-                <div class="col s12">
-                    <div class="row">
-                        <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
-                    </div>
-                    <div class="footer-social row">
-                        @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
-                        <a href="href=" https: //www.facebook.com/profile.php?id =100064146603627""><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
-                        @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
-                        @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
-                    </div>
-
-                    <div class="row">
-                        <span id="footer-contacttxt"> CONTACT US </span>
-                    </div>
-                    <div class="footer-contact row">
-                        <span>
-                            <img src="~/Content/images/phone-icon.png" alt="Facebook">
-                            0917 582 0708
-                        </span>
-
-                        <span>
-                            <img src="~/Content/images/email-icon.jpg" alt="Email Address">
-                            asalazar.infinityprints@gmail.com
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="footer-container4 row">
-                <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
-            </div>
-        </footer>
-    </div>
-
-
-
 
 </body>
 <script>

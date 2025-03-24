@@ -293,8 +293,8 @@
         gap: 8px;
         box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease-in-out;
-        outline: auto; 
-        z-index:1000;
+        outline: auto;
+        z-index: 1000;
     }
 
         .add-service-btn i {
@@ -675,18 +675,14 @@
 
                             <div class="row">
 
-                                <label for="FileQuantity">Service:</label>
-                                <label for="Service">Service</label>
-                                <select id="Service" required ng-model="services[$index]"
-                                            ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
-                                        <option value="" disabled>Please select One</option>
-                                    </select>
+                                <label for="Service">Service ID</label>
+                                <input name="Service" type="text" disabled ng-model="selectedID" />
 
                                 <label for="SizeName">Size Name</label>
                                 <input name="SizeName" type="text" ng-model="SizeName" />
 
                                 <label for="Price">Price</label>
-                                <input name="Price" type="text" ng-model="Price" />
+                                <input name="Price" type="number" ng-model="Price" />
 
 
 

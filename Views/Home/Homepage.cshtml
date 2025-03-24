@@ -166,40 +166,19 @@
             <h3 id="servicesTxt">Services Offered</h3>
         </div>
 
-        <div class="row" id="services-section">
-            <div class="col s12 m4">
+        <div class="row" id="services-section" ng-init="loadServices()">
+            <div class="col s12 m4" ng-repeat="DATA in ServicesData | limitTo: 3">
                 <div class="card">
                     <div class="card-image">
-                        <img src="~/Content/images/infinityprintsimg.png" alt="Service 1">
+                        <img ng-src="{{DATA.ImagePath}}" alt="Service 1">
                     </div>
                     <div class="card-content">
-                        <h5 class="service-title">Service 1</h5>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                        <h5 class="service-title">{{DATA.ServiceName}}</h5>
+                        <p>{{DATA.Description}}</p>
                     </div>
                 </div>
             </div>
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="~/Content/images/infinityprintsimg.png" alt="Service 2">
-                    </div>
-                    <div class="card-content">
-                        <h5 class="service-title">Service 2</h5>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="~/Content/images/infinityprintsimg.png" alt="Service 3">
-                    </div>
-                    <div class="card-content">
-                        <h5 class="service-title">Service 3</h5>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                    </div>
-                </div>
-            </div>
+
 
             <div class="col s12">
                 <div class="view-more-section">
@@ -220,49 +199,22 @@
             <h3 id="feedbacksTxt">Feedbacks</h3>
         </div>
 
-        <div class="row" id="feedbacks-section">
-            <div class="col s12 m4">
+        <div class="row" id="feedbacks-section" ng-init="loadContents()">
+            <div class="col s12 m4" ng-repeat="DATA in ContentsData | limitTo: 3">
                 <div>
-                    <h5 class="rating-title center">Review 1</h5>
+                    <h5 class="rating-title center">{{DATA.ContName}}</h5>
                 </div>
                 <div class="card">
                     <div class="card-feedback-image">
-                        <img src="~/Content/images/infinityprintsimg.png" alt="Service 1">
+                        <img ng-src="{{DATA.IMG_Path}}" alt="Service 1">
                     </div>
                     <div class="card-feedback">
                         <h5 class="service-rating"> Rating: </h5>
-                        <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+                        <p id="custfeedbacks">{{DATA.Desc}}</p>
                     </div>
                 </div>
             </div>
-            <div class="col s12 m4">
-                <div>
-                    <h5 class="rating-title center">Review 2</h5>
-                </div>
-                <div class="card">
-                    <div class="card-feedback-image">
-                        <img src="~/Content/images/infinityprintsimg.png" alt="Service 2">
-                    </div>
-                    <div class="card-feedback">
-                        <h5 class="service-rating"> Rating: </h5>
-                        <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m4">
-                <div>
-                    <h5 class="rating-title center">Review 3</h5>
-                </div>
-                <div class="card">
-                    <div class="card-feedback-image">
-                        <img src="~/Content/images/infinityprintsimg.png" alt="Service 3">
-                    </div>
-                    <div class="card-feedback">
-                        <h5 class="service-rating"> Rating: </h5>
-                        <p id="custfeedbacks">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
-                    </div>
-                </div>
-            </div>
+
             <div class="col s12">
                 <div class="view-more-section">
                     <a ng-click="Reviewspage()" id="view-more" class="view-more-link">View more</a>

@@ -145,7 +145,7 @@
                                 <!-- Phone Number -->
                                 <div class="col s6 input-icons" ng-class="{'invalid': signUpForm.phone.$touched && signUpForm.phone.$invalid || signUpForm.$submitted && signUpForm.phone.$invalid}">
                                     <i class="material-icons input-icon">phone</i>
-                                    <input id="phone" class="input-field validate" type="text" placeholder="Phone No." required ng-model="phone" name="phone" minlength="11" maxlength="12" ng-pattern="/^(09|\+639)\d{9}$/" autocomplete="off" />
+                                    <input id="phone" class="input-field validate" type="text" placeholder="Phone No." required ng-model="phone" name="phone" minlength="11" maxlength="13" ng-pattern="/^(09\d{9}|\+639\d{9})$/" autocomplete="off" />
                                     <span class="helper-text red-text" ng-show="(signUpForm.phone.$error.required && (signUpForm.phone.$touched || signUpForm.$submitted)) ||
                                                   (signUpForm.phone.$error.pattern && (signUpForm.phone.$touched || signUpForm.$submitted))">
                                         <span ng-show="signUpForm.phone.$error.required && (signUpForm.phone.$touched || signUpForm.$submitted)">

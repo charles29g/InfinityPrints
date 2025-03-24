@@ -166,7 +166,6 @@
                             <th>Order ID</th>
                             <th>User ID</th>
                             <th>Reference</th>
-                            <th>IMG_PayPath</th>
                             <th>Amount</th>
                             <th>Created At</th>
                             <th>View Order</th>
@@ -180,8 +179,7 @@
                             <td>{{pDATA.OrderID}}</td>
                             <td>{{pDATA.UserID}}</td>
                             <td>{{pDATA.ReferenceNo}}</td>
-                            <td>{{pDATA.IMG_PayPath}}</td>
-                            <td>{{pDATA.Amount}}</td>
+                            <td>{{pDATA.Amount | currency:'₱' }}</td>
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                             <td>
                                 <button class="btn btn-info" ng-click="viewPaymentOrder(pDATA)">

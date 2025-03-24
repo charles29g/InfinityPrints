@@ -1731,7 +1731,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult UpdateOrderStatus(int orderID, int statusID)
+        public JsonResult UpdateOrderStatus(int orderID, int statusID, string Name2, int UserID)
         {
             try
             {
@@ -1742,6 +1742,7 @@ namespace InfinityPrints.Controllers
                     {
                         order.StatusID = statusID; // Update the status
                         db.SaveChanges();
+                        LogAction($"Updated The Order Status of order: {orderID}", UserID, Name2);
                         return Json(new { success = true, message = "Order status updated successfully." });
                     }
                     else
@@ -1757,6 +1758,7 @@ namespace InfinityPrints.Controllers
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
 
 
 

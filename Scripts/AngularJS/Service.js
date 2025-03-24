@@ -684,16 +684,23 @@ app.service("IPService", function ($http, $q, Upload) {
         });
     };
 
-    this.updateOrderStatus = function (orderID, statusID) {
-        console.log("Update Order Status Service Called");
-        console.log("OrderID:", orderID);
-        console.log("StatusID:", statusID);
+    this.updateOrderStatus = function (orderID, statusID, Name2, UserID) {
+        console.log("Service");
 
-        return $http.post('/Home/UpdateOrderStatus', {
-            orderID: orderID,
-            statusID: statusID
+        var update = $http({
+            method: "post",
+            url: "Home/UpdateOrderStatus",
+            data: {
+                orderID,
+                statusID,
+                Name2,
+                UserID
+            }
         });
+
+        return update;
     };
+
 
 
     this.InsertChat2 = function (ChatsDataAdd, UserIDTo, Chat2) {

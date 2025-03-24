@@ -228,23 +228,22 @@
     <title>Email Verification</title>
 </head>
 <body style="font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0;">
-    <div style="max-width: 600px; margin: 20px auto; background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-align: center;">
-        <div style="background-color: #e74c3c; padding: 20px; border-radius: 8px 8px 0 0;">
-            <img src="logo.png" alt="Logo" style="width: 50px; height: 50px;">
+    <div style="max-width: 600px; margin: 20px auto; background: #e7e7e7; padding: 0px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); text-align: center;">
+        <div style="background-color: #6f0d4a; padding: 20px; border-radius: 8px 8px 0 0; height:9vh;">
+<h1 style="color:white;">InfinityPrints</h1>
         </div>
         <h1 style="color: #333; font-size: 24px;">Email Verification</h1>
-        <p style="color: #555; font-size: 16px; margin: 20px 0;">
-            Hi User},<br>
-            You're almost set to start enjoying Infinity Prints. Simply click the link below to verify your email address and get started. The link expires in 48 hours.
+        <p style="color: #555; font-size: 16px; margin: 20px 0; padding:14px">
+            
+            You're almost set to start enjoying Infinity Prints. Simply click the link below to verify your email address and get started. .
         </p>
-        <a href="${url}" style="display: inline-block; padding: 12px 20px; color: #ffffff; background-color: #e74c3c; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold;">
+        <a href="${url}" style="display: inline-block; padding: 12px 20px; color: #ffffff; background-color: #6f0d4a; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold;">
             Verify my email address
         </a>
         <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
         <div style="margin-top: 20px; font-size: 14px; color: #777;">
-            800 Broadway Suit 1500 New York, NY 000423, USA<br>
-            <a href="#" style="color: #777; text-decoration: none;">Privacy Policy</a> | 
-            <a href="#" style="color: #777; text-decoration: none;">Contact Details</a>
+            323 General Luna Street, Baritan 1470 Malabon, Philippines<br>
+            <a href="https://www.facebook.com/profile.php?id=100064146603627" style="color: #777; text-decoration: none; margin-top:2px;">Contact Us</a>
         </div>
     </div>
 </body>
@@ -271,6 +270,7 @@
             });
         });
     };
+
 
 
 
@@ -1296,6 +1296,7 @@
     $scope.AddSizes = function () {
 
         var SizesDataAdd = {
+            ServiceID: $scope.selectedID,
             SizeName: $scope.SizeName,
             Price: $scope.Price,
         };
@@ -1344,22 +1345,23 @@
                 console.log(response);
                 swal.fire({
                     title: 'Success!',
-                    text: 'Tour added successfully!',
+                    text: 'Size added successfully!',
                     icon: 'success',
                     confirmButtonText: 'OK',
                     timer: 2000,
                 });
             }).catch(function (error) {
-                console.error("Failed to add tour:", error);
+                console.error("Failed to add size:", error);
                 swal.fire({
                     title: 'Error!',
-                    text: 'Something went wrong while adding the tour.',
+                    text: 'Something went wrong while adding the size.',
                     icon: 'error',
                     confirmButtonText: 'OK',
                 });
             });
         }
     };
+
 
 
 
@@ -2288,8 +2290,10 @@
         $scope.selectedServicePage = angular.copy(DATA);
         console.log("Copied service:", $scope.selectedServicePage);
         $scope.imageSrc = $scope.selectedServicePage.ImagePath;
+        $scope.selectedID = $scope.selectedServicePage.ServiceID;
         document.querySelector('.update-container').style.display = 'block';
     };
+
 
     $scope.openUpdateReview = function (DATA) {
         openContainer2();
@@ -2794,7 +2798,10 @@
             if (result.isConfirmed) {
                 // Call the service to update the order status to "Accepted" (StatusID = 2)
 
-                IPService.updateOrderStatus(orderID, 2).then(function (response) {
+                var postData = IPService.updateOrderStatus(orderID, 2, $scope.Name2, $scope.UserID);
+
+
+                postData.then(function (response) {
                     if (response.data.success) {
                         Swal.fire('Accepted!', 'The order has been accepted.', 'success').then(() => {
                             $scope.loadOrders(); // Refresh the orders table
@@ -2808,8 +2815,9 @@
                 });
             }
         });
-        
+
     };
+
 
     $scope.declineOrder = function (orderID) {
         Swal.fire({
@@ -3188,8 +3196,6 @@
 
             var timeDifference = currentDate - orderDate; // Difference in milliseconds
             var daysDifference = timeDifference / (1000 * 60 * 60 * 24); // Convert to days
-            console.log("Order Date:", orderDate);
-            console.log("Days Difference:", daysDifference);
 
             return daysDifference > 3; // Return orders older than 3 days
         });

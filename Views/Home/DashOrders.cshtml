@@ -336,7 +336,7 @@
                                 <td>{{pDATA.Service || 'Unknown Service'}}</td>
                                 <td>{{pDATA.Size}}</td>
                                 <td>{{pDATA.Quantity}}</td>
-                                <td>{{pDATA.TotalPrice}}</td>
+                                <td>{{pDATA.TotalPrice | currency:'₱' }}</td>
                                 <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                                 <td>{{pDATA.PaymentTerm}}</td>
                                 <td>
@@ -386,7 +386,7 @@
                                 <td>{{order.Service || 'Unknown Service'}}</td>
                                 <td>{{order.Size}}</td>
                                 <td>{{order.Quantity}}</td>
-                                <td>{{order.TotalPrice}}</td>
+                                <td>{{order.TotalPrice | currency:'₱' }}</td>
                                 <td>{{DateFormat(order.CreatedAt)}}</td>
                                 <td>
                                     <!-- Button to open the status modal -->
@@ -437,7 +437,7 @@
                                 <td>{{pDATA.UserID}}</td>
                                 <td>{{pDATA.Service || 'Unknown Service'}}</td>
                                 <td>{{pDATA.Size}}</td>
-                                <td>{{pDATA.TotalPrice}}</td>
+                                <td>{{pDATA.TotalPrice | currency:'₱' }}</td>
                                 <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                                 <td>{{pDATA.PaymentTerm}}</td>
                                 <td>
@@ -478,7 +478,7 @@
                             <td>{{order.Service || 'Unknown Service'}}</td>
                             <td>{{order.Size}}</td>
                             <td>{{order.Quantity}}</td>
-                            <td>{{order.TotalPrice}}</td>
+                            <td>{{order.TotalPrice | currency:'₱' }}</td>
                             <td>{{DateFormat(order.CreatedAt)}}</td>
                             <td>{{getStatusName(order.StatusID)}}</td>
                             <td>{{order.PaymentTerm || 'Not specified'}}</td>
@@ -653,7 +653,7 @@
                                 <td>{{order.Service || 'Unknown Service'}}</td>
                                 <td>{{order.Size}}</td>
                                 <td>{{order.Quantity}}</td>
-                                <td>{{order.TotalPrice}}</td>
+                                <td>{{order.TotalPrice | currency:'₱' }}</td>
                                 <td>{{DateFormat(order.CreatedAt)}}</td>
                                 <td>{{order.PaymentTerm}}</td>
                                 <td>
