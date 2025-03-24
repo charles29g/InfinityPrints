@@ -241,7 +241,9 @@
     <Compile Include="Models\tbl_sizesModel.cs" />
     <Compile Include="Models\tbl_statusMap.cs" />
     <Compile Include="Models\tbl_statusModel.cs" />
+    <Compile Include="Models\tbl_chatsMap.cs" />
     <Compile Include="Models\tbl_usersMap.cs" />
+    <Compile Include="Models\tbl_chatsModel.cs" />
     <Compile Include="Models\tbl_usersModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -272,6 +274,7 @@
     <Content Include="Content\images\infinityprintsimg.png" />
     <Content Include="Content\images\MG4.png" />
     <Content Include="Content\images\phone-icon.png" />
+    <Content Include="Content\images\print-bg.jpg" />
     <Content Include="Content\images\SN1.png" />
     <Content Include="Content\images\SN11.png" />
     <Content Include="Content\images\TARP3.png" />
@@ -1139,6 +1142,7 @@
     <Content Include="Views\Home\AboutusPage.cshtml" />
     <Content Include="Views\Home\Chatpage.cshtml" />
     <Content Include="Views\Home\DashChat.cshtml" />
+    <Content Include="Views\Home\DashChat2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

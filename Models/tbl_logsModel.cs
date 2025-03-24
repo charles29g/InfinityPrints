@@ -9,7 +9,7 @@ namespace InfinityPrints.Models
 
     {
         public int LogID { get; set; }
-
+        public string Name { get; set; }
         public int UserID { get; set; }
         public string Action { get; set; }
         public DateTime CreatedAt { get; set; }

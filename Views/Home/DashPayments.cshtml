@@ -1,36 +1,73 @@
-@{
+﻿@{
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
+<style>
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        z-index: 1001; /* Ensure it's below the modal but above other content */
+    }
+
+    .orderModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 600px;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1002;
+    }
+
+    .container {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 90%;
+        position: relative;
+    }
+</style>
+
 
 <body>
     <div class="sidebar">
-        <h1>Infinity Prints</h1>
+        <h1>Infinity Print </h1>
         <ul>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="DashAdmin()">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="DashAdmin()" ">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                        <i class="fas fa-home active" style="font-size: 18px;"></i>
                     </span>
                     Homepage
                 </a>
             </li>
+            <li ng-show="!RoleEmp()" style="margin-bottom: 5px;">
+                <a ng-click="Homepage()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                    </span>
+                    Go Back to Homepage
+                </a>
+            </li>
             <li style="margin-bottom: 5px;">
                 <a ng-click="Account()">
-
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-user-circle active" style="font-size: 18px;"></i>
+                        <i class="fas fa-user-circle " style="font-size: 18px;"></i>
                     </span>
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" ng-show="Owner()" class="active">
-                <a ng-click="Authorization()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
-                    </span>
-                    Task Authorization
-                </a>
-            </li>
+
+
             <li style="margin-bottom: 5px;">
                 <a ng-click="Orders()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
@@ -39,7 +76,7 @@
                     Orders
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Users()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-users" style="font-size: 18px;"></i>
@@ -47,31 +84,39 @@
                     Users
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" class="active">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()" class="active">
                 <a ng-click="Payment()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-credit-card active" style="font-size: 18px;"></i>
+                        <i class="fas fa-credit-card" style="font-size: 18px;"></i>
                     </span>
                     Payment
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Chat()">
+            <li style="margin-bottom: 5px; position: relative;" ng-show="RoleEmp()">
+                <a ng-click="Chat(); clearChatNotifications()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-comments" style="font-size: 18px;"></i>
                     </span>
                     Chat
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="UserGuide()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
                     </span>
-                    User Guide
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px; position: relative;" ng-show="Customer()">
+                <a ng-click="Chat2(); clearChatNotifications()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-comments" style="font-size: 18px;"></i>
+                    </span>
+                    Chat
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
+                    </span>
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;" ng-show="isOwner()">
                 <a ng-click="Status()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-spinner " style="font-size: 18px;"></i>
@@ -79,7 +124,7 @@
                     Status
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Receipts()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-receipt" style="font-size: 18px;"></i>
@@ -87,10 +132,10 @@
                     Receipts
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Receipts()">
+            <li style="margin-bottom: 5px;" ng-show="isOwner()">
+                <a ng-click="Logs()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-file-alt" " style="font-size: 18px;"></i>
+                        <i class="fas fa-file-alt" style="font-size: 18px;"></i>
                     </span>
                     Logs
                 </a>
@@ -102,7 +147,6 @@
                     <p class="user-name"><i class="fas fa-user-circle"></i> {{ Name }}</p>
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
-
             </div>
         </div>
     </div>
@@ -120,9 +164,12 @@
                         <tr>
                             <th>Payment ID</th>
                             <th>Order ID</th>
+                            <th>User ID</th>
                             <th>Reference</th>
                             <th>IMG_PayPath</th>
+                            <th>Amount</th>
                             <th>Created At</th>
+                            <th>View Order</th>
                             <th>Confirm</th>
                             <th>Decline</th>
                         </tr>
@@ -131,18 +178,22 @@
                         <tr ng-repeat="pDATA in PaymentsData">
                             <td>{{pDATA.PaymentID}}</td>
                             <td>{{pDATA.OrderID}}</td>
+                            <td>{{pDATA.UserID}}</td>
                             <td>{{pDATA.ReferenceNo}}</td>
                             <td>{{pDATA.IMG_PayPath}}</td>
-
+                            <td>{{pDATA.Amount}}</td>
                             <td>{{DateFormat(pDATA.CreatedAt)}}</td>
                             <td>
-                                <!-- Confirm Button -->
+                                <button class="btn btn-info" ng-click="viewPaymentOrder(pDATA)">
+                                    View Order
+                                </button>
+                            </td>
+                            <td>
                                 <button class="btn btn-success" ng-click="confirmPayment(pDATA.PaymentID, pDATA.OrderID)">
                                     Confirm
                                 </button>
                             </td>
                             <td>
-                                <!-- Decline Button -->
                                 <button class="btn btn-danger" ng-click="declinePayment(pDATA.PaymentID, pDATA.OrderID)">
                                     Decline
                                 </button>
@@ -153,4 +204,34 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal-backdrop" ng-show="selectedPayment">
+        <div id="viewOrderModal" class="orderModal">
+            <div class="container">
+                <h2>Order Details</h2>
+                <p><strong>Order ID:</strong> {{ selectedPayment.OrderID }}</p>
+                <p><strong>User ID:</strong> {{ selectedPayment.UserID }}</p>
+                <p><strong>Reference Number:</strong> {{ selectedPayment.ReferenceNo }}</p>
+                <p><strong>Amount:</strong> {{ selectedPayment.Amount | currency:'₱' }}</p>
+                <p><strong>Created At:</strong> {{ DateFormat(selectedPayment.CreatedAt) }}</p>
+
+                <!-- Display Payment Proof from PaymentsData -->
+                <p><strong>Payment Proof:</strong></p>
+                <ul>
+                    <li ng-if="selectedPayment.IMG_PayPath">
+                        <a href="{{selectedPayment.IMG_PayPath}}" download target="_blank">
+                            {{selectedPayment.IMG_PayPath.split('/').pop()}}
+                        </a>
+                    </li>
+                    <li ng-if="!selectedPayment.IMG_PayPath">
+                        No payment proof uploaded.
+                    </li>
+                </ul>
+
+                <button class="btn btn-secondary" ng-click="closePaymentOrderModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
 </body>

@@ -32,7 +32,7 @@ namespace InfinityPrints.Models
         public virtual DbSet<tbl_ordersModel> tbl_orders { get; set; }
         public virtual DbSet<tbl_paymentsModel> tbl_payments { get; set; }
 
-
+        public virtual DbSet<tbl_chatsModel> tbl_chats { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace InfinityPrints.Models
             modelBuilder.Configurations.Add(new tbl_sizesMap());
             modelBuilder.Configurations.Add(new tbl_ordersMap());
             modelBuilder.Configurations.Add(new tbl_paymentsMap());
-
+            modelBuilder.Configurations.Add(new tbl_chatsMap());
             //modelBuilder.Configurations.Add(new tbl_bookingsMap());
             //  modelBuilder.Configurations.Add(new tbl_departmentsMap());
         }

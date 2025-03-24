@@ -264,7 +264,7 @@
         display: flex;
         justify-content: center; /* Horizontal centering */
         align-items: center; /* Vertical centering */
-        z-index: 10; /* Ensure it overlaps other content */
+        z-index: 9999; /* Ensure it overlaps other content */
     }
 
     .centered-container2 {
@@ -292,6 +292,7 @@
         max-width: 600px; /* Optional, limits the width */
         width: 90%; /* Makes it responsive */
         position: relative;
+        z-index: 9999;
     }
 
 
@@ -371,6 +372,19 @@
             transform: scale(1.1);
             box-shadow: 6px 8px 12px rgba(0, 0, 0, 0.4);
         }
+
+    #services-section, #feedbacks-section {
+        animation: fadeIn 1s ease-in-out;
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        padding-left: 20px;
+        padding-right: 20px;
+        opacity: 0;
+    }
+
+    .fade-in {
+        opacity: 1 !important;
+        transform: translateY(0);
+    }
 </style>
 
 <body>
@@ -388,7 +402,7 @@
                     <li class="tab"><a ng-click="OrderPage()">Order</a></li>
                     <li class="tab"><a ng-click="FAQpage()">FAQs</a></li>
                     <li class="tab"><a ng-click="AboutusPage()">About Us</a></li>
-                    <li class="tab"><a ng-click="SignIn()">{{Name}}</a></li>
+                    <li class="tab"><a ng-click="handleClick()">{{ Name }}</a></li>
 
                 </ul>
                 <div class="right-menu">
@@ -412,18 +426,8 @@
     </nav>
 
     <div class="body">
-        <div class="col s12 m4" style="margin-top:5vh" ng-if="RoleEmp()">
-            <div class="modern-card" onclick="openContainer()">
-                <div class="modern-card-icon">
-                    <span>+</span>
-                </div>
-                <div class="modern-card-content">
-                    <h5>Add Content</h5>
-                </div>
-            </div>
-        </div>
 
-        <a onclick="window.location.href='/Home/ReviewPageForm'" class="add-review-btn">
+        <a onclick="openContainer()" class="add-review-btn" ng-if="RoleEmp()">
             <i class="material-icons">rate_review</i> Add Review
         </a>
 
@@ -575,6 +579,83 @@
 
 
     </div>
+
+
+    <div>
+        <footer>
+            <div class="footer-container1 row s12">
+                <div class="footer-logo">
+                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
+                </div>
+            </div>
+            <div class="footer-container2">
+                <div class="footer-nav">
+                    <div class="row s12">
+                        <div class="col s12">
+                            <div class="row footer-links">
+                                <div class="col s2">
+                                    <a ng-click="Homepage()">Homepage</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Servicepage()">Services</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Reviewpage()">Reviews</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="OrderPage()">Order</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="FAQpage()">FAQs</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="AboutusPage()">About Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-container3 row">
+                <div class="col s12">
+                    <div class="row">
+                        <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
+                    </div>
+                    <div class="footer-social row">
+                        @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
+                        <a href="href=" https: //www.facebook.com/profile.php?id =100064146603627""><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
+                        @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
+                        @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
+                    </div>
+
+                    <div class="row">
+                        <span id="footer-contacttxt"> CONTACT US </span>
+                    </div>
+                    <div class="footer-contact row">
+                        <span>
+                            <img src="~/Content/images/phone-icon.png" alt="Facebook">
+                            0917 582 0708
+                        </span>
+
+                        <span>
+                            <img src="~/Content/images/email-icon.jpg" alt="Email Address">
+                            asalazar.infinityprints@gmail.com
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="footer-container4 row">
+                <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+            </div>
+        </footer>
+    </div>
+
+
+
+
 </body>
 <script>
     function closeContainer() {
@@ -607,6 +688,24 @@
         } else {
             button.classList.remove("show");
         }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll("#services-section, #servicesTxt, #feedbacksTxt, #feedbacks-section, .businessInfo-container");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-in"); // Add fade-in when visible
+                } else {
+                    entry.target.classList.remove("fade-in"); // Remove when out of view
+                }
+            });
+        }, { threshold: 0.2 }); // Trigger when 20% of section is visible
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     });
 
 

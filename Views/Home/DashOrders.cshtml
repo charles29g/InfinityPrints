@@ -1,4 +1,4 @@
-@{
+﻿@{
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
@@ -28,6 +28,16 @@
     }
 
     .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        z-index: 1001; /* Ensure it's below the modal but above other content */
+    }
+
+    .modal-backdrop-payment {
         position: fixed;
         top: 0;
         left: 0;
@@ -183,33 +193,34 @@
 
 <body>
     <div class="sidebar">
-        <h1>InfinityPrints</h1>
+        <h1>Infinity Print </h1>
         <ul>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="DashAdmin()">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="DashAdmin()" ">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                        <i class="fas fa-home active" style="font-size: 18px;"></i>
                     </span>
                     Homepage
                 </a>
             </li>
+            <li ng-show="!RoleEmp()" style="margin-bottom: 5px;">
+                <a ng-click="Homepage()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                    </span>
+                    Go Back to Homepage
+                </a>
+            </li>
             <li style="margin-bottom: 5px;">
                 <a ng-click="Account()">
-
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-user-circle " style="font-size: 18px;"></i>
                     </span>
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" ng-show="Owner()" class="active">
-                <a ng-click="Authorization()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
-                    </span>
-                    Task Authorization
-                </a>
-            </li>
+
+
             <li style="margin-bottom: 5px;" class="active">
                 <a ng-click="Orders()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
@@ -218,7 +229,7 @@
                     Orders
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Users()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-users" style="font-size: 18px;"></i>
@@ -226,7 +237,7 @@
                     Users
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Payment()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-credit-card" style="font-size: 18px;"></i>
@@ -234,48 +245,63 @@
                     Payment
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Chat()">
+            <li style="margin-bottom: 5px; position: relative;" ng-show="RoleEmp()">
+                <a ng-click="Chat(); clearChatNotifications()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-comments" style="font-size: 18px;"></i>
                     </span>
                     Chat
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="UserGuide()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
                     </span>
-                    User Guide
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px; position: relative;" ng-show="Customer()">
+                <a ng-click="Chat2(); clearChatNotifications()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-comments" style="font-size: 18px;"></i>
+                    </span>
+                    Chat
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
+                    </span>
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;" ng-show="isOwner()">
                 <a ng-click="Status()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-spinner active" style="font-size: 18px;"></i>
+                        <i class="fas fa-spinner " style="font-size: 18px;"></i>
                     </span>
                     Status
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Receipts()">
-                    <!-- Call the Receipts function -->
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-receipt" style="font-size: 18px;"></i>
                     </span>
                     Receipts
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Receipts()">
+            <li style="margin-bottom: 5px;" ng-show="isOwner()">
+                <a ng-click="Logs()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-file-alt" " style="font-size: 18px;"></i>
+                        <i class="fas fa-file-alt" style="font-size: 18px;"></i>
                     </span>
                     Logs
                 </a>
             </li>
         </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <button class="logout-btn" ng-click="logoutfunc()">
+                    <p class="user-name"><i class="fas fa-user-circle"></i> {{ Name }}</p>
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="main-content">
@@ -335,7 +361,7 @@
             </h1>
             <div class="row white-text m2">
                 <div class="table-wrapper">
-                    <table id="manageOrdersTable" class="display">
+                    <table id="manageTable" class="display">
                         <thead>
                             <tr>
                                 <th>Order ID</th>
@@ -371,11 +397,11 @@
                                 <td>{{order.PaymentTerm}}</td>
                                 <td>{{order.PaymentStatus || 'Unpaid'}}</td>
                                 <td>
-                                    <button class="btn btn-info" ng-click="viewOrder(pDATA)">View Order</button>
+                                    <button class="btn btn-info" ng-click="viewOrder(order)">View Order</button>
                                 </td>
                                 <td>
                                     <!-- Delete Button (styled like Accept button but red) -->
-                                    <button class="btn btn-cancel" ng-click="declineOrder(order.OrderID)">
+                                    <button class="btn btn-cancel" ng-click="deleteOrder(order.OrderID)">
                                         Delete
                                     </button>
                                 </td>
@@ -392,7 +418,7 @@
             </h1>
             <div class="row white-text m2">
                 <div class="table-wrapper">
-                    <table id="myTable2" class="display">
+                    <table id="completedTable" class="display">
                         <thead>
                             <tr>
                                 <th>Order ID</th>
@@ -422,194 +448,223 @@
                     </table>
                 </div>
             </div>
-            </div>
+        </div>
 
-            <!-- New Table for Logged-in User's Orders -->
+        <!-- New Table for Logged-in User's Orders -->
+        <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
+            My Orders
+        </h1>
+        <div class="row white-text m2">
+            <div class="table-wrapper">
+                <table id="myOrdersTable" class="display">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Service</th>
+                            <th>Size</th>
+                            <th>Quantity</th>
+                            <th>Total Amount</th>
+                            <th>Created At</th>
+                            <th>Status</th>
+                            <th>Payment Type</th>
+                            <th>Payment Status</th>
+                            <th>Payment</th>
+                            <th>Cancel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="order in OrdersData | filter: { UserID: UserID }">
+                            <td>{{order.OrderID}}</td>
+                            <td>{{order.Service || 'Unknown Service'}}</td>
+                            <td>{{order.Size}}</td>
+                            <td>{{order.Quantity}}</td>
+                            <td>{{order.TotalPrice}}</td>
+                            <td>{{DateFormat(order.CreatedAt)}}</td>
+                            <td>{{getStatusName(order.StatusID)}}</td>
+                            <td>{{order.PaymentTerm || 'Not specified'}}</td>
+                            <td>{{order.PaymentStatus || 'Unpaid'}}</td>
+                            <td>
+                                <!-- Updated Make Payment Button -->
+                                <button class="btn btn-primary" ng-click="makePayment(order)"
+                                        ng-if="order.StatusID === 2 && (order.PaymentTerm === 'FullPayment' || (order.PaymentTerm === 'Fifty' && order.PaymentStatus !== 'Paid')) && order.PaymentStatus !== 'Paid' && order.PaymentStatus !== 'In Progress' && order.PaymentStatus !== '2nd Payment In Progress'">
+                                    <i class="fas fa-credit-card"></i> Make Payment
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-warning" ng-click="openCancelConfirmationModal(order)" ng-if="(order.StatusID === 1 || order.StatusID === 2) && order.PaymentStatus !== 'Paid' && order.PaymentStatus !== 'Half Paid' && order.PaymentStatus !== 'In Progress' && order.PaymentStatus !== '2nd Payment In Progress'">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Backdrop and Modal -->
+        <div class="modal-backdrop" ng-show="selectedOrder && !showPaymentModal && !showStatusModal">
+            <div id="viewOrderModal" class="orderModal">
+                <div class="container">
+                    <h2>Order Details</h2>
+                    <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                    <p><strong>User ID:</strong> {{selectedOrder.UserID}}</p>
+
+                    <!-- File Path Section -->
+                    <p><strong>File Paths:</strong></p>
+                    <ul>
+                        <li ng-repeat="filePath in (selectedOrder.FilePath ? selectedOrder.FilePath.split(' , ') : []) track by $index">
+                            <a href="{{filePath}}" download target="_blank">
+                                {{filePath.split('/').pop()}}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <p><strong>Size:</strong> {{selectedOrder.Size}}</p>
+                    <p><strong>Total Price:</strong> {{selectedOrder.TotalPrice}}</p>
+                    <p><strong>Additional Requests:</strong> {{selectedOrder.AdditionalRequests || 'None'}}</p> <!-- Display AdditionalRequests -->
+                    <p><strong>Payment Type:</strong> {{selectedOrder.PaymentTerm || 'Not specified'}}</p> <!-- Display PaymentType -->
+                    <p><strong>Created At:</strong> {{DateFormat(selectedOrder.CreatedAt)}}</p>
+                    <p><strong>Status:</strong> {{getStatusName(selectedOrder.StatusID)}}</p>
+                    <button class="btn btn-secondary" ng-click="closeOrderModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="modal-backdrop-payment" ng-show="showPaymentModal">
+            <div class="orderModal">
+                <div class="container">
+                    <h2>Make Payment</h2>
+                    <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                    <p><strong>Payment Term:</strong> {{selectedOrder.PaymentTerm}}</p>
+                    <p><strong>Amount to Pay:</strong> {{calculateAmountToPay() | currency:'₱'}}</p>
+
+                    <form ng-submit="AddPayment()">
+                        <div class="form-group">
+                            <label for="referenceNumber">Reference Number</label>
+                            <input type="text" id="referenceNumber" ng-model="paymentData.referenceNumber" required class="input-field" placeholder="Enter reference number" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="file-upload">
+                                <label class="custom-file-upload">
+                                    <i class="fas fa-upload"></i>
+                                    <span ng-if="!paymentData.file">Upload Payment Proof</span>
+                                    <span ng-if="paymentData.file">{{ paymentData.file.name }}</span>
+                                </label>
+                                <input type="file" id="paymentProof" ngf-select ng-model="paymentData.file" accept="image/*" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success" ng-click="AddPayment(); closeOrderModal()">Submit Payment</button>
+                            <button type="button" class="btn btn-secondary" ng-click="closePaymentModal(); closeOrderModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-backdrop" ng-show="showDeclineModal">
+            <div class="orderModal">
+                <div class="container">
+                    <h2>Decline Order</h2>
+                    <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                    <div class="form-group">
+                        <label for="declineReason">Reason for Decline</label>
+                        <textarea id="declineReason" ng-model="declineReason" class="form-control" rows="4" placeholder="Enter reason for declining the order"></textarea>
+                    </div>
+                    <button class="btn btn-success" ng-click="submitDecline()">Submit</button>
+                    <button class="btn btn-secondary" ng-click="closeDeclineModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Status Modal -->
+        <div class="modal-backdrop" ng-show="showStatusModal">
+            <div class="orderModal">
+                <div class="container">
+                    <h2>Order Status</h2>
+                    <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                    <p><strong>Current Status:</strong> {{getStatusName(selectedOrder.StatusID)}}</p>
+
+                    <!-- Display additional status details or allow updates -->
+                    <div class="form-group">
+                        <label for="newStatus">Update Status</label>
+                        <select id="newStatus" ng-model="newStatus" class="form-control">
+                            <option value="1">Pending</option>
+                            <option value="2">Accepted</option>
+                            <option value="3">In Progress</option>
+                            <option value="4">Completed</option>
+                        </select>
+                    </div>
+
+                    <!-- Buttons -->
+                    <button class="btn btn-success" ng-click="updateStatus(); closeOrderModal()">Update</button>
+                    <button class="btn btn-secondary" ng-click="closeStatusModal(); closeOrderModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-backdrop" ng-show="showCancelConfirmationModal">
+            <div class="orderModal">
+                <div class="container">
+                    <h2>Confirm Cancellation</h2>
+                    <p>Are you sure you want to cancel this order?</p>
+                    <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
+                    <p><strong>Service:</strong> {{selectedOrder.Service || 'Unknown Service'}}</p>
+                    <p><strong>Size:</strong> {{selectedOrder.Size || 'Unknown Size'}}</p>
+                    <p><strong>Total Amount:</strong> {{selectedOrder.TotalPrice}}</p>
+
+                    <!-- Buttons -->
+                    <button class="btn btn-danger" ng-click="confirmCancel()">Yes, Cancel Order</button>
+                    <button class="btn btn-secondary" ng-click="closeCancelConfirmationModal()">No, Go Back</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-if="RoleEmp()">
             <h1 style="font-size: 2.5rem; font-weight: 600; color: #6f0d4a; text-align: center; margin-top: 50px;">
-                My Orders
+                Old Orders
             </h1>
             <div class="row white-text m2">
                 <div class="table-wrapper">
-                    <table id="myOrdersTable" class="display">
+                    <table id="lateTable" class="display">
                         <thead>
                             <tr>
                                 <th>Order ID</th>
+                                <th>User ID</th>
                                 <th>Service</th>
                                 <th>Size</th>
                                 <th>Quantity</th>
-                                <th>Total Amount</th>
+                                <th>Total Price</th>
                                 <th>Created At</th>
-                                <th>Status</th>
                                 <th>Payment Type</th>
-                                <th>Payment Status</th>
-                                <th>Payment</th> <!-- Payment Column -->
-                                <th>Cancel</th> <!-- Cancel Column -->
+                                <th>View Order</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Show orders for the logged-in user -->
-                            <tr ng-repeat="order in OrdersData | filter: { UserID: UserID }">
+                            <!-- Apply the filterOrdersOlderThan3Days function to OrdersData -->
+                            <tr ng-repeat="order in filterOrdersOlderThan3Days(OrdersData)">
                                 <td>{{order.OrderID}}</td>
+                                <td>{{order.UserID}}</td>
                                 <td>{{order.Service || 'Unknown Service'}}</td>
                                 <td>{{order.Size}}</td>
                                 <td>{{order.Quantity}}</td>
                                 <td>{{order.TotalPrice}}</td>
                                 <td>{{DateFormat(order.CreatedAt)}}</td>
-                                <td>{{getStatusName(order.StatusID)}}</td>
-                                <td>{{order.PaymentTerm || 'Not specified'}}</td>
-                                <td>{{order.PaymentStatus || 'Unpaid'}}</td>
+                                <td>{{order.PaymentTerm}}</td>
                                 <td>
-                                    <!-- Make Payment Button (only shown if status is Accepted) -->
-                                    <button class="btn btn-primary" ng-click="makePayment(order)" ng-if="order.StatusID === 2">
-                                        <i class="fas fa-credit-card"></i> Make Payment
-                                    </button>
-                                </td>
-                                <td>
-                                    <!-- Cancel Button (only shown if status is Pending or Accepted) -->
-                                    <button class="btn btn-warning" ng-click="openCancelConfirmationModal(order)" ng-if="order.StatusID === 1 || order.StatusID === 2">
-                                        <i class="fas fa-times"></i> Cancel
-                                    </button>
+                                    <button class="btn btn-info" ng-click="viewOrder(order)">View Order</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            <!-- Backdrop and Modal -->
-            <div class="modal-backdrop" ng-show="selectedOrder">
-                <div id="viewOrderModal" class="orderModal">
-                    <div class="container">
-                        <h2>Order Details</h2>
-                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
-                        <p><strong>User ID:</strong> {{selectedOrder.UserID}}</p>
-
-                        <!-- File Path Section -->
-                        <p><strong>File Paths:</strong></p>
-                        <ul>
-                            <li ng-repeat="filePath in (selectedOrder.FilePath ? selectedOrder.FilePath.split(' , ') : []) track by $index">
-                                <a href="{{filePath}}" download target="_blank">
-                                    {{filePath.split('/').pop()}}
-                                </a>
-                            </li>
-                        </ul>
-
-                        <p><strong>Size:</strong> {{selectedOrder.Size}}</p>
-                        <p><strong>Total Price:</strong> {{selectedOrder.TotalPrice}}</p>
-                        <p><strong>Additional Requests:</strong> {{selectedOrder.AdditionalRequests || 'None'}}</p> <!-- Display AdditionalRequests -->
-                        <p><strong>Payment Type:</strong> {{selectedOrder.PaymentTerm || 'Not specified'}}</p> <!-- Display PaymentType -->
-                        <p><strong>Created At:</strong> {{DateFormat(selectedOrder.CreatedAt)}}</p>
-                        <p><strong>Status:</strong> {{getStatusName(selectedOrder.StatusID)}}</p>
-                        <button class="btn btn-secondary" ng-click="closeOrderModal()">Close</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-backdrop" ng-show="showPaymentModal">
-                <div class="orderModal">
-                    <div class="container">
-                        <div class="modal-content">
-                            <!-- Image on the Left -->
-                            <div class="image-section">
-                                <img src="~/Content/images/payment-image.jpg" alt="Payment Image" style="width: 100%; max-width: 200px;" />
-                            </div>
-
-                            <!-- Form on the Right -->
-                            <div class="form-section">
-                                <h2>Make Payment</h2>
-                                <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
-                                <p><strong>Total Amount:</strong> {{selectedOrder.TotalPrice}}</p>
-
-                                <!-- Upload Payment Proof -->
-                                <div class="col s12 file-upload">
-                                    <label for="file-upload" class="custom-file-upload">
-                                        <i class="material-icons upload-icon">file_upload</i>
-                                        Upload Payment Proof
-                                    </label>
-                                    <input type="file" ngf-select ng-model="file" name="file" accept="image/*" />
-                                </div>
-
-                                <!-- Reference Number -->
-                                <div class="col s12 input-icons">
-                                    <input id="ReferenceNumber" class="input-field" type="text" placeholder="Enter reference number" required ng-model="ReferenceNo" />
-                                </div>
-
-                                <!-- Buttons -->
-                                <button class="btn btn-success" ng-click="AddPayment()">Submit Payment</button>
-                                <button class="btn btn-secondary" ng-click="closePaymentModal()">Cancel</button>
-
-                                <!-- Feedback Messages -->
-                                <div ng-if="paymentSuccess" class="alert alert-success">
-                                    Payment submitted successfully!
-                                </div>
-                                <div ng-if="paymentError" class="alert alert-danger">
-                                    {{paymentError}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-backdrop" ng-show="showDeclineModal">
-                <div class="orderModal">
-                    <div class="container">
-                        <h2>Decline Order</h2>
-                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
-                        <div class="form-group">
-                            <label for="declineReason">Reason for Decline</label>
-                            <textarea id="declineReason" ng-model="declineReason" class="form-control" rows="4" placeholder="Enter reason for declining the order"></textarea>
-                        </div>
-                        <button class="btn btn-success" ng-click="submitDecline()">Submit</button>
-                        <button class="btn btn-secondary" ng-click="closeDeclineModal()">Close</button>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Status Modal -->
-            <div class="modal-backdrop" ng-show="showStatusModal">
-                <div class="orderModal">
-                    <div class="container">
-                        <h2>Order Status</h2>
-                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
-                        <p><strong>Current Status:</strong> {{getStatusName(selectedOrder.StatusID)}}</p>
-
-                        <!-- Display additional status details or allow updates -->
-                        <div class="form-group">
-                            <label for="newStatus">Update Status</label>
-                            <select id="newStatus" ng-model="newStatus" class="form-control">
-                                <option value="1">Pending</option>
-                                <option value="2">Accepted</option>
-                                <option value="3">In Progress</option>
-                                <option value="4">Completed</option>
-                            </select>
-                        </div>
-
-                        <!-- Buttons -->
-                        <button class="btn btn-success" ng-click="updateStatus()">Update</button>
-                        <button class="btn btn-secondary" ng-click="closeStatusModal()">Close</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-backdrop" ng-show="showCancelConfirmationModal">
-                <div class="orderModal">
-                    <div class="container">
-                        <h2>Confirm Cancellation</h2>
-                        <p>Are you sure you want to cancel this order?</p>
-                        <p><strong>Order ID:</strong> {{selectedOrder.OrderID}}</p>
-                        <p><strong>Service:</strong> {{selectedOrder.Service || 'Unknown Service'}}</p>
-                        <p><strong>Size:</strong> {{selectedOrder.Size || 'Unknown Size'}}</p>
-                        <p><strong>Total Amount:</strong> {{selectedOrder.TotalPrice}}</p>
-
-                        <!-- Buttons -->
-                        <button class="btn btn-danger" ng-click="confirmCancel()">Yes, Cancel Order</button>
-                        <button class="btn btn-secondary" ng-click="closeCancelConfirmationModal()">No, Go Back</button>
-                    </div>
-                </div>
-            </div>
-
+        </div>
 
 
 </body>

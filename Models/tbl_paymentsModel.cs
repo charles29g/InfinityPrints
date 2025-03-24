@@ -8,6 +8,7 @@ namespace InfinityPrints.Models
     public class tbl_paymentsModel
     {
         public int OrderID { get; set; }
+        public int UserID { get; set; }
         public int Amount { get; set; }
         public int PaymentID { get; set; }
         public string ReferenceNo { get; set; }

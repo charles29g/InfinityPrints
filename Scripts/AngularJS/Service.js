@@ -37,14 +37,16 @@ app.service("IPService", function ($http, $q, Upload) {
         return $http.get("/Home/LoadChart");
     }
 
-    this.InsertServices = function (ServiceDataAdd) {
+    this.InsertServices = function (ServiceDataAdd, Name, UserID) {
 
         console.log(ServiceDataAdd + "Service")
         var Insert = $http({
             method: "post",
             url: "Home/InsertServices",
             data: {
-                ServiceDataAdd
+                ServiceDataAdd,
+                Name,
+                UserID
             }
 
 
@@ -54,18 +56,12 @@ app.service("IPService", function ($http, $q, Upload) {
     };
 
     this.InsertPayment = function (PaymentDataAdd) {
-
-        console.log(PaymentDataAdd + "Payment")
+        console.log("PaymentDataAdd:", PaymentDataAdd); // Debugging
         var Insert = $http({
             method: "post",
             url: "Home/InsertPayment",
-            data: {
-                PaymentDataAdd
-            }
-
-
+            data: { PaymentDataAdd } // Send the object directly
         });
-
         return Insert;
     };
 
@@ -200,6 +196,14 @@ app.service("IPService", function ($http, $q, Upload) {
         return Confirm;
     };
 
+
+    this.ConfirmPayment = function (paymentID, orderID) {
+        return $http.post("/Home/ConfirmPayment", { paymentID: paymentID, orderID: orderID });
+    };
+
+    this.DeclinePayment = function (paymentID, orderID) {
+        return $http.post("/Home/DeclinePayment", { paymentID: paymentID, orderID: orderID });
+    };
 
 
     this.UpdateSelf = function (userDataUpdate) {
@@ -422,6 +426,10 @@ app.service("IPService", function ($http, $q, Upload) {
 
     };
 
+    this.GetOrderDetails = function (orderID) {
+        return $http.post("/Home/GetOrderDetails", { orderID: orderID });
+    };
+
     this.DeleteServiceEmployee = function (dataToDelete, action) {
         var Delete = $http({
             method: "post",
@@ -564,11 +572,13 @@ app.service("IPService", function ($http, $q, Upload) {
 
         // Collect selected sizes into a comma-separated string
         var sizes = orderData.sizes.join(",");
+        var services = orderData.services.join(",");
 
         // Prepare the data for sending
         var postData = {
             filePaths: filePaths.join(","),
             sizes: sizes,
+            services: services,
             // Add any other order-related data here (e.g., customer info, quantity, etc.)
         };
 
@@ -604,20 +614,18 @@ app.service("IPService", function ($http, $q, Upload) {
 
 
 
-    this.submitPayment = function (formData) {
-        console.log("Submit Payment Service Called");
-        return $http.post('/Home/SubmitPayment', formData, {
-            headers: {
-                'Content-Type': undefined // Allow file upload
-            },
-            transformRequest: angular.identity // Preserve FormData
-        });
-    };
+    this.submitPayment = function (PaymentDataAdd) {
+        var formData = new FormData();
+        formData.append("OrderID", PaymentDataAdd.OrderID);
+        formData.append("UserID", PaymentDataAdd.UserID);
+        formData.append("Amount", PaymentDataAdd.Amount);
+        formData.append("ReferenceNo", PaymentDataAdd.ReferenceNo);
+        formData.append("PaymentStatus", PaymentDataAdd.PaymentStatus);
+        formData.append("File", PaymentDataAdd.File);
 
-    this.updateOrderStatus = function (orderID, statusID) {
-        return $http.post('Home/UpdateOrderStatus', {
-            orderID: orderID,
-            statusID: statusID
+        return $http.post('/Home/SubmitPayment', formData, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined } // This is important for file uploads
         });
     };
 
@@ -687,6 +695,83 @@ app.service("IPService", function ($http, $q, Upload) {
         });
     };
 
+
+    this.InsertChat2 = function (ChatsDataAdd, UserIDTo, Chat2) {
+
+        console.log(ChatsDataAdd + "Service")
+        var Chat = $http({
+            method: "post",
+            url: "Home/InsertChats2",
+            data: {
+                ChatsDataAdd, UserIDTo, Chat2
+            }
+
+
+        });
+
+        return Chat;
+    };
+
+
+
+    this.InsertChat = function (ChatsDataAdd) {
+
+        console.log(ChatsDataAdd + "Service")
+        var Chat = $http({
+            method: "post",
+            url: "Home/InsertChats",
+            data: {
+                ChatsDataAdd
+            }
+
+
+        });
+
+        return Chat;
+    };
+
+
+
+    this.UpdateUnread = function (userDataUpdate) {
+
+        var Insert = $http({
+            method: "post",
+            url: "Home/UpdateUnread",
+            data: {
+                SelectedUserID: userDataUpdate.SelectedUserID
+            }
+
+
+        });
+
+        return Insert;
+    };
+
+
+
+    this.LoadChats = function () {
+        return $http.get("Home/LoadChats");
+    }
+
+    this.LoadUsersChat = function () {
+        return $http.get("Home/LoadUsersChat");
+    }
+
+
+    this.SendEmail2 = function (emailData, userID) {
+        console.log(emailData);
+
+        console.log(emailData + " Service");
+        var SendEmail = $http({
+            method: "post",
+            url: "Home/SendEmail2",
+            data: {
+                emailData: emailData, userID,
+            }
+        });
+
+        return SendEmail;
+    };
 
 
 

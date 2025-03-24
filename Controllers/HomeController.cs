@@ -14,6 +14,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 using System.Web.Services.Description;
+using System.Web.UI.WebControls;
+using System.Data.Entity;
+using System.Xml.Linq;
 namespace InfinityPrints.Controllers
 {
     public class HomeController : Controller
@@ -170,6 +173,12 @@ namespace InfinityPrints.Controllers
             return View();
         }
         public ActionResult DashChat()
+        {
+
+            return View();
+        }
+
+        public ActionResult DashChat2()
         {
 
             return View();
@@ -418,6 +427,7 @@ namespace InfinityPrints.Controllers
          order.StatusID,
          order.Service,
          order.PaymentTerm,
+         order.PaymentStatus,
          order.Quantity
      })
      .ToList();
@@ -435,10 +445,13 @@ namespace InfinityPrints.Controllers
                 var PaymentsInfo = db.tbl_payments
      .Select(payment => new
      {
+         payment.OrderID,
+         payment.UserID,
          payment.PaymentID,
          payment.ReferenceNo,
          payment.IMG_PayPath,
          payment.CreatedAt,
+         payment.Amount,
 
      })
      .ToList();
@@ -515,6 +528,19 @@ namespace InfinityPrints.Controllers
                                           .ToList();
                         }
                         System.Diagnostics.Debug.WriteLine("Size Names: " + string.Join(",", sizeNames));
+
+                        List<string> serviceNames = new List<string>();
+                        if (!string.IsNullOrEmpty(OrderDataAdd.Service))
+                        {
+                            System.Diagnostics.Debug.WriteLine("Received ServiceIDs: " + OrderDataAdd.Service);
+
+                            var serviceIds = OrderDataAdd.Service.Split(',').Select(int.Parse).ToList();
+                            serviceNames = db.tbl_services
+                                          .Where(s => serviceIds.Contains(s.ServiceID))  // Match IDs
+                                          .Select(s => s.ServiceName)  // Get Names
+                                          .ToList();
+                        }
+                        System.Diagnostics.Debug.WriteLine("Service Names: " + string.Join(",", serviceNames));
                         var dbnew = new tbl_ordersModel()
                         {
                             UserID = OrderDataAdd.UserID,
@@ -524,7 +550,7 @@ namespace InfinityPrints.Controllers
                             TotalPrice = OrderDataAdd.TotalPrice,
                             CreatedAt = DateTime.Now,
                             StatusID = 1,
-                            Service = OrderDataAdd.Service,
+                            Service = string.Join(",", serviceNames),
                             CompanyName = OrderDataAdd.CompanyName,
                             AdditionalRequests = OrderDataAdd.AdditionalRequests, // Include AdditionalRequests
                             Quantity = OrderDataAdd.Quantity, // Include Quantity
@@ -536,6 +562,8 @@ namespace InfinityPrints.Controllers
                         db.tbl_orders.Add(dbnew);
                         db.SaveChanges();
 
+                        
+
                         return Json(new { success = true, message = "Order Added successfully" }, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -546,6 +574,52 @@ namespace InfinityPrints.Controllers
                 catch (Exception ex)
                 {
                     return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+        public JsonResult InsertPayment(tbl_paymentsModel PaymentDataAdd, string Name, int UserID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == PaymentDataAdd.OrderID);
+                    if (order == null)
+                    {
+                        return Json(new { success = false, message = "Order not found." });
+                    }
+
+                    // Update the PaymentStatus based on the PaymentTerm
+                    if (order.PaymentTerm == "Fifty")
+                    {
+                        if (order.PaymentStatus == "Unpaid" || order.PaymentStatus == null)
+                        {
+                            order.PaymentStatus = "In Progress"; // First payment
+                        }
+                        else if (order.PaymentStatus == "Half Paid")
+                        {
+                            order.PaymentStatus = "2nd Payment In Progress"; // Second payment
+                        }
+                    }
+                    else if (order.PaymentTerm == "FullPayment")
+                    {
+                        order.PaymentStatus = "In Progress"; // Full payment
+                    }
+
+                    // Set the CreatedAt field to the current date and time
+                    PaymentDataAdd.CreatedAt = DateTime.Now;
+
+                    // Save the payment record
+                    db.tbl_payments.Add(PaymentDataAdd);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Payment submitted successfully!" });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
                 }
             }
         }
@@ -808,7 +882,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult UpdateSelf(tbl_usersModel UserDataUpdate)
+        public JsonResult UpdateSelf(tbl_usersModel UserDataUpdate, string Name, int UserID)
         {
             System.Diagnostics.Debug.WriteLine(UserDataUpdate + "Home");
             using (InfinityPrintsContext db = new InfinityPrintsContext())
@@ -830,7 +904,7 @@ namespace InfinityPrints.Controllers
                     existingUserInfo.UpdatedAt = DateTime.Now;
 
                     db.SaveChanges();
-                    // LogAction("Updated their own information", UserID);
+                    //LogAction("Updated their own information", UserID, Name);
 
                     return Json(new { success = true, message = "Your account details are updated successfully" }, JsonRequestBehavior.AllowGet);
                 }
@@ -842,7 +916,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult UpdateUser(tbl_usersModel UserDataUpdate)
+        public JsonResult UpdateUser(tbl_usersModel UserDataUpdate, string Name, int UserID)
         {
             System.Diagnostics.Debug.WriteLine(UserDataUpdate + "Home");
             using (InfinityPrintsContext db = new InfinityPrintsContext())
@@ -860,7 +934,7 @@ namespace InfinityPrints.Controllers
                     existingUserInfo.UpdatedAt = DateTime.Now;
 
                     db.SaveChanges();
-                    // LogAction("Updated their own information", UserID);
+                    //LogAction("Updated their own information", UserID, Name);
 
                     return Json(new { success = true, message = "Successfully Promoted" }, JsonRequestBehavior.AllowGet);
                 }
@@ -964,7 +1038,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteUser(tbl_usersModel dataToDelete)
+        public JsonResult DeleteUser(tbl_usersModel dataToDelete, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -975,7 +1049,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_users.Remove(recordToDelete);
                         db.SaveChanges();
-                        //LogAction("Deleted a user account", UserID);
+                        LogAction("Deleted a user account", UserID, Name);
 
                         return Json(new { success = true, message = "You Have deleted your account" }, JsonRequestBehavior.AllowGet);
                     }
@@ -991,7 +1065,7 @@ namespace InfinityPrints.Controllers
             }
         }
 
-        public JsonResult UpdateServiceEmployee(tbl_servicesModel dataToUpdate, string action)
+        public JsonResult UpdateServiceEmployee(tbl_servicesModel dataToUpdate, string action, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1003,7 +1077,7 @@ namespace InfinityPrints.Controllers
 
 
 
-                        //LogAction("Updated a user account", UserID);
+                        LogAction("Updated a service", UserID, Name);
 
                         return Json(new { success = true, message = "You requested to update this service" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1065,7 +1139,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action)
+        public JsonResult DeleteServiceEmployee(tbl_servicesModel dataToDelete, string action, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1078,7 +1152,7 @@ namespace InfinityPrints.Controllers
                         recordToDelete.Request = action; ;
                         db.SaveChanges();
 
-                        //LogAction("Deleted a user account", UserID);
+                        LogAction("Deleted a service", UserID, Name);
 
                         return Json(new { success = true, message = "You requested to delete this service" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1096,7 +1170,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteUserEmployee(tbl_usersModel dataToDelete, string action)
+        public JsonResult DeleteUserEmployee(tbl_usersModel dataToDelete, string action, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1109,7 +1183,7 @@ namespace InfinityPrints.Controllers
                         recordToDelete.Request = action; ;
                         db.SaveChanges();
 
-                        //LogAction("Deleted a user account", UserID);
+                        LogAction("Deleted a user account", UserID, Name);
 
                         return Json(new { success = true, message = "You requested to delete this user" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1126,7 +1200,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete, string action)
+        public JsonResult DeleteReviewEmployee(tbl_contentModel dataToDelete, string action, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1139,7 +1213,7 @@ namespace InfinityPrints.Controllers
                         recordToDelete.Request = action;
                         db.SaveChanges();
 
-                        //LogAction("Deleted a user account", UserID);
+                        LogAction("Deleted a review", UserID, Name);
 
                         return Json(new { success = true, message = "You requested to delete this service" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1382,9 +1456,28 @@ namespace InfinityPrints.Controllers
             }
         }
 
+        public void LogAction(string action, int userID, string name)
+        {
+            using (var db = new InfinityPrintsContext())
+            {
+
+                var logEntry = new tbl_logsModel()
+                {
+                    UserID = userID,
+                    Action = action,
+                    Name = name,
+                    CreatedAt = DateTime.Now
+                };
+
+                db.tbl_logs.Add(logEntry);
+                db.SaveChanges();
+            }
+        }
 
 
-        public JsonResult InsertServices(tbl_servicesModel ServiceDataAdd)
+
+
+        public JsonResult InsertServices(tbl_servicesModel ServiceDataAdd, string Name, int UserID)
         {
             System.Diagnostics.Debug.WriteLine(ServiceDataAdd + "Home");
             using (InfinityPrintsContext db = new InfinityPrintsContext())
@@ -1411,6 +1504,7 @@ namespace InfinityPrints.Controllers
 
                     db.tbl_services.Add(dbnew);
                     db.SaveChanges();
+                    LogAction("Added a new service", UserID, Name);
 
                     return Json(new { success = true, message = "Sizes Added successfully" }, JsonRequestBehavior.AllowGet);
                 }
@@ -1460,7 +1554,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteUserAd(tbl_usersModel dataToDelete)
+        public JsonResult DeleteUserAd(tbl_usersModel dataToDelete, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1471,7 +1565,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_users.Remove(recordToDelete);
                         db.SaveChanges();
-                        // LogAction("Deleted a user account", UserID);
+                        LogAction("Deleted a user account", UserID, Name);
 
                         return Json(new { success = true, message = "User deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1490,7 +1584,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteServices(tbl_servicesModel dataToDelete)
+        public JsonResult DeleteServices(tbl_servicesModel dataToDelete, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1501,7 +1595,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_services.Remove(recordToDelete);
                         db.SaveChanges();
-                        //LogAction("Deleted a tour package", UserID);
+                        LogAction("Deleted a service", UserID, Name);
 
                         return Json(new { success = true, message = "Service deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1517,7 +1611,7 @@ namespace InfinityPrints.Controllers
             }
         }
 
-        public JsonResult DeleteReviews(tbl_contentModel dataToDelete)
+        public JsonResult DeleteReviews(tbl_contentModel dataToDelete, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1528,7 +1622,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_content.Remove(recordToDelete);
                         db.SaveChanges();
-                        //LogAction("Deleted a tour package", UserID);
+                        LogAction("Deleted a review", UserID, Name);
 
                         return Json(new { success = true, message = "Review deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1545,7 +1639,7 @@ namespace InfinityPrints.Controllers
         }
 
 
-        public JsonResult DeleteAccounts(tbl_usersModel dataToDelete)
+        public JsonResult DeleteAccounts(tbl_usersModel dataToDelete, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1556,7 +1650,7 @@ namespace InfinityPrints.Controllers
                     {
                         db.tbl_users.Remove(recordToDelete);
                         db.SaveChanges();
-                        //LogAction("Deleted a tour package", UserID);
+                        LogAction("Deleted an account", UserID, Name);
 
                         return Json(new { success = true, message = "Account deleted successfully" }, JsonRequestBehavior.AllowGet);
                     }
@@ -1604,7 +1698,43 @@ namespace InfinityPrints.Controllers
             }
         }
 
-        public JsonResult UpdateOrderStatus(int orderID, int statusID)
+
+
+
+        public JsonResult UploadFile5()
+        {
+            try
+            {
+                var file = Request.Files[0]; // Assuming one file per request
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    var filePath = Path.Combine(Server.MapPath("~/Content/images/Payment/"), file.FileName);
+
+                    int count = 1;
+                    while (System.IO.File.Exists(filePath))
+                    {
+                        string newFileName = $"{fileName}({count}){fileExtension}";
+                        filePath = Path.Combine(Server.MapPath("~/Content/images/Payment/"), newFileName);
+                        count++;
+                    }
+
+                    file.SaveAs(filePath);
+                    string savedFileName = Path.GetFileName(filePath);
+                    return Json(new { success = true, fileName = savedFileName, filePath = "/Content/images/Payment/" + savedFileName });
+                }
+                return Json(new { success = false, message = "No file selected" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
+
+        public JsonResult UpdateOrderStatus(int orderID, int statusID, string Name, int UserID)
         {
             try
             {
@@ -1615,6 +1745,8 @@ namespace InfinityPrints.Controllers
                     {
                         order.StatusID = statusID; // Update the status
                         db.SaveChanges();
+                        LogAction("Updated an Order Status", UserID, Name);
+
                         return Json(new { success = true, message = "Order status updated successfully." });
                     }
                     else
@@ -1633,7 +1765,7 @@ namespace InfinityPrints.Controllers
 
 
 
-        public JsonResult DeleteOrder(int orderID)
+        public JsonResult DeleteOrder(int orderID, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
@@ -1644,6 +1776,8 @@ namespace InfinityPrints.Controllers
                     {
                         order.StatusID = 6;
                         db.SaveChanges();
+                        LogAction("Deleted an Order", UserID, Name);
+
                         return Json(new { success = true, message = "Order deleted successfully." });
                     }
                     else
@@ -1744,10 +1878,35 @@ namespace InfinityPrints.Controllers
         {
             try
             {
-                // Extract orderID and referenceNumber from the request
-                var orderID = Request.Form["orderID"];
-                var referenceNumber = Request.Form["referenceNumber"];
-                var file = Request.Files["file"];
+                // Log incoming data for debugging
+                System.Diagnostics.Debug.WriteLine("Received Form Data:");
+                System.Diagnostics.Debug.WriteLine("OrderID: " + (Request.Form["OrderID"] ?? "NULL"));
+                System.Diagnostics.Debug.WriteLine("UserID: " + (Request.Form["UserID"] ?? "NULL"));
+                System.Diagnostics.Debug.WriteLine("Amount: " + (Request.Form["Amount"] ?? "NULL"));
+                System.Diagnostics.Debug.WriteLine("ReferenceNo: " + (Request.Form["ReferenceNo"] ?? "NULL"));
+                System.Diagnostics.Debug.WriteLine("PaymentStatus: " + (Request.Form["PaymentStatus"] ?? "NULL"));
+                System.Diagnostics.Debug.WriteLine("File: " + (Request.Files["File"] != null ? "Present" : "Missing"));
+
+                // Retrieve form data
+                var orderID = Request.Form["OrderID"];
+                var userID = Request.Form["UserID"];
+                var amount = Request.Form["Amount"];
+                var referenceNumber = Request.Form["ReferenceNo"];
+                var paymentStatus = Request.Form["PaymentStatus"];
+                var file = Request.Files["File"];
+
+                // Validate required fields
+                if (string.IsNullOrEmpty(orderID) || string.IsNullOrEmpty(userID) || string.IsNullOrEmpty(amount) || string.IsNullOrEmpty(referenceNumber) || file == null)
+                {
+                    return Json(new { success = false, message = "All fields are required." });
+                }
+
+                // Parse OrderID, UserID, and Amount as integers
+                int parsedOrderID, parsedUserID, parsedAmount;
+                if (!int.TryParse(orderID, out parsedOrderID) || !int.TryParse(userID, out parsedUserID) || !int.TryParse(amount, out parsedAmount))
+                {
+                    return Json(new { success = false, message = "Invalid data format." });
+                }
 
                 // Save the file
                 string uploadPath = Server.MapPath("~/Content/images/Payment/");
@@ -1760,22 +1919,17 @@ namespace InfinityPrints.Controllers
                 string filePath = Path.Combine(uploadPath, fileName);
                 file.SaveAs(filePath);
 
-                // Update the payment status in the database
-                using (InfinityPrintsContext db = new InfinityPrintsContext())
+                // Save payment details to the database
+                using (var db = new InfinityPrintsContext())
                 {
-                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == int.Parse(orderID));
-                    if (order != null)
-                    {
-                        order.PaymentStatus = "Confirming Payment";
-                        db.SaveChanges();
-                    }
-
-                    // Save the payment details to the database
                     var payment = new tbl_paymentsModel
                     {
-                        OrderID = int.Parse(orderID),
+                        OrderID = parsedOrderID,
+                        UserID = parsedUserID,
+                        Amount = parsedAmount,
                         ReferenceNo = referenceNumber,
-                        IMG_PayPath = filePath,
+                        PaymentStatus = paymentStatus ?? "Pending", // Default to "Pending" if not provided
+                        IMG_PayPath = filePath, // Save the file path to IMG_PayPath
                         CreatedAt = DateTime.Now
                     };
 
@@ -1783,7 +1937,7 @@ namespace InfinityPrints.Controllers
                     db.SaveChanges();
                 }
 
-                return Json(new { success = true, message = "Payment submitted successfully." });
+                return Json(new { success = true, message = "Payment submitted successfully!" });
             }
             catch (Exception ex)
             {
@@ -1795,7 +1949,7 @@ namespace InfinityPrints.Controllers
 
 
         [HttpPost]
-        public JsonResult DeclineOrder(int orderID, string reason)
+        public JsonResult DeclineOrder(int orderID, string reason, string Name, int UserID)
         {
             try
             {
@@ -1815,6 +1969,8 @@ namespace InfinityPrints.Controllers
                         order.Reason = reason; // Update the Reason column
                         db.SaveChanges();
 
+                        LogAction("Declined an Order", UserID, Name);
+
                         return Json(new { success = true, message = "Order declined successfully." });
                     }
                     else
@@ -1829,69 +1985,367 @@ namespace InfinityPrints.Controllers
             }
         }
 
-        public JsonResult ConfirmPayment(int PaymentID, int OrderID)
+        [HttpPost]
+        public JsonResult ConfirmPayment(int paymentID, int orderID, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
                 try
                 {
-                    // Update payment status to "Paid"
-                    var payment = db.tbl_payments.Find(PaymentID);
-                    if (payment != null)
+                    // Find the payment record
+                    var payment = db.tbl_payments.FirstOrDefault(p => p.PaymentID == paymentID);
+                    if (payment == null)
                     {
-                        payment.PaymentStatus = "Paid";
-                        db.SaveChanges();
+                        return Json(new { success = false, message = "Payment not found." });
                     }
 
-                    // Update order status (if needed)
-                    var order = db.tbl_orders.Find(OrderID);
-                    if (order != null)
+                    // Find the associated order
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order == null)
                     {
-                        order.StatusID = 2; // Example: Set status to "Paid"
-                        db.SaveChanges();
+                        return Json(new { success = false, message = "Order not found." });
                     }
 
-                    return Json(new { success = true, message = "Payment confirmed successfully." });
+                    // Handle PaymentTerm = "Fifty"
+                    if (order.PaymentTerm == "Fifty")
+                    {
+                        if (order.PaymentStatus == "In Progress")
+                        {
+                            // First confirmation: change to "Half Paid"
+                            order.PaymentStatus = "Half Paid";
+                        }
+                        else if (order.PaymentStatus == "2nd Payment In Progress")
+                        {
+                            // Second confirmation: change to "Paid"
+                            order.PaymentStatus = "Paid";
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "Invalid PaymentStatus for PaymentTerm = Fifty." });
+                        }
+                    }
+                    else if (order.PaymentTerm == "FullPayment")
+                    {
+                        // For FullPayment, update to "Paid"
+                        order.PaymentStatus = "Paid";
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Invalid PaymentTerm." });
+                    }
+
+                    // Save changes to the order
+                    db.SaveChanges();
+                    LogAction("Confirmed Payment", UserID, Name);
+
+                    // Create a receipt
+                    var receipt = new tbl_receiptsModel
+                    {
+                        UserID = order.UserID,
+                        OrderID = order.OrderID,
+                        PaymentTerm = order.PaymentTerm,
+                        ReferenceNo = payment.ReferenceNo,
+                        Balance = payment.Amount,
+                        PaymentStatus = order.PaymentStatus, // Use the updated PaymentStatus
+                        CreatedAt = DateTime.Now
+                    };
+
+                    db.tbl_receipts.Add(receipt);
+
+                    // Remove the payment record
+                    db.tbl_payments.Remove(payment);
+
+                    // Save changes to the database
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Payment confirmed, receipt created, and payment record removed successfully." });
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = false, message = ex.Message });
+                    return Json(new { success = false, message = $"Error confirming payment: {ex.Message}" });
                 }
             }
         }
 
-        // Decline Payment
         [HttpPost]
-        public JsonResult DeclinePayment(int PaymentID, int OrderID)
+        public JsonResult DeclinePayment(int paymentID, int orderID, string Name, int UserID)
         {
             using (InfinityPrintsContext db = new InfinityPrintsContext())
             {
                 try
                 {
-                    // Update payment status to "Unpaid"
-                    var payment = db.tbl_payments.Find(PaymentID);
-                    if (payment != null)
+                    // Find the payment record
+                    var payment = db.tbl_payments.FirstOrDefault(p => p.PaymentID == paymentID);
+                    if (payment == null)
                     {
-                        payment.PaymentStatus = "Unpaid";
-                        db.SaveChanges();
+                        return Json(new { success = false, message = "Payment not found." });
                     }
 
-                    // Update order status (if needed)
-                    var order = db.tbl_orders.Find(OrderID);
-                    if (order != null)
+                    // Find the associated order
+                    var order = db.tbl_orders.FirstOrDefault(o => o.OrderID == orderID);
+                    if (order == null)
                     {
-                        order.StatusID = 2; // Example: Set status to "Pending"
-                        db.SaveChanges();
+                        return Json(new { success = false, message = "Order not found." });
                     }
+
+                    if (order.PaymentTerm == "Fifty")
+                    {
+                        if (order.PaymentStatus == "In Progress")
+                        {
+                            order.PaymentStatus = null; // Revert to null or "Unpaid"
+                        }
+                        else if (order.PaymentStatus == "2nd Payment In Progress")
+                        {
+                            order.PaymentStatus = "Half Paid";
+                        }
+                    }
+                    else if (order.PaymentTerm == "FullPayment")
+                    {
+                        // If the payment was for the full amount, revert to "Unpaid" or null
+                        order.PaymentStatus = null;
+                    }
+
+                    // Remove the payment record
+                    db.tbl_payments.Remove(payment);
+
+                    // Save changes to the database
+                    db.SaveChanges();
+
+                    LogAction("Declined Payment", UserID, Name);
 
                     return Json(new { success = true, message = "Payment declined successfully." });
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = false, message = ex.Message });
+                    return Json(new { success = false, message = $"Error declining payment: {ex.Message}" });
                 }
             }
         }
+
+
+        public JsonResult GetOrderDetails(int orderID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                var order = db.tbl_orders
+                    .FirstOrDefault(o => o.OrderID == orderID);
+
+                if (order != null)
+                {
+                    return Json(new { success = true, order = order });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Order not found." });
+                }
+            }
+        }
+
+
+
+        public JsonResult InsertChats2(tbl_chatsModel ChatsDataAdd, int UserIDTo, string Chat2)
+        {
+            System.Diagnostics.Debug.WriteLine(ChatsDataAdd + "Home");
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+
+
+                    var dbnew = new tbl_chatsModel()
+                    {
+                        UserID = ChatsDataAdd.UserID,
+                        Chat = Chat2,
+                        replyTo = UserIDTo,
+                        Username = ChatsDataAdd.Username,
+                        createdAt = DateTime.Now,
+                        unread = "true"
+
+                    };
+
+                    db.tbl_chats.Add(dbnew);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "chat Added successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+
+        public JsonResult LoadUsersChat()
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                var UsersInfo = db.tbl_users
+                    .Where(user => db.tbl_chats.Any(chat => chat.UserID == user.UserID || chat.replyTo == user.UserID))
+                    .Select(user => new
+                    {
+                        user.UserID,
+                        user.FName,
+                        user.LName,
+
+                        // Fetch latest chat's unread status per user
+                        Unread = db.tbl_chats
+                            .Where(chat => chat.UserID == user.UserID || chat.replyTo == user.UserID)
+                            .OrderByDescending(chat => chat.chatID) // Get latest ChatID first
+                            .Select(chat => chat.unread)
+                            .FirstOrDefault() ?? "false" // Default to "false" if no chat exists
+                    })
+                    .ToList();
+
+                return Json(UsersInfo, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult InsertChats(tbl_chatsModel ChatsDataAdd)
+        {
+            System.Diagnostics.Debug.WriteLine(ChatsDataAdd + "Home");
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+
+
+                    var dbnew = new tbl_chatsModel()
+                    {
+                        UserID = ChatsDataAdd.UserID,
+                        Chat = ChatsDataAdd.Chat,
+                        replyTo = ChatsDataAdd.replyTo,
+                        Username = ChatsDataAdd.Username,
+                        createdAt = DateTime.Now,
+                        unread = "true"
+
+
+
+                    };
+
+                    db.tbl_chats.Add(dbnew);
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "chat Added successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+        public JsonResult UpdateUnread(int SelectedUserID)
+        {
+            using (InfinityPrintsContext db = new InfinityPrintsContext())
+            {
+                try
+                {
+                    // Get the latest chat entry for the user
+                    var latestChat = db.tbl_chats
+     .Where(chat => chat.UserID == SelectedUserID)
+     .OrderByDescending(chat => chat.createdAt)
+     .AsNoTracking()
+     .FirstOrDefault();
+
+
+                    if (latestChat == null)
+                    {
+                        return Json(new { success = false, message = "No chat found for this user." }, JsonRequestBehavior.AllowGet);
+                    }
+
+                    // Update unread status (assuming it's stored as a string)
+                    latestChat.unread = "false";  // Use "false" as a string if needed
+
+                    // Mark as modified and save changes
+                    db.SaveChanges();
+
+                    return Json(new { success = true, message = "Unread status updated." }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+        public JsonResult LoadChats()
+        {
+            using (var db = new InfinityPrintsContext())
+            {
+
+                var ChatsInfo = db.tbl_chats
+     .Select(chats => new
+     {
+         chats.chatID,
+         chats.UserID,
+         chats.Username,
+         chats.createdAt,
+         chats.Chat,
+         chats.replyTo,
+     })
+     .ToList();
+
+
+                return Json(ChatsInfo, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+        public JsonResult SendEmail2(EmailData emailData, int UserID)
+        {
+            try
+            {
+                using (var db = new InfinityPrintsContext()) // Replace with your actual DbContext
+                {
+                    // Fetch user email based on UserID
+                    var user = db.tbl_users.FirstOrDefault(u => u.UserID == UserID);
+                    if (user == null || string.IsNullOrEmpty(user.Email))
+                    {
+                        return Json(new { success = false, message = "User not found or email is missing." });
+                    }
+
+                    // Set the correct recipient email
+                    emailData.ToEmail = user.Email;
+                }
+
+                // Validate email data
+                if (string.IsNullOrEmpty(emailData.ToEmail) || string.IsNullOrEmpty(emailData.Subject) || string.IsNullOrEmpty(emailData.Body))
+                {
+                    return Json(new { success = false, message = "Invalid email details." });
+                }
+
+                // Setting up SMTP client and sending the email
+                var smtpClient = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("infinityprints.team@gmail.com", "yfof olpz bdkb vdjm"), // Use app password here
+                    EnableSsl = true
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("infinityprints.team@gmail.com"),
+                    Subject = emailData.Subject,
+                    Body = emailData.Body,
+                    IsBodyHtml = true
+                };
+
+                mailMessage.To.Add(emailData.ToEmail);
+                smtpClient.Send(mailMessage);  // Send email
+
+                return Json(new { success = true, message = "Email sent successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Error sending email: {ex.Message}" });
+            }
+        }
+
+
 
 
     }

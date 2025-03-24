@@ -4,62 +4,103 @@
 
 
 <style>
-    .guide-container {
+
+    .containers {
         background-color: #6f0d4a;
-        border-top-right-radius: 100px;
-        border-top-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-        border-bottom-left-radius: 0px;
-        padding-left: 40px;
-        padding-right: 20px;
-        padding-top: 30px;
-        padding-bottom: 50px;
-        width: 90%;
+        padding: 100px;
+    }
+
+
+    .carousel-container {
+        position: relative;
+        /* margin: 5px 50px; */
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        background: linear-gradient(135deg, #f9f9f9, #ffffff);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        animation: fadeIn 1s ease-in-out;
+        margin-left: 100px;
+        margin-right: 100px;
         margin-top: 50px;
         margin-bottom: 50px;
-        color: white;
+        width: 60%;
+        justify-self: center;
+    }
+    /*
+            .carousel-container:hover {
+                transform: scale(1.03);
+                box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25), 0px 0px 15px rgba(130, 0, 255, 0.2);
+            }*/
+
+    .carousel-fade {
         position: relative;
-        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3); /* Box shadow added */
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+        display: flex;
     }
 
-    .faq-container {
-        background-color: #6f0d4a;
-        border-top-right-radius: 0px;
-        border-top-left-radius: 0px;
-        border-bottom-right-radius: 100px;
-        border-bottom-left-radius: 0px;
-        padding-left: 40px;
-        padding-right: 20px;
-        padding-top: 30px;
-        padding-bottom: 20px;
-        width: 90%;
-        margin-top: 50px;
-        margin-bottom: 50px;
+    .carousel-item {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important;
+            background-color: #6f0d4a;
+        }
+
+
+        .carousel-item.active {
+            opacity: 1; /* Only the active image will be visible */
+        }
+
+
+    /* New styles for sliding effect */
+    /*.carousel-track {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+    }*/
+
+
+    .button-container {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .btn, .btn:focus {
+        all: unset;
         color: white;
-        position: relative;
-        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3); /* Box shadow added */
+        cursor: pointer;
+        font-size: 18px;
+        text-decoration: none;
     }
 
-    .text-block {
-        max-width: 100%;
-        text-align: justify;
-        margin-left: 10px;
-        margin-right: 20px;
-    }
+        /* Remove background completely */
+        .btn:hover, .btn:active, .btn:focus-visible {
+            color: lightgray !important;
+            text-decoration: underline;
+            background: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
 
-    .guide-label .col {
-        display:inline-block
-    }
-
-    .row {
-        border-left: 40px double white;
-    }
-
-    h2 {
-        font-weight: 0 !important;
-        line-height: 1.3;
-        margin: 0px !important;
-        font-weight:bolder
+    footer {
+        margin-top: 150px;
     }
 </style>
 <body>
@@ -77,7 +118,7 @@
                     <li class="tab"><a ng-click="OrderPage()">Order</a></li>
                     <li class="tab"><a ng-click="FAQpage()" class="active">FAQs</a></li>
                     <li class="tab"><a ng-click="AboutusPage()">About Us</a></li>
-                    <li class="tab"><a ng-click="SignIn()">{{Name}}</a></li>
+                    <li class="tab"><a ng-click="handleClick()">{{ Name }}</a></li>
 
                 </ul>
                 <div class="right-menu">
@@ -100,102 +141,198 @@
         </div>
     </nav>
 
-    <div class="body" ">
-        <div class="container">
-            <div class="guide-container">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="guide-label">
-                            <div class="col">
-                                <h2>USER GUIDE</h2>
-                            </div>
-                        </div>
+    <div class="body">
+
+        <div class="carousel-container" id="faq-carousel">
+            <div class="containers">
+                <div class="carousel-fade">
+                    <div class="carousel-item active">
+                        <img src="~/Content/images/faq1.png" alt="Image 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/faq2.png" alt="Image 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/faq3.png" alt="Image 3">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col s12">
-                        <p class="text-block">
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                        </p>
-                        <p class="text-block">
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="faq-container">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="guide-label">
-                            <div class="col">
-                                <h2>FAQs</h2><p>Frequently Asked Questions</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <p class="text-block">
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                        </p>
-                        <p class="text-block">
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..."
-                        </p>
-                    </div>
-
+                <div class="button-container">
+                    <button class="prev btn" onclick="moveSlide(-1, 'faq-carousel')">&#10094; Prev</button>
+                    <button class="next btn" onclick="moveSlide(1, 'faq-carousel')">Next &#10095;</button>
                 </div>
             </div>
         </div>
+
+
+
+
+        <div class="carousel-container" id="customer-carousel" ng-if="Customer()">
+            <div class="containers">
+                <div class="carousel-fade">
+                    <div class="carousel-item active">
+                        <img src="~/Content/images/cust1.png" alt="Image 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/cust2.png" alt="Image 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/cust3.png" alt="Image 3">
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="prev btn" onclick="moveSlide(-1, 'customer-carousel')">&#10094; Prev</button>
+                    <button class="next btn" onclick="moveSlide(1, 'customer-carousel')">Next &#10095;</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="carousel-container" id="employee-carousel" ng-if="Employee()">
+            <div class="containers">
+                <div class="carousel-fade">
+                    <div class="carousel-item active">
+                        <img src="~/Content/images/emp1.png" alt="Image 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/emp2.png" alt="Image 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/emp3.png" alt="Image 3">
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="prev btn" onclick="moveSlide(-1, 'employee-carousel')">&#10094; Prev</button>
+                    <button class="next btn" onclick="moveSlide(1, 'employee-carousel')">Next &#10095;</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-container" id="owner-carousel" ng-if="Owner()">
+            <div class="containers">
+                <div class="carousel-fade">
+                    <div class="carousel-item active">
+                        <img src="~/Content/images/owner1.png" alt="Image 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/owner2.png" alt="Image 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/owner3.png" alt="Image 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/Content/images/owner4.png" alt="Image 4">
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="prev btn" onclick="moveSlide(-1, 'owner-carousel')">&#10094; Prev</button>
+                    <button class="next btn" onclick="moveSlide(1, 'owner-carousel')">Next &#10095;</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div>
+        <footer>
+            <div class="footer-container1 row s12">
+                <div class="footer-logo">
+                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
+                </div>
+            </div>
+            <div class="footer-container2">
+                <div class="footer-nav">
+                    <div class="row s12">
+                        <div class="col s12">
+                            <div class="row footer-links">
+                                <div class="col s2">
+                                    <a ng-click="Homepage()">Homepage</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Servicepage()">Services</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Reviewpage()">Reviews</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="OrderPage()">Order</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="FAQpage()">FAQs</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="AboutusPage()">About Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-container3 row">
+                <div class="col s12">
+                    <div class="row">
+                        <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
+                    </div>
+                    <div class="footer-social row">
+                        @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
+                        <a href="https://www.facebook.com/profile.php?id=100064146603627"><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
+                        @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
+                        @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
+                    </div>
+
+                    <div class="row">
+                        <span id="footer-contacttxt"> CONTACT US </span>
+                    </div>
+                    <div class="footer-contact row">
+                        <span>
+                            <img src="~/Content/images/phone-icon.png" alt="Facebook">
+                            0917 582 0708
+                        </span>
+
+                        <span>
+                            <img src="~/Content/images/email-icon.jpg" alt="Email Address">
+                            asalazar.infinityprints@gmail.com
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="footer-container4 row">
+                <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+            </div>
+        </footer>
     </div>
 
 </body>
+
+<script>
+    const carouselIndices = {}; // Keeps track of index per carousel
+
+    function moveSlide(direction, carouselId) {
+        const carousel = document.getElementById(carouselId);
+        if (!carousel) return;
+
+        const items = carousel.querySelectorAll('.carousel-item');
+        if (items.length === 0) return;
+
+        // Get or initialize current index
+        if (carouselIndices[carouselId] === undefined) {
+            carouselIndices[carouselId] = 0;
+        }
+
+        const currentIndex = carouselIndices[carouselId];
+        items[currentIndex].classList.remove('active');
+
+        let newIndex = currentIndex + direction;
+        if (newIndex < 0) newIndex = items.length - 1;
+        if (newIndex >= items.length) newIndex = 0;
+
+        items[newIndex].classList.add('active');
+        carouselIndices[carouselId] = newIndex;
+    }
+
+
+</script>

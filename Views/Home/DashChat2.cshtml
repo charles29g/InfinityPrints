@@ -1,0 +1,519 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+
+<style>
+    /* General styling for the chat box */
+    /*    .chat-box {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }*/
+    .chat-box {
+        width: 100%;
+        margin: 0px;
+        /*        margin-left: 60px;*/
+        padding-left: 100px;
+        padding-right: 100px;
+        /*        padding-bottom: 20px;
+        border: 1px solid #ccc;*/
+        border-radius: 1px;
+        background-color: #fff;
+        flex-direction: column;
+        background: white;
+        overflow-y: scroll;
+    }
+
+
+    /* Chat title */
+    .chat-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Styling for each message container */
+    .chat-messages {
+        flex-grow: 1;
+    }
+
+    /* Chat message container */
+    /*    .chat-message {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        overflow: hidden;
+    }*/
+
+    .chat-message {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 5px;
+    }
+
+        .chat-message.chat-left {
+            color: #6f0d4a !important; /* Theme color for left messages */
+        }
+
+        .chat-message.chat-right {
+            color: white !important; /* Text color for right messages */
+        }
+
+    .chat-left {
+        align-self: flex-start;
+        background-color: #e5b5cd; /* Softer pinkish shade */
+        text-align: left;
+        justify-self: left;
+        color: #4d0c32; /* Darker text for readability */
+    }
+
+    .chat-right {
+        align-self: flex-end;
+        background-color: #8a0f5d; /* Lighter shade of the main color */
+        color: white;
+        text-align: right;
+        justify-self: right;
+    }
+
+    /* Username styling */
+    .chat-name {
+        font-weight: bold;
+        color: #ffccdc; /* Soft pink for better contrast */
+    }
+
+    .chat-left .chat-name {
+        color: #6f0d4a; /* Theme color */
+    }
+
+    .chat-right .chat-name {
+        color: #ffccdc; /* Light pink */
+    }
+
+    /* Date of the message */
+    .chat-date {
+        color: gray;
+        font-size: 10px;
+    }
+
+    .chat-left .chat-date {
+        color: #6f0d4a; /* Theme color */
+    }
+
+    .chat-right .chat-date {
+        color: #ffccdc; /* Light pink */
+    }
+
+    /* Message body */
+    .chat-body {
+        font-size: 16px;
+        /*color: #4d0c32;*/ /* Deep wine color for readability */
+        word-wrap: break-word;
+    }
+
+    /* Header section containing the user's name and date */
+    .chat-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #555;
+    }
+
+
+    /* Styling for the chat input section */
+    .chat-input {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box; /* Ensures padding doesn’t increase size */
+        overflow-x: hidden; /* Prevents horizontal scrolling */
+        margin-bottom: 20px;
+    }
+
+        /* Styling for the input field */
+        .chat-input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+    /* Send button styling */
+    .send-btn {
+        background-color: #007bff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+        font-size: 18px;
+    }
+
+        /* Send button hover effect */
+        .send-btn:hover {
+            background-color: #0056b3;
+        }
+
+    /* For when the message input is focused */
+    .chat-input input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    /* Responsive Design: Adjust layout for smaller screens */
+    @@media (max-width: 600px) {
+        .chat-box {
+            width: 95%;
+        }
+
+        .chat-title {
+            font-size: 20px;
+        }
+
+        .chat-messages {
+            max-height: 350px;
+        }
+
+        .chat-input {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+            .chat-input input {
+                margin-bottom: 10px;
+            }
+    }
+
+    .chat-container {
+        display: flex;
+        height: 100vh;
+    }
+
+    /* Chat Sidebar */
+    .chat-sidebar {
+        width: 300px;
+        background: #600c3f;
+        padding: 20px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        margin-left: 60px;
+    }
+
+        .chat-sidebar h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+    .chat-list {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .chat-item {
+        background: #c58aac;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+        .chat-item.selected {
+            background: #8b506b;
+        }
+
+    /* Chat Box */
+    /*    .chat-box {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 20px;
+        overflow-y: scroll;
+    }*/
+
+    .chat-title {
+        text-align: center;
+        color: #600c3f;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .chat-messages {
+        flex: 1;
+        background: white;
+    }
+
+    .message {
+        padding: 10px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        max-width: 60%;
+    }
+
+        .message.user {
+            background: #c58aac;
+            align-self: flex-start;
+            color: white;
+        }
+
+        .message.bot {
+            background: #600c3f;
+            color: white;
+            align-self: flex-end;
+        }
+
+    /* Chat Input */
+    .chat-input {
+        display: flex;
+        background: #600c3f;
+        padding: 15px;
+        border-radius: 25px;
+        margin-top: 10px;
+        position: sticky !important;
+    }
+
+        .chat-input input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 25px;
+            outline: none;
+        }
+
+    .send-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+
+    h1 {
+        color: white;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 60px;
+        white-space: nowrap;
+        height: 100%;
+        background-color: #6f0d4a;
+        color: white;
+        padding: 20px 0;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        transition: width 0.3s ease;
+        z-index: 200;
+    }
+
+</style>
+<body>
+    <div class="sidebar">
+        <h1>Infinity Print </h1>
+        <ul>
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="DashAdmin()" ">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home active" style="font-size: 18px;"></i>
+                    </span>
+                    Homepage
+                </a>
+            </li>
+            <li ng-show="!RoleEmp()" style="margin-bottom: 5px;">
+                <a ng-click="Homepage()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                    </span>
+                    Go Back to Homepage
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Account()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-user-circle " style="font-size: 18px;"></i>
+                    </span>
+                    Account
+                </a>
+            </li>
+
+
+            <li style="margin-bottom: 5px;">
+                <a ng-click="Orders()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-box-open" style="font-size: 18px;"></i>
+                    </span>
+                    Orders
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="Users()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-users" style="font-size: 18px;"></i>
+                    </span>
+                    Users
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="Payment()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-credit-card" style="font-size: 18px;"></i>
+                    </span>
+                    Payment
+                </a>
+            </li>
+            <li style="margin-bottom: 5px; position: relative;" ng-show="RoleEmp()">
+                <a ng-click="Chat(); clearChatNotifications()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-comments" style="font-size: 18px;"></i>
+                    </span>
+                    Chat
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
+                    </span>
+                </a>
+            </li>
+            <li style="margin-bottom: 5px; position: relative;" ng-show="Customer()"  class="active">
+                <a ng-click="Chat2(); clearChatNotifications()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-comments" style="font-size: 18px;"></i>
+                    </span>
+                    Chat
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
+                    </span>
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;" ng-show="isOwner()">
+                <a ng-click="Status()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-spinner " style="font-size: 18px;"></i>
+                    </span>
+                    Status
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
+                <a ng-click="Receipts()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-receipt" style="font-size: 18px;"></i>
+                    </span>
+                    Receipts
+                </a>
+            </li>
+            <li style="margin-bottom: 5px;" ng-show="isOwner()">
+                <a ng-click="Logs()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-file-alt" style="font-size: 18px;"></i>
+                    </span>
+                    Logs
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <button class="logout-btn" ng-click="logoutfunc()">
+                    <p class="user-name"><i class="fas fa-user-circle"></i> {{ Name }}</p>
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    @{
+        Layout = "~/Views/Shared/_Admin.cshtml";
+    }
+
+    <div class="chat-container">
+        <!-- Left Sidebar for Chats -->
+        <!-- Chat Box -->
+        <div class="chat-box" ng-init="loadChat()">
+            <h2 class="chat-title">InfinityChat - Customer</h2>
+
+            <div class="chat-messages">
+                <div class="chat-message"
+                     ng-class="{'chat-right': DATA.UserID == UserID, 'chat-left': DATA.UserID != UserID}"
+                     ng-repeat="DATA in ChatData | filter:filterChat2">
+                    <div class="chat-header">
+                        <span class="chat-name">
+                            {{ DATA.replyTo ? 'InfinityPrints Team' : DATA.Username }}
+                            {{ DATA.UserID == UserID ? '(You)' : '' }}
+                        </span>
+                        <span class="chat-date">{{ DateFormat(DATA.createdAt) }}</span>
+                    </div>
+                    <div class="chat-body">
+                        <p class="chat-message-text">{{ DATA.Chat }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Input -->
+            <div class="chat-input">
+                <input type="text" id="messageInput" ng-model="Chats"
+                       placeholder="Hello! Type message here"
+                       ng-change="validateMessage()" ng-minlength="1" />
+
+                <button class="send-btn" ng-click="AddChat()" ng-disabled="isInvalidMessage || isMessageTooShort">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+
+                <span ng-show="isInvalidMessage" style="color: red;">
+                    Inappropriate words are not allowed!
+                </span>
+
+                <span ng-show="isMessageTooShort" style="color: orange;">
+                    Message must be at least 3 characters long!
+                </span>
+            </div>
+        </div>
+    </div>
+
+    @*<script>
+            document.querySelector(".send-btn").addEventListener("click", function () {
+                var input = document.getElementById("messageInput");
+                var message = input.value.trim();
+                if (message !== "") {
+                    var chatMessages = document.querySelector(".chat-messages");
+                    var newMessage = document.createElement("div");
+                    newMessage.classList.add("message", "user");
+                    newMessage.innerHTML = "<span>You: " + message + "</span>";
+                    chatMessages.appendChild(newMessage);
+                    input.value = "";
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            });
+        </script>*@
+
+
+
+
+</body>

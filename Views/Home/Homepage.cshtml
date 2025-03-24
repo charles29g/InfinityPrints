@@ -16,6 +16,14 @@
         transition: background-color 0.3s ease;
     }
 
+    .businessInfo-container {
+        text-align: justify;
+        transform: translateY(50px);
+        opacity: 0;
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        margin-bottom: 250px;
+    }
+
     .prev {
         left: 10px;
     }
@@ -82,7 +90,7 @@
                     <li class="tab"><a ng-click="OrderPage()">Order</a></li>
                     <li class="tab"><a ng-click="FAQpage()">FAQs</a></li>
                     <li class="tab"><a ng-click="AboutusPage()">About Us</a></li>
-                    <li class="tab"><a ng-click="SignIn()">{{Name}}</a></li>
+                    <li class="tab"><a ng-click="handleClick()">{{ Name }}</a></li>
 
                 </ul>
                 <div class="right-menu">
@@ -105,7 +113,11 @@
         </div>
     </nav>
 
-    <a onclick="window.location.href='/Home/Chatpage'" class="chat-btn">
+    <a ng-click="Chat()" class="chat-btn" ng-show="RoleEmp()">
+        <i class="material-icons">chat</i> Chat here...
+    </a>
+
+    <a ng-click="Chat2()" class="chat-btn" ng-show="Customer()">
         <i class="material-icons">chat</i> Chat here...
     </a>
 
@@ -276,9 +288,9 @@
                 <div class="aboutUs-section">
                     <div class="row center">
                         <p>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Infinity Prints is a reliable printing company that provides high-quality and affordable printing services for businesses and individuals.
+                            We offer a wide range of products, including banners, posters, billboards, and corporate branding materials. With the latest technology and a focus on customer satisfaction,
+                            we ensure fast service and excellent results. Whether you're a small business or a big company, we help bring your ideas to life with quality and care.
                         </p>
                     </div>
                 </div>
@@ -295,76 +307,20 @@
             <div class="history-section">
                 <div class="row center">
                     <p>
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                        Company History
+                        Founded with a vision to revolutionize the printing industry, Infinity Prints started as a small local shop and quickly grew into a trusted provider of large-scale printing solutions.
+                        Over the years, we have expanded our services and client base, catering to both small businesses and major corporations. Our commitment to quality,
+                        innovation, and customer satisfaction has made us a go-to printing partner for various industries.
                     </p>
                 </div>
             </div>
 
             <div class="view-more-section">
-                <a href="~/Home/SignIn" id="view-more" class="view-more-link">View more</a>
+                <a ng-click="AboutusPage()" id="view-more" class="view-more-link">View more</a>
             </div>
+
         </div>
-
     </div>
-
-
-
-    @*<div>
-        <footer>
-            <div class="footer-container row s12">
-                <div class="footer-logo col s3">
-                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
-                </div>
-                <div class="col col-divider1 s0" style="height:200px"></div>
-                <div class="footer-nav col s4 center">
-                    <div class="row footer-links">
-                        <div class="col">
-                            <a href="">Homepage</a>
-                        </div>
-                        <div class="col">
-                            <a href="">Services</a>
-                        </div>
-                        <div class="col">
-                            <a href="">Reviews</a>
-                        </div>
-                    </div>
-                    <div class="row footer-links">
-                        <div class="col">
-                            <a href="">Order</a>
-                        </div>
-                        <div class="col">
-                            <a href="">FAQs</a>
-                        </div>
-                        <div class="col">
-                            <a href="">About Us</a>
-                        </div>
-                    </div>
-
-
-
-                    <div class="footer-social">
-                        <a href="#"><img src="x-icon.png" alt="X"></a>
-                        <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-                        <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
-                        <a href="#"><img src="viber-icon.png" alt="Viber"></a>
-                    </div>
-
-                    <div class="footer-tagline">
-                        <p>Infinity Prints: Putting Your Ideas Into Print</p>
-                    </div>
-                </div>
-                <div class="col col-divider s0" style="height:200px"></div>
-
-                <div class="footer-contact col s3 center">
-                    <h4>Contact US</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-
-            </div>
-        </footer>
-    </div>*@
 
     <div>
         <footer>
@@ -379,22 +335,22 @@
                         <div class="col s12">
                             <div class="row footer-links">
                                 <div class="col s2">
-                                    <a href="">Homepage</a>
+                                    <a ng-click="Homepage()">Homepage</a>
                                 </div>
                                 <div class="col s2">
-                                    <a href="">Services</a>
+                                    <a ng-click="Servicepage()">Services</a>
                                 </div>
                                 <div class="col s2">
-                                    <a href="">Reviews</a>
+                                    <a ng-click="Reviewpage()">Reviews</a>
                                 </div>
                                 <div class="col s2">
-                                    <a href="">Order</a>
+                                    <a ng-click="OrderPage()">Order</a>
                                 </div>
                                 <div class="col s2">
-                                    <a href="">FAQs</a>
+                                    <a ng-click="FAQpage()">FAQs</a>
                                 </div>
                                 <div class="col s2">
-                                    <a href="">About Us</a>
+                                    <a ng-click="AboutusPage()">About Us</a>
                                 </div>
                             </div>
                         </div>
@@ -402,46 +358,43 @@
                 </div>
             </div>
 
-                <div class="footer-container3 row">
-                    <div class="col s12">
-                        <div class="row">
-                            <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
-                        </div>
-                        <div class="footer-social row">
-                            @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
-                            <a href="#"><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
-                            @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
-                            @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
-                        </div>
-
-                        <div class="row">
-                            <span id="footer-contacttxt"> CONTACT US </span>
-                        </div>
-                        <div class="footer-contact row">
-                            <span>
-                                <img src="~/Content/images/phone-icon.png" alt="Facebook">
-                                0917 582 0708
-                            </span> 
-                                
-                            <span>
-                                <img src="~/Content/images/email-icon.jpg" alt="Email Address">
-                                asalazar.infinityprints@gmail.com
-                            </span>
-                        </div>
-
-                        </div>
+            <div class="footer-container3 row">
+                <div class="col s12">
+                    <div class="row">
+                        <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
+                    </div>
+                    <div class="footer-social row">
+                        @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
+                        <a href="https://www.facebook.com/profile.php?id=100064146603627"><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
+                        @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
+                        @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
                     </div>
 
-                <div class="footer-container4 row">
-                    <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+                    <div class="row">
+                        <span id="footer-contacttxt"> CONTACT US </span>
+                    </div>
+                    <div class="footer-contact row">
+                        <span>
+                            <img src="~/Content/images/phone-icon.png" alt="Phone">
+                            0917 582 0708
+                        </span>
+
+                        <span>
+                            <img src="~/Content/images/email-icon.jpg" alt="Email Address">
+                            asalazar.infinityprints@gmail.com
+                        </span>
+                    </div>
+
                 </div>
+            </div>
 
-
-            
-
+            <div class="footer-container4 row">
+                <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+            </div>
 
         </footer>
     </div>
+
 
 
 

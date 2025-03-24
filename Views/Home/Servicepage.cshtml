@@ -42,7 +42,27 @@
         color: white;
         font-size: 14px;
         cursor: pointer;
+        margin: 5px;
     }
+
+    .buttons {
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+    }
+
+    .add-size-btn {
+        width: 20%; /* Full width for consistency */
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #6f0d4a;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+
 
     button:hover {
         background-color: #850f5a !important; /* Slightly darker magenta for hover */
@@ -182,7 +202,7 @@
         display: flex;
         justify-content: center; /* Horizontal centering */
         align-items: center; /* Vertical centering */
-        z-index: 10; /* Ensure it overlaps other content */
+        z-index: 1000; /* Ensure it overlaps other content */
     }
 
     .size-container {
@@ -252,7 +272,7 @@
     .modern-card-content h5 {
         font-size: 18px;
         font-weight: 600;
-        color: #000; 
+        color: #000;
     }
 
 
@@ -273,7 +293,8 @@
         gap: 8px;
         box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease-in-out;
-       outline:auto
+        outline: auto; 
+        z-index:1000;
     }
 
         .add-service-btn i {
@@ -396,6 +417,23 @@
         color: black;
         font-size: 25px;
     }
+
+    .error {
+        font-size: 0.75rem;
+        /*        padding-left: 20px;*/
+        top: 110%;
+        left: 0;
+        color: red;
+        /*        visibility: hidden;*/
+    }
+
+    .ng-invalid.ng-touched ~ .error {
+        visibility: visible;
+    }
+
+    select.ng-invalid.ng-touched + .error {
+        visibility: visible;
+    }
 </style>
 <body>
 
@@ -413,7 +451,7 @@
                     <li class="tab"><a ng-click="OrderPage()">Order</a></li>
                     <li class="tab"><a ng-click="FAQpage()">FAQs</a></li>
                     <li class="tab"><a ng-click="AboutusPage()">About Us</a></li>
-                    <li class="tab"><a ng-click="SignIn()">{{Name}}</a></li>
+                    <li class="tab"><a ng-click="handleClick()">{{ Name }}</a></li>
 
                 </ul>
                 <div class="right-menu">
@@ -437,20 +475,9 @@
     </nav>
 
     <div class="body">
-        <div class="col s12 m4" style="margin-top:5vh" ng-if="RoleEmp()">
-            <div class="modern-card" onclick="openContainer()">
-                <div class="modern-card-icon">
-                    <span>+</span>
-                </div>
-                <div class="modern-card-content">
-                    <h5>Add Service</h5>
-
-                </div>
-            </div>
-        </div>
 
         <!-- Add service button na nasa lower right -->
-        <a href='/Home/ServiceForm' class="add-service-btn">
+        <a onclick="openContainer()" class="add-service-btn" ng-if="RoleEmp()">
             <i class="material-icons">add_circle</i> Add Service
         </a>
 
@@ -505,7 +532,7 @@
 
                     <div class="row">
 
-                        <form class="col s12" style="margin-top:10px;" name="signUpForm" ng-submit="validateUser()" novalidate>
+                        <form class="col s12" style="margin-top:10px;" name="serviceForm" ng-submit="validateUser()" novalidate>
 
                             <div class="row">
                                 <div class="col s12 image-preview" ng-show="true">
@@ -516,8 +543,11 @@
                                         </div>
                                         <!-- Image Preview -->
                                         <img ng-src={{imageSrc}} alt="Image Preview" class="preview-img" ng-show="imageSrc" />
-
                                     </div>
+                                    @*<span class="error"
+                                              ng-show="serviceForm.file.$touched && serviceForm.file.$error.required">
+                                            Image is required.
+                                        </span>*@
                                 </div>
                                 <div class="col s12 file-upload">
                                     <label for="serviceupload" class="custom-file-upload">
@@ -530,25 +560,45 @@
                                 </div>
                                 <div class="col s12 input-icons">
 
-                                    <input id="ServiceName" class="input-field " type="text" placeholder="Service Name" required ng-model="ServiceName" />
+                                    <input id="ServiceName" class="input-field" type="text" placeholder="Service Name"
+                                           name="serviceName" ng-model="ServiceName" required ng-minlength="3" ng-maxlength="100" />
 
+                                    <span class="error" ng-show="serviceForm.serviceName.$touched && serviceForm.serviceName.$error.required">
+                                        Service Name is required.
+                                    </span>
+
+                                    <span class="error" ng-show="serviceForm.serviceName.$touched && serviceForm.serviceName.$error.minlength">
+                                        Service Name must be at least 3 characters long.
+                                    </span>
+
+                                    <span class="error" ng-show="serviceForm.serviceName.$touched && serviceForm.serviceName.$error.maxlength">
+                                        Service Name cannot exceed 100 characters.
+                                    </span>
                                 </div>
 
                                 <div class="col s12 input-icons">
 
-                                    <input id="ServiceMat" class="input-field " type="text" placeholder="Service Material" required ng-model="ServiceMat" />
-
+                                    <input id="ServiceMat" name="serviceMat" class="input-field" type="text" placeholder="Service Material" required ng-model="ServiceMat" />
+                                    <span class="error" ng-show="serviceForm.serviceMat.$touched && serviceForm.serviceMat.$error.required">
+                                        Service Material is required.
+                                    </span>
                                 </div>
 
                                 <div class="col s12 input-icons">
 
-                                    <input id="ServiceDesc" class="input-field " type="text" placeholder="Service Description" required ng-model="ServiceDesc" />
+                                    <input id="ServiceDesc" name="serviceDesc" class="input-field " type="text" placeholder="Service Description" required ng-model="ServiceDesc" ng-minlength="100" ng-maxlength="300" />
+                                    <span class="error" ng-show="serviceForm.serviceDesc.$touched && serviceForm.serviceDesc.$error.required">
+                                        Service Description is required.
+                                    </span>
 
+                                    <span class="error" ng-show="serviceForm.serviceDesc.$touched && serviceForm.serviceDesc.$error.minlength">
+                                        Service Description must be at least 100 characters long.
+                                    </span>
+
+                                    <span class="error" ng-show="serviceForm.serviceDesc.$touched && serviceForm.serviceDesc.$error.maxlength">
+                                        Service Description cannot exceed 300 characters.
+                                    </span>
                                 </div>
-
-
-
-
 
                             </div>
                         </form>
@@ -594,7 +644,10 @@
                                     <input id="ServiceDesc" class="input-field" type="text"
                                            ng-model="selectedServicePage.Description" placeholder="Service Description" required />
                                 </div>
-                                <!--<button class="close-button" onClick="openAddSize()">Add Sizes</button>-->
+                            </div>
+
+                            <div class="buttons">
+                                <button class="add-size-btn" onClick="openAddSize()">Add Sizes</button>
                             </div>
                         </form>
                         <div class="button">
@@ -605,7 +658,7 @@
             </div>
         </div>
 
-        @*<div class="size-container" style="display:none;" ng-init="loadServices()">
+        <div class="size-container" style="display:none;" ng-init="loadServices()">
 
 
             <div class="container">
@@ -625,37 +678,38 @@
                                 <label for="FileQuantity">Service:</label>
                                 <label for="Service">Service</label>
                                 <select id="Service" required ng-model="services[$index]"
-                                        ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
-                                    <option value="" disabled>Please select One</option>
-                                </select>
+                                            ng-options="service.ServiceID as service.ServiceName for service in ServicesData">
+                                        <option value="" disabled>Please select One</option>
+                                    </select>
 
-                                <label for="FileQuantity">Size Quantity:</label>
-                                <select id="FileQuantity" ng-model="FileQuantity" ng-change="updateContainers()">
-                                    <option value="" disabled>Please select One</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
+                                <label for="SizeName">Size Name</label>
+                                <input name="SizeName" type="text" ng-model="SizeName" />
 
-                                <div ng-repeat="n in getNumber(FileQuantity) track by $index">
-                                    <div class="upload-container">
+                                <label for="Price">Price</label>
+                                <input name="Price" type="text" ng-model="Price" />
 
-                                        <div class="row">
-                                            <div class="col s6">
-                                                <label for="Size">Size</label>
-                                                <input id="SizeName" class="input-field " type="text" placeholder="Size Name" required ng-model="SizeName" />
+
+
+
+
+                                @*<div ng-repeat="n in getNumber(FileQuantity) track by $index">
+                                        <div class="upload-container">
+
+                                            <div class="row">
+                                                <div class="col s6">
+                                                    <label for="Size">Size</label>
+                                                    <input id="SizeName" class="input-field " type="text" placeholder="Size Name" required ng-model="SizeName" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class=`"col s6">
+                                                    <label for="Price">Price</label>
+                                                    <input id="Price" class="input-field " type="text" placeholder="Price" required ng-model="Price" />
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col s6">
-                                                <label for="Price">Price</label>
-                                                <input id="Price" class="input-field " type="text" placeholder="Price" required ng-model="Price" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </div>*@
 
                             </div>
                         </form>
@@ -665,8 +719,82 @@
                     </div>
                 </div>
             </div>
-        </div>*@
+        </div>
 
+    </div>
+
+
+
+    <div>
+        <footer>
+            <div class="footer-container1 row s12">
+                <div class="footer-logo">
+                    <img src="~/Content/images/footlogo.png" alt="Infinity Prints Logo">
+                </div>
+            </div>
+            <div class="footer-container2">
+                <div class="footer-nav">
+                    <div class="row s12">
+                        <div class="col s12">
+                            <div class="row footer-links">
+                                <div class="col s2">
+                                    <a ng-click="Homepage()">Homepage</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Servicepage()">Services</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="Reviewpage()">Reviews</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="OrderPage()">Order</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="FAQpage()">FAQs</a>
+                                </div>
+                                <div class="col s2">
+                                    <a ng-click="AboutusPage()">About Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-container3 row">
+                <div class="col s12">
+                    <div class="row">
+                        <span id="footer-socialtxt"> FOLLOW US ON SOCIAL</span>
+                    </div>
+                    <div class="footer-social row">
+                        @*<a href="#"><img src="x-icon.png" alt="X"></a>*@
+                        <a href="href=" https: //www.facebook.com/profile.php?id =100064146603627""><img src="~/Content/images/fblogo.png" alt="Facebook"></a>
+                        @*<a href="#"><img src="instagram-icon.png" alt="Instagram"></a>*@
+                        @*<a href="#"><img src="viber-icon.png" alt="Viber"></a>*@
+                    </div>
+
+                    <div class="row">
+                        <span id="footer-contacttxt"> CONTACT US </span>
+                    </div>
+                    <div class="footer-contact row">
+                        <span>
+                            <img src="~/Content/images/phone-icon.png" alt="Facebook">
+                            0917 582 0708
+                        </span>
+
+                        <span>
+                            <img src="~/Content/images/email-icon.jpg" alt="Email Address">
+                            asalazar.infinityprints@gmail.com
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="footer-container4 row">
+                <p>  © INFINITY PRINTS 2025. ALL RIGHTS RESERVED.</p>
+            </div>
+        </footer>
     </div>
 
 </body>

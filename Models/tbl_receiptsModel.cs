@@ -10,10 +10,11 @@ namespace InfinityPrints.Models
         public int ReceiptID { get; set; }
         public int UserID { get; set; }
         public int OrderID { get; set; }
+        public string PaymentStatus { get; set; }
 
         public string PaymentTerm { get; set; }
-        public string Balance { get; set; }
-        public int ReferenceNo { get; set; }
+        public int Balance { get; set; }
+        public string ReferenceNo { get; set; }
         public DateTime CreatedAt { get; set; }
 
     }

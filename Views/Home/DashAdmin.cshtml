@@ -42,18 +42,42 @@
                 height: 250px !important; /* Smaller height on mobile */
             }
     }
+
+    .buttones {
+        background-color: #6f0d4a;
+        color: white;
+        font-size: 16px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+        .buttones:hover {
+            background-color: #a31a6c;
+        }
+
 </style>
 
 <body>
     <div class="sidebar">
         <h1>Infinity Print </h1>
         <ul>
-            <li style="margin-bottom: 5px;" class="active">
-                <a ng-click="DashAdmin()">
+            <li style="margin-bottom: 5px;" class="active" ng-show="RoleEmp()">
+                <a ng-click="DashAdmin()" ">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-home active" style="font-size: 18px;"></i>
                     </span>
                     Homepage
+                </a>
+            </li>
+            <li ng-show="!RoleEmp()" style="margin-bottom: 5px;">
+                <a ng-click="Homepage()">
+                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                        <i class="fas fa-home " style="font-size: 18px;"></i>
+                    </span>
+                    Go Back to Homepage
                 </a>
             </li>
             <li style="margin-bottom: 5px;">
@@ -64,14 +88,7 @@
                     Account
                 </a>
             </li>
-            <li style="margin-bottom: 5px;" ng-show="Owner()" class="active">
-                <a ng-click="Authorization()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-shopping-cart" style="font-size: 18px;"></i>
-                    </span>
-                    Task Authorization
-                </a>
-            </li>
+
 
             <li style="margin-bottom: 5px;">
                 <a ng-click="Orders()">
@@ -81,7 +98,7 @@
                     Orders
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Users()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-users" style="font-size: 18px;"></i>
@@ -89,7 +106,7 @@
                     Users
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Payment()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-credit-card" style="font-size: 18px;"></i>
@@ -97,31 +114,47 @@
                     Payment
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Chat()">
+            <li style="margin-bottom: 5px; position: relative;" ng-show="RoleEmp()">
+                <a ng-click="Chat(); clearChatNotifications()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-comments" style="font-size: 18px;"></i>
                     </span>
                     Chat
-                </a>
-            </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="UserGuide()">
-                    <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
                     </span>
-                    User Guide
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Status()">
+            <li style="margin-bottom: 5px; position: relative;" ng-show="Customer()">
+                <a ng-click="Chat2(); clearChatNotifications()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
-                        <i class="fas fa-spinner " style="font-size: 18px;"></i>
+                        <i class="fas fa-comments" style="font-size: 18px;"></i>
                     </span>
-                    Status
+                    Chat
+                    <!-- Chat notification icon -->
+                    <span ng-show="UsersDataChat.some(user => user.Unread === 'true' && user.replyTo === null)"
+                          style="position: absolute; top: 5px; right: 5px; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
+                    </span>
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
+            @*<li style="margin-bottom: 5px;">
+            <a ng-click="UserGuide()">
+                <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                    <i class="fas fa-book-open" style="font-size: 18px;"></i>
+                </span>
+                User Guide
+            </a>
+        </li>*@
+        <li style="margin-bottom: 5px;" ng-show="isOwner()">
+            <a ng-click="Status()">
+                <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
+                    <i class="fas fa-spinner" style="font-size: 18px;"></i>
+                </span>
+                Status
+            </a>
+        </li>
+            <li style="margin-bottom: 5px;" ng-show="RoleEmp()">
                 <a ng-click="Receipts()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-receipt" style="font-size: 18px;"></i>
@@ -129,8 +162,8 @@
                     Receipts
                 </a>
             </li>
-            <li style="margin-bottom: 5px;">
-                <a ng-click="Receipts()">
+            <li style="margin-bottom: 5px;" ng-show="isOwner()">
+                <a ng-click="Logs()">
                     <span style="display: inline-block; width: 20px; text-align: center; margin-right: 10px;">
                         <i class="fas fa-file-alt" style="font-size: 18px;"></i>
                     </span>
@@ -149,10 +182,10 @@
     </div>
 
     <div class="welcome-message" style="text-align: center; padding: 30px 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); margin-top: 20px; max-width: 80%; margin-left: auto; margin-right: auto;">
-        <img src="~/Content/Images/logo.PNG" alt="Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+        <img src="~/Content/Images/footlogo.png" alt="Logo" style="height: 100%;margin-bottom: 20px; width:50%">
         <h1 style="font-size: 32px; font-weight: 600; color: #333;">Welcome, {{ Name }}!</h1>
         <p style="font-size: 18px; color: #555;">Welcome to the Infinity Prints Admin Dashboard. Begin managing your orders, users, and other administrative tasks with ease.</p>
-        <a ng-click="Homepage()">Click here to go to the view page</a>
+        <button class="buttones" ng-click="Homepage()">Click here to go to the view page</button>
     </div>
 
 
